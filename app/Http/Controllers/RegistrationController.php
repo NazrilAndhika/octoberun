@@ -10,4 +10,10 @@ class RegistrationController extends Controller
     {
         return view('user.daftar');
     }
+
+    // Tambahkan fungsi ini
+    public function payment()
+    {
+        return view('user.pembayaran');
+    }
 }

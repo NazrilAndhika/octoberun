@@ -151,9 +151,9 @@
                             </div>
 
                             <!-- Tombol Bayar (Sementara submit form kosong) -->
-                            <button type="submit" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded-md transition uppercase tracking-widest shadow-md">
+                            <a href="{{ route('pembayaran') }}" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded-md transition uppercase tracking-widest shadow-md flex justify-center text-center">
                                 LANJUT PEMBAYARAN
-                            </button>
+                            </a>
                         </div>
 
                         <!-- Kotak Informasi -->
