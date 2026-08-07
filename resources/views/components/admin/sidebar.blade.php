@@ -11,7 +11,7 @@
     <!-- Bagian Menu Navigasi (Diberi flex-1 agar memenuhi ruang tengah) -->
     <nav class="mt-6 px-4 space-y-1 flex-1 overflow-y-auto">
         
-        <a href="#" class="flex items-center gap-3 px-4 py-3 bg-white/10 rounded-lg font-bold border-l-4 border-[#e85d04] transition">
+        <a href="{{ url('/admin-gsc/dashboard') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition {{ request()->is('admin-gsc/dashboard') ? 'bg-white/10 border-l-4 border-[#e85d04] text-white' : 'text-blue-100 hover:bg-white/10 hover:text-white' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
             Dashboard
         </a>
@@ -23,7 +23,7 @@
                 Pendaftar
             </div>
             <div class="pl-12 pr-4 space-y-1 mt-1">
-                <a href="#" class="block py-2 text-sm text-blue-100 hover:text-white hover:bg-white/5 rounded-md px-3 transition">Data Pendaftar</a>
+                <a href="{{ route('admin.datapendaftar') }}" class="block py-2 text-sm rounded-md px-3 transition {{ request()->routeIs('admin.datapendaftar*') ? 'bg-white/10 text-white font-bold' : 'text-blue-100 hover:text-white hover:bg-white/5' }}">Data Pendaftar</a>
                 <a href="#" class="block py-2 text-sm text-blue-100 hover:text-white hover:bg-white/5 rounded-md px-3 transition">Validasi Pembayaran</a>
             </div>
         </div>
@@ -33,7 +33,7 @@
             Konten Website
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-4 py-3 text-blue-100 hover:bg-white/10 hover:text-white rounded-lg transition">
+        <a href="{{ route('admin.faq') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg transition {{ request()->routeIs('admin.faq*') ? 'bg-white/10 border-l-4 border-[#e85d04] text-white font-bold' : 'text-blue-100 hover:bg-white/10 hover:text-white' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             FAQ
         </a>

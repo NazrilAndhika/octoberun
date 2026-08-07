@@ -233,61 +233,19 @@
             
             <div class="space-y-4">
                 
-                <!-- FAQ Item 1 -->
+                @forelse($faqs ?? [] as $faq)
                 <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
                     <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
-                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">Kapan event OCTOBERUN 2026 dilaksanakan ?</span>
-                        <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
-                    </button>
-                    <!-- Area Jawaban (Disembunyikan secara default) -->
-                    <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        Event OCTOBERUN 2026 akan dilaksanakan pada hari Minggu, 18 Oktober 2026. Jadwal flag-off akan diinformasikan lebih lanjut mendekati hari H.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 2 -->
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
-                    <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
-                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">Bagaimana Cara Pendaftaran ?</span>
+                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">{{ $faq->question }}</span>
                         <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
                     </button>
                     <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        Pendaftaran bisa dilakukan secara online melalui tombol "Daftar Sekarang" di website ini. Silakan isi form dan selesaikan pembayaran.
+                        {{ $faq->answer }}
                     </div>
                 </div>
-
-                <!-- FAQ Item 3 -->
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
-                    <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
-                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">Dimana lokasi Start & Finish ?</span>
-                        <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
-                    </button>
-                    <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        Lokasi Start dan Finish berada di Alun-Alun Kota. Rute lengkap bisa dilihat di bagian info rute pada website.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 4 -->
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
-                    <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
-                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">Apa yang saya dapatkan jika mendaftar ?</span>
-                        <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
-                    </button>
-                    <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        Kamu akan mendapatkan Jersey Premium, Nomor Dada (BIB), Medali Finisher, dan donasi 1 bibit pohon atas namamu.
-                    </div>
-                </div>
-
-                <!-- FAQ Item 5 -->
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
-                    <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
-                        <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">Apakah pendaftaran bisa dibatalkan ?</span>
-                        <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
-                    </button>
-                    <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        Pendaftaran yang sudah lunas tidak dapat dibatalkan atau direfund (dikembalikan uangnya) dengan alasan apapun.
-                    </div>
-                </div>
+                @empty
+                <p class="text-center text-gray-400 text-sm py-8">Belum ada FAQ tersedia.</p>
+                @endforelse
 
             </div>
         </div>
