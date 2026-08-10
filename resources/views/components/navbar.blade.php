@@ -24,6 +24,7 @@
                 <a href="{{ url('/#beranda') }}" class="text-[#0b4d75] font-bold hover:text-[#e85d04] transition pb-1">BERANDA</a>
                 <a href="{{ url('/#tentang') }}" class="text-gray-500 font-semibold hover:text-[#0b4d75] transition pb-1">TENTANG</a>
                 <a href="{{ url('/#info') }}" class="text-gray-500 font-semibold hover:text-[#0b4d75] transition pb-1">INFO</a>
+                <a href="{{ route('cek-status') }}" class="{{ request()->routeIs('cek-status') ? 'text-[#0b4d75] font-bold' : 'text-gray-500 font-semibold' }} hover:text-[#0b4d75] transition pb-1">CEK STATUS</a>
             </div>
 
             <!-- Bagian Tombol Kanan (Ditambah rute pendaftaran) -->
@@ -45,6 +46,7 @@
             <a href="{{ url('/#beranda') }}" class="block px-3 py-2 text-[#0b4d75] font-bold border-l-4 border-[#0b4d75] bg-blue-50">BERANDA</a>
             <a href="{{ url('/#tentang') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">TENTANG</a>
             <a href="{{ url('/#info') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">INFO</a>
+            <a href="{{ route('cek-status') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">CEK STATUS</a>
             <a href="{{ route('daftar') }}" class="block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
                 DAFTAR SEKARANG
             </a>

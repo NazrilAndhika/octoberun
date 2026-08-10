@@ -135,6 +135,22 @@ class RegistrationController extends Controller
         return view('user.sukses', compact('participant'));
     }
 
+    // -------------------------------------------------------
+    // GET /cek-status
+    // -------------------------------------------------------
+    public function cekStatus(Request $request)
+    {
+        $participant = null;
+        $settings = EventSetting::first();
+        
+        if ($request->filled('order_id')) {
+            $orderId = trim($request->order_id);
+            $participant = Participant::where('order_id', 'like', '%' . $orderId)->first();
+        }
+
+        return view('user.cek-status', compact('participant', 'settings'));
+    }
+
     // Legacy method (kept for compatibility)
     public function payment()
     {

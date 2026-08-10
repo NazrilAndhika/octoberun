@@ -7,6 +7,8 @@ use App\Models\Participant;
 use App\Models\EventSetting;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ETicketMail;
 
 class DatapendaftarController extends Controller
 {
@@ -37,6 +39,15 @@ class DatapendaftarController extends Controller
             $query->where('jersey_size', $request->jersey_size);
         }
 
+        // --- Filter: Status Race Pack ---
+        if ($request->filled('racepack_status') && $request->racepack_status !== 'all') {
+            if ($request->racepack_status === 'taken') {
+                $query->where('is_racepack_taken', true);
+            } else if ($request->racepack_status === 'not_taken') {
+                $query->where('is_racepack_taken', false);
+            }
+        }
+
         // --- Filter: Tanggal ---
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
@@ -61,6 +72,31 @@ class DatapendaftarController extends Controller
         return view('admin.datapendaftar_detail', compact('participant'));
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        $participant = Participant::findOrFail($id);
+        $oldStatus = $participant->payment_status;
+        $newStatus = $request->payment_status;
+
+        $participant->update(['payment_status' => $newStatus]);
+
+        $message = 'Status pembayaran berhasil diperbarui!';
+
+        // Jika status berubah menjadi Lunas (paid), kirim email E-Ticket
+        if ($oldStatus !== 'paid' && $newStatus === 'paid') {
+            try {
+                $settings = EventSetting::first() ?? new EventSetting();
+                Mail::to($participant->email)->send(new ETicketMail($participant, $settings));
+                $message .= ' Email E-Ticket telah berhasil dikirim ke peserta.';
+            } catch (\Exception $e) {
+                // Jangan gagalkan update status hanya karena email gagal
+                $message .= ' Namun, email E-Ticket gagal dikirim: ' . $e->getMessage();
+            }
+        }
+
+        return back()->with('success', $message);
+    }
+
     public function exportCsv(Request $request)
     {
         $query = Participant::query();
@@ -79,6 +115,13 @@ class DatapendaftarController extends Controller
         }
         if ($request->filled('jersey_size') && $request->jersey_size !== 'all') {
             $query->where('jersey_size', $request->jersey_size);
+        }
+        if ($request->filled('racepack_status') && $request->racepack_status !== 'all') {
+            if ($request->racepack_status === 'taken') {
+                $query->where('is_racepack_taken', true);
+            } else if ($request->racepack_status === 'not_taken') {
+                $query->where('is_racepack_taken', false);
+            }
         }
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
@@ -115,6 +158,7 @@ class DatapendaftarController extends Controller
                 'Kota',
                 'Alamat',
                 'Status Pembayaran',
+                'Status Race Pack',
                 'Metode Pembayaran',
                 'Total Bayar',
                 'Tanggal Daftar',
@@ -133,6 +177,7 @@ class DatapendaftarController extends Controller
                     $p->city,
                     $p->address,
                     ucfirst($p->payment_status),
+                    $p->is_racepack_taken ? 'Sudah Diambil' : 'Belum Diambil',
                     $p->payment_method ?? '-',
                     'Rp ' . number_format($p->gross_amount, 0, ',', '.'),
                     $p->created_at->format('d M Y H:i'),
@@ -143,5 +188,19 @@ class DatapendaftarController extends Controller
         }, 200, $headers);
 
         return $response;
+    }
+
+    public function destroy($id)
+    {
+        $participant = Participant::findOrFail($id);
+        
+        // Hapus file bukti pembayaran jika ada
+        if ($participant->payment_proof && \Illuminate\Support\Facades\Storage::disk('public')->exists($participant->payment_proof)) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($participant->payment_proof);
+        }
+
+        $participant->delete();
+
+        return back()->with('success', 'Data pendaftar berhasil dihapus!');
     }
 }

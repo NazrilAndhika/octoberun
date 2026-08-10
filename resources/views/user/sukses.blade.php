@@ -79,9 +79,19 @@
                     </ul>
                 </div>
 
+                {{-- Info Email E-Ticket --}}
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="text-xs text-amber-800 leading-relaxed font-medium">
+                        Silakan pantau kotak masuk atau folder spam Email Anda. <strong>E-Ticket</strong> dan <strong>Jadwal Pengambilan Race Pack</strong> akan dikirimkan otomatis setelah admin memvalidasi pembayaran Anda.
+                    </p>
+                </div>
+
                 {{-- Tombol --}}
                 <div class="space-y-3 pt-2">
-                    <a href="{{ route('pembayaran.show', $participant->order_id) }}"
+                    <a href="{{ route('cek-status', ['order_id' => $participant->order_id]) }}"
                         class="flex items-center justify-center gap-2 w-full bg-[#0b4d75] hover:bg-[#083b5c] text-white font-bold py-3 rounded-xl transition text-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         Lihat Status Pesanan

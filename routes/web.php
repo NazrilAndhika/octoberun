@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\DatapendaftarController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\RegistrationSettingController;
+use App\Http\Controllers\Admin\RacePackController;
 
 Route::get('/', function () {
     $settings = EventSetting::first();
@@ -18,6 +21,9 @@ Route::get('/', function () {
 // Rute Halaman Pendaftaran
 Route::get('/daftar', [RegistrationController::class, 'index'])->name('daftar');
 Route::post('/daftar', [RegistrationController::class, 'store'])->name('daftar.store');
+
+// Rute Cek Status
+Route::get('/cek-status', [RegistrationController::class, 'cekStatus'])->name('cek-status');
 
 // Rute Pembayaran
 Route::get('/pembayaran/{order_id}', [RegistrationController::class, 'showPembayaran'])->name('pembayaran.show');
@@ -32,15 +38,18 @@ Route::post('/login-panitia', [AuthController::class, 'authenticate']);
 Route::post('/logout-panitia', [AuthController::class, 'logout'])->name('logout');
 
 // Rute Admin yang DIKUNCI (Middleware Auth)
+// Rute Admin yang DIKUNCI (Middleware Auth)
 Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     
     Route::get('/', function () {
         return redirect('/admin-gsc/dashboard');
     });
 
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    // UBAH JADI SEPERTI INI (Hanya 1 baris, tidak ada function() lagi):
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Rute Konten Website
+    Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings');
 
     // Rute Konten Website
     Route::get('/settings', [SettingController::class, 'index'])->name('admin.settings');
@@ -52,11 +61,12 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     Route::get('/datapendaftar', [DatapendaftarController::class, 'index'])->name('admin.datapendaftar');
     Route::get('/datapendaftar/export', [DatapendaftarController::class, 'exportCsv'])->name('admin.datapendaftar.export');
     Route::get('/datapendaftar/{id}', [DatapendaftarController::class, 'show'])->name('admin.datapendaftar.show');
-    Route::patch('/datapendaftar/{id}/status', function (\Illuminate\Http\Request $request, $id) {
-        $participant = \App\Models\Participant::findOrFail($id);
-        $participant->update(['payment_status' => $request->payment_status]);
-        return back()->with('success', 'Status pembayaran berhasil diperbarui!');
-    })->name('admin.datapendaftar.status');
+    Route::patch('/datapendaftar/{id}/status', [DatapendaftarController::class, 'updateStatus'])->name('admin.datapendaftar.status');
+    Route::delete('/datapendaftar/{id}', [DatapendaftarController::class, 'destroy'])->name('admin.datapendaftar.destroy');
+
+    // === Rute Distribusi Race Pack ===
+    Route::get('/rpc', [RacePackController::class, 'index'])->name('admin.rpc');
+    Route::post('/rpc/confirm/{id}', [RacePackController::class, 'confirm'])->name('admin.rpc.confirm');
 
     // === Rute FAQ ===
     Route::get('/faq', [FaqController::class, 'index'])->name('admin.faq');
@@ -66,5 +76,9 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     Route::put('/faq/{id}', [FaqController::class, 'update'])->name('admin.faq.update');
     Route::delete('/faq/{id}', [FaqController::class, 'destroy'])->name('admin.faq.destroy');
     Route::patch('/faq/{id}/toggle', [FaqController::class, 'toggleStatus'])->name('admin.faq.toggle');
+
+    // Rute Pengaturan Pendaftaran
+    Route::get('/pengaturan-pendaftaran', [RegistrationSettingController::class, 'index'])->name('admin.registration.settings');
+    Route::post('/pengaturan-pendaftaran', [RegistrationSettingController::class, 'update'])->name('admin.registration.update');
 
 });

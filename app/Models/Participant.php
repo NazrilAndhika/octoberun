@@ -11,4 +11,9 @@ class Participant extends Model
 
     // Mengizinkan penyimpanan data secara otomatis
     protected $guarded = [];
+
+    // Cast the racepack_taken_at column to a datetime instance
+    protected $casts = [
+        'racepack_taken_at' => 'datetime',
+    ];
 }

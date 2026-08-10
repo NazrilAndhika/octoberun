@@ -57,6 +57,13 @@
                 @endforeach
             </select>
 
+            {{-- Racepack Status Filter --}}
+            <select name="racepack_status" id="racepack-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
+                <option value="all" {{ request('racepack_status', 'all') === 'all' ? 'selected' : '' }}>Status Race Pack</option>
+                <option value="taken" {{ request('racepack_status') === 'taken' ? 'selected' : '' }}>Sudah Diambil</option>
+                <option value="not_taken" {{ request('racepack_status') === 'not_taken' ? 'selected' : '' }}>Belum Diambil</option>
+            </select>
+
             {{-- Date From --}}
             <input type="date" name="date_from" id="date-from" value="{{ request('date_from') }}"
                 class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50"
@@ -107,6 +114,7 @@
                     <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">No. HP</th>
                     <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Email</th>
                     <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Status Pembayaran</th>
+                    <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Race Pack</th>
                     <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">Tgl Daftar</th>
                     <th class="px-5 py-3.5 text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap text-center">Aksi</th>
                 </tr>
@@ -157,6 +165,17 @@
                             {{ $cfg['label'] }}
                         </span>
                     </td>
+                    <td class="px-5 py-4 whitespace-nowrap">
+                        @if($participant->is_racepack_taken)
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200">
+                                Sudah Diambil
+                            </span>
+                        @else
+                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gray-100 text-gray-600 border border-gray-200">
+                                Belum
+                            </span>
+                        @endif
+                    </td>
                     <td class="px-5 py-4 whitespace-nowrap text-gray-500 text-sm">
                         {{ $participant->created_at->format('d M Y H:i') }}
                     </td>
@@ -177,25 +196,25 @@
                                 class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 transition border border-amber-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
                             </button>
-                            {{-- Download bukti --}}
-                            @if($participant->payment_proof)
-                            <a href="{{ Storage::url($participant->payment_proof) }}" target="_blank"
-                                id="btn-download-{{ $participant->id }}"
-                                title="Unduh Bukti Bayar"
-                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-green-50 hover:bg-green-100 text-green-600 transition border border-green-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            </a>
-                            @else
-                            <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-50 text-gray-300 border border-gray-200" title="Tidak ada bukti">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            </span>
-                            @endif
+                            {{-- Hapus Data --}}
+                            <form action="{{ route('admin.datapendaftar.destroy', $participant->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data peserta ini?');" class="inline-block">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    id="btn-delete-{{ $participant->id }}"
+                                    title="Hapus Peserta"
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition border border-red-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
+                            </form>
                         </div>
                     </td>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="px-6 py-16 text-center">
+                    <td colspan="9" class="px-6 py-16 text-center">
                         <div class="flex flex-col items-center gap-3">
                             <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
@@ -306,11 +325,11 @@
             @method('PATCH')
             <label class="block text-sm font-semibold text-gray-700 mb-2">Status Baru</label>
             <select name="payment_status" id="modal-status-select"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] text-sm mb-6">
-                <option value="paid">✅ Lunas</option>
-                <option value="pending">⏳ Pending</option>
-                <option value="failed">❌ Gagal</option>
-                <option value="expired">🕒 Expired</option>
+                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] text-sm mb-6 font-medium">
+                <option value="paid">Lunas</option>
+                <option value="pending">Pending</option>
+                <option value="failed">Gagal</option>
+                <option value="expired">Expired</option>
             </select>
             <div class="flex gap-3">
                 <button type="button" onclick="closeStatusModal()"
@@ -331,7 +350,7 @@
 @push('scripts')
 <script>
     // Auto-submit filter on select change
-    document.querySelectorAll('#status-filter, #jersey-filter').forEach(el => {
+    document.querySelectorAll('#status-filter, #jersey-filter, #racepack-filter').forEach(el => {
         el.addEventListener('change', () => document.getElementById('filter-form').submit());
     });
 

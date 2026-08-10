@@ -16,22 +16,53 @@
     <!-- Memanggil Komponen Sidebar -->
     @include('components.admin.sidebar')
 
-    <!-- Area Konten Utama (Diberi margin-left 64 agar tidak tertutup sidebar) -->
-    <main class="ml-64 p-8 min-h-screen">
+    <!-- Area Konten Utama (Responsive margin dan padding) -->
+    <main class="md:ml-64 p-4 md:p-8 min-h-screen transition-all duration-300">
         
-        <!-- Header Atas (Bisa diisi nama admin / tombol logout nanti) -->
-        <header class="flex justify-end items-center mb-8 pb-4 border-b border-gray-200">
+        <!-- Header Atas -->
+        <header class="flex justify-between md:justify-end items-center mb-6 md:mb-8 pb-4 border-b border-gray-200">
+            <!-- Hamburger Button for Mobile -->
+            <button id="admin-mobile-btn" class="md:hidden text-gray-600 hover:text-[#0b4d75] focus:outline-none p-2 -ml-2">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            
             <div class="flex items-center gap-3">
                 <span class="text-sm font-semibold text-gray-600">Halo, Panitia</span>
-                <div class="w-10 h-10 bg-[#0b4d75] rounded-full flex items-center justify-center text-white font-bold">P</div>
+                <div class="w-10 h-10 bg-[#0b4d75] rounded-full flex items-center justify-center text-white font-bold shadow-sm">P</div>
             </div>
         </header>
 
         <!-- Tempat menyisipkan konten dinamis per halaman -->
-        @yield('content')
+        <div class="overflow-x-hidden">
+            @yield('content')
+        </div>
 
     </main>
 
+    <!-- Overlay untuk mobile sidebar -->
+    <div id="admin-sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('admin-sidebar');
+            const mobileBtn = document.getElementById('admin-mobile-btn');
+            const overlay = document.getElementById('admin-sidebar-overlay');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('-translate-x-full');
+                overlay.classList.toggle('hidden');
+            }
+
+            if(mobileBtn) {
+                mobileBtn.addEventListener('click', toggleSidebar);
+            }
+            if(overlay) {
+                overlay.addEventListener('click', toggleSidebar);
+            }
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>
