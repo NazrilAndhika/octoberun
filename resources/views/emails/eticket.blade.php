@@ -41,6 +41,12 @@
             <div class="ticket-box">
                 <div class="ticket-title">Nomor Order / E-Ticket</div>
                 <div class="ticket-number">{{ $participant->order_id }}</div>
+                
+                @if($qrCodeData)
+                <div style="margin-top: 20px;">
+                    <img src="{{ $message->embedData($qrCodeData, 'qrcode.png', 'image/png') }}" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                </div>
+                @endif
             </div>
 
             <div class="participant-details">

@@ -8,7 +8,7 @@
 <div class="mb-6 flex flex-col sm:flex-row sm:items-start justify-between gap-4">
     <div>
         <h1 class="text-2xl font-black text-gray-900 tracking-tight">Distribusi Race Pack</h1>
-        <p class="text-sm text-gray-500 mt-1">Gunakan 6 digit terakhir dari No. Order untuk mencari tiket peserta secara cepat.</p>
+        <p class="text-sm text-gray-500 mt-1">Gunakan kode E-Ticket atau scan QR Code untuk mencari tiket peserta secara cepat.</p>
     </div>
     <div class="bg-blue-50 border border-blue-200 text-[#0b4d75] px-4 py-2 rounded-xl text-sm shadow-sm flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
@@ -34,16 +34,22 @@
 {{-- AREA PENCARIAN --}}
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center max-w-2xl mx-auto mb-8">
     <form action="{{ route('admin.rpc') }}" method="GET">
-        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Masukkan 6 Digit Kode E-Ticket</label>
+        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Masukkan Kode E-Ticket atau Scan QR Code</label>
+        
+        <div id="reader" class="mx-auto mb-4 overflow-hidden rounded-xl hidden" style="width: 100%; max-width: 500px;"></div>
+
         <div class="flex flex-col sm:flex-row items-center gap-3">
             <input type="text" id="kode" name="kode" value="{{ request('kode') }}" 
-                   class="w-full sm:flex-1 text-center text-3xl font-black tracking-[0.2em] uppercase rounded-xl border-2 border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] py-4"
-                   placeholder="XXXXXX"
-                   maxlength="6"
+                   class="w-full sm:flex-1 text-center text-3xl font-black tracking-widest uppercase rounded-xl border-2 border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] py-4"
+                   placeholder="KODE E-TICKET"
                    required
                    autofocus>
-            <button type="submit" class="w-full sm:w-auto bg-[#0b4d75] hover:bg-blue-800 text-white px-8 py-5 rounded-xl font-bold text-lg shadow-md transition">
+            <button type="submit" id="btn-cari" class="w-full sm:w-auto bg-[#0b4d75] hover:bg-blue-800 text-white px-8 py-5 rounded-xl font-bold text-lg shadow-md transition">
                 Cari
+            </button>
+            <button type="button" id="btn-scan" class="w-full sm:w-auto bg-green-500 hover:bg-green-600 text-white px-6 py-5 rounded-xl font-bold text-lg shadow-md transition flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Kamera
             </button>
         </div>
     </form>
@@ -101,5 +107,92 @@
         @endif
     </div>
 @endif
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnScan = document.getElementById('btn-scan');
+        const readerDiv = document.getElementById('reader');
+        const inputKode = document.getElementById('kode');
+        const formCari = inputKode.closest('form');
+        
+        let html5QrCode = null;
+        let isScanning = false;
+
+        btnScan.addEventListener('click', function() {
+            if (isScanning) {
+                // Hentikan scan
+                if (html5QrCode) {
+                    html5QrCode.stop().then(ignore => {
+                        html5QrCode.clear();
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }
+                readerDiv.classList.add('hidden');
+                btnScan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Kamera';
+                btnScan.classList.remove('bg-red-500', 'hover:bg-red-600');
+                btnScan.classList.add('bg-green-500', 'hover:bg-green-600');
+                isScanning = false;
+            } else {
+                // Mulai scan
+                readerDiv.classList.remove('hidden');
+                btnScan.innerHTML = 'Memulai kamera...';
+                btnScan.classList.remove('bg-green-500', 'hover:bg-green-600');
+                btnScan.classList.add('bg-gray-400');
+                
+                html5QrCode = new Html5Qrcode("reader");
+                
+                html5QrCode.start(
+                    { facingMode: "environment" }, 
+                    {
+                        fps: 10,
+                        qrbox: { width: 250, height: 250 }
+                    },
+                    (decodedText, decodedResult) => {
+                        // Berhasil scan
+                        inputKode.value = decodedText;
+                        
+                        html5QrCode.stop().then(() => {
+                            formCari.submit();
+                        });
+                    },
+                    (errorMessage) => {
+                        // parse error, abaikan
+                    }
+                )
+                .then(() => {
+                    isScanning = true;
+                    btnScan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Tutup Kamera';
+                    btnScan.classList.remove('bg-gray-400');
+                    btnScan.classList.add('bg-red-500', 'hover:bg-red-600');
+                })
+                .catch((err) => {
+                    // Coba fallback tanpa facingMode jika environment gagal (biasanya karena PC desktop tanpa kamera belakang)
+                    html5QrCode.start(
+                        { facingMode: "user" },
+                        { fps: 10, qrbox: { width: 250, height: 250 } },
+                        (decodedText, decodedResult) => {
+                            inputKode.value = decodedText;
+                            html5QrCode.stop().then(() => { formCari.submit(); });
+                        },
+                        (errorMessage) => {}
+                    ).then(() => {
+                        isScanning = true;
+                        btnScan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> Tutup Kamera';
+                        btnScan.classList.remove('bg-gray-400');
+                        btnScan.classList.add('bg-red-500', 'hover:bg-red-600');
+                    }).catch((err2) => {
+                        alert("Gagal memulai kamera. Pastikan kamera tidak sedang dipakai aplikasi lain (Zoom/Google Meet) dan Anda sudah memberi izin akses kamera di browser.\n\nError: " + err2);
+                        readerDiv.classList.add('hidden');
+                        btnScan.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" /></svg> Kamera';
+                        btnScan.classList.remove('bg-gray-400');
+                        btnScan.classList.add('bg-green-500', 'hover:bg-green-600');
+                    });
+                });
+            }
+        });
+    });
+</script>
 
 @endsection

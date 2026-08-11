@@ -58,14 +58,19 @@
                         </div>
                         <h2 class="text-xl font-bold text-green-700 mb-2">Pendaftaran Berhasil! 🎉</h2>
                         
-                        <div class="bg-white border-2 border-dashed border-green-400 rounded-xl p-4 my-6">
+                        <div class="bg-white border-2 border-dashed border-green-400 rounded-xl p-4 my-6 flex flex-col items-center">
                             <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">E-Ticket / No. Order</p>
-                            <p class="text-2xl font-black text-[#0b4d75] tracking-widest">{{ $participant->order_id }}</p>
-                            <p class="text-sm font-semibold text-gray-600 mt-2">{{ $participant->full_name }} ({{ $participant->bib_name }})</p>
+                            <p class="text-2xl font-black text-[#0b4d75] tracking-widest mb-2">{{ $participant->order_id }}</p>
+                            <p class="text-sm font-semibold text-gray-600">{{ $participant->full_name }} ({{ $participant->bib_name }})</p>
+                            
+                            <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                {!! QrCode::size(180)->generate($participant->order_id) !!}
+                            </div>
                         </div>
 
-                        <p class="text-green-700 font-medium bg-green-100 p-4 rounded-lg">
-                            Silakan tunjukkan halaman ini (sebagai E-Ticket) untuk mengambil Race Pack di erea EVENT pada tanggal 15-17 Oktober 2026.
+                        <p class="text-green-700 font-medium bg-green-100 p-4 rounded-lg mb-4 text-sm">
+                            📱 <strong>Screenshot halaman ini!</strong><br>
+                            Silakan tunjukkan QR Code di atas saat pengambilan Race Pack di area EVENT. 
                         </p>
                     </div>
                 @endif

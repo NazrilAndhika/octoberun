@@ -22,11 +22,18 @@
             {{-- Body --}}
             <div class="px-8 py-8 space-y-5">
 
-                {{-- No Order --}}
-                <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                {{-- No Order & QR Code --}}
+                <div class="bg-gray-50 rounded-xl p-6 border border-gray-100 flex flex-col items-center justify-center">
                     <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-1">No. Order Kamu</p>
-                    <p class="text-2xl font-black text-[#0b4d75] tracking-wider">{{ $participant->order_id }}</p>
-                    <p class="text-sm font-semibold text-gray-600 mt-1">{{ $participant->full_name }}</p>
+                    <p class="text-2xl font-black text-[#0b4d75] tracking-wider mb-2">{{ $participant->order_id }}</p>
+                    <p class="text-sm font-semibold text-gray-600">{{ $participant->full_name }}</p>
+                    
+                    @if($participant->payment_status == 'paid')
+                        <div class="mt-4 p-3 bg-white rounded-lg shadow-sm border border-gray-100">
+                            {!! QrCode::size(150)->generate($participant->order_id) !!}
+                        </div>
+                        <p class="text-xs text-green-600 font-bold mt-2 text-center">Screenshot halaman ini!<br>Tunjukkan QR Code saat pengambilan Race Pack.</p>
+                    @endif
                 </div>
 
                 {{-- Status Timeline --}}
@@ -92,7 +99,7 @@
                 {{-- Tombol --}}
                 <div class="space-y-3 pt-2">
                     <a href="{{ route('cek-status', ['order_id' => $participant->order_id]) }}"
-                        class="flex items-center justify-center gap-2 w-full bg-[#0b4d75] hover:bg-[#083b5c] text-white font-bold py-3 rounded-xl transition text-sm">
+                        class="flex items-center justify-center gap-2 w-full bg-[#0b4d75] hover:bg-[#083b5c] text-white font-bold py-3 rounded-xl transition text-sm shadow-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         Lihat Status Pesanan
                     </a>

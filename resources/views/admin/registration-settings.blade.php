@@ -29,6 +29,13 @@
                     <p class="text-xs text-gray-500 mt-1">Tanggal acara lari OCTOBERUN diselenggarakan.</p>
                 </div>
                 
+                <!-- Titik Lokasi Event -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Titik Lokasi Event</label>
+                    <input type="text" name="event_location" value="{{ $settings->event_location }}" placeholder="Contoh: TITIK 0 CILACAP" class="w-full border-gray-300 rounded-md focus:ring-[#0b4d75] uppercase">
+                    <p class="text-xs text-gray-500 mt-1">Lokasi utama atau titik kumpul pelaksanaan lari.</p>
+                </div>
+                
                 <!-- Kapasitas -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Kapasitas / Kuota Maksimal Peserta</label>

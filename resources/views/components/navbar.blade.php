@@ -22,16 +22,16 @@
             <!-- Bagian Menu Tengah (Link diperbarui menggunakan url('/#...')) -->
             <div class="hidden md:flex space-x-10">
                 <a href="{{ url('/#beranda') }}" class="text-[#0b4d75] font-bold hover:text-[#e85d04] transition pb-1">BERANDA</a>
-                <a href="{{ url('/#tentang') }}" class="text-gray-500 font-semibold hover:text-[#0b4d75] transition pb-1">TENTANG</a>
                 <a href="{{ url('/#info') }}" class="text-gray-500 font-semibold hover:text-[#0b4d75] transition pb-1">INFO</a>
+                <a href="{{ url('/#tentang') }}" class="text-gray-500 font-semibold hover:text-[#0b4d75] transition pb-1">TENTANG</a>
                 <a href="{{ route('cek-status') }}" class="{{ request()->routeIs('cek-status') ? 'text-[#0b4d75] font-bold' : 'text-gray-500 font-semibold' }} hover:text-[#0b4d75] transition pb-1">CEK STATUS</a>
             </div>
 
             <!-- Bagian Tombol Kanan (Ditambah rute pendaftaran) -->
             <div class="hidden md:flex">
-                <a href="{{ route('daftar') }}" class="bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
+                <a href="{{ route('daftar') }}" class="btn-daftar-global bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
                     DAFTAR SEKARANG
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                 </a>
@@ -47,7 +47,7 @@
             <a href="{{ url('/#tentang') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">TENTANG</a>
             <a href="{{ url('/#info') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">INFO</a>
             <a href="{{ route('cek-status') }}" class="block px-3 py-2 text-gray-600 font-semibold hover:bg-gray-50">CEK STATUS</a>
-            <a href="{{ route('daftar') }}" class="block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
+            <a href="{{ route('daftar') }}" class="btn-daftar-global block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
                 DAFTAR SEKARANG
             </a>
         </div>

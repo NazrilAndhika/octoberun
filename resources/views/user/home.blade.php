@@ -16,14 +16,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div class="max-w-2xl">
                 
-                <h3 class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase">
+                <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase">
                     {{ $settings->event_name ?? 'OCTOBERUN 2026' }}
                 </h3>
-                <h1 class="font-sporty text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-[#0b4d75] leading-none mb-4 uppercase drop-shadow-md">
+                <h1 data-aos="fade-right" data-aos-delay="100" class="font-sporty text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-[#0b4d75] leading-none mb-4 uppercase drop-shadow-md">
                     {{ $settings->hero_title ?? 'RUN BEYOND LIMITS' }}
                 </h1>
                 
-                <div class="flex items-center gap-2 md:gap-3 text-[#0b4d75] font-bold text-xs md:text-sm tracking-widest mb-6 uppercase flex-wrap">
+                <div data-aos="fade-right" data-aos-delay="200" class="flex items-center gap-2 md:gap-3 text-[#0b4d75] font-bold text-xs md:text-sm tracking-widest mb-6 uppercase flex-wrap">
                     <span>Faster</span>
                     <div class="w-1.5 h-1.5 rounded-full bg-[#e85d04]"></div>
                     <span>Stronger</span>
@@ -31,14 +31,39 @@
                     <span>Together</span>
                 </div>
 
-                <p class="text-gray-700 mb-8 max-w-md text-sm md:text-base leading-relaxed">
+                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-700 mb-8 max-w-md text-sm md:text-base leading-relaxed">
                     Bergabunglah dalam event lari terbesar di bulan Oktober. Rasakan pengalaman lari yang seru, menantang, dan penuh makna bersama ribuan pelari lainnya!
                 </p>
 
-                <div class="flex flex-col sm:flex-row items-center gap-4">
-                    <a href="{{ route('daftar') }}" class="w-full sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3 px-8 rounded flex items-center gap-2 transition duration-300 shadow-lg transform hover:-translate-y-1">
+                <!-- Countdown Timer -->
+                @if(!empty($settings->registration_deadline))
+                <div data-aos="zoom-in" data-aos-delay="400" class="mb-8" id="countdown-container">
+                    <p class="text-[#0b4d75] font-bold text-sm mb-2 tracking-wide">PENDAFTARAN DITUTUP DALAM:</p>
+                    <div class="flex gap-2 sm:gap-3 text-center">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-days">00</div>
+                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-hours">00</div>
+                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-minutes">00</div>
+                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
+                        </div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-seconds">00</div>
+                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-center gap-4">
+                    <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-full sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3 px-8 rounded flex items-center gap-2 transition duration-300 shadow-lg transform hover:-translate-y-1">
                         DAFTAR SEKARANG
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                     </a>
@@ -62,7 +87,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             
             <!-- Kartu 1: Jersey (Memicu Pop-up modal-jersey) -->
-            <div class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-cyan-500 flex items-center justify-center mb-4 text-cyan-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                 </div>
@@ -71,7 +96,7 @@
                 <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL &rarr;</button>
             </div>
 
-            <div class="bg-white rounded-lg shadow-xl border-t-4 border-[#e85d04] p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl border-t-4 border-[#e85d04] p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-100 rounded-full flex items-center justify-center text-[#e85d04] mb-4 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
@@ -80,7 +105,7 @@
                 <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP &rarr;</button>
             </div>
 
-            <div class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-500 mb-4 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </div>
@@ -100,7 +125,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x-2 divide-blue-600/50">
                 
                 <!-- Stat 1: Pelari -->
-                <div class="flex items-center justify-center gap-4 px-2">
+                <div data-aos="zoom-in" data-aos-delay="100" class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
@@ -111,7 +136,7 @@
                 </div>
 
                 <!-- Stat 2: Tanggal -->
-                <div class="flex items-center justify-center gap-4 px-2">
+                <div data-aos="zoom-in" data-aos-delay="200" class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
@@ -122,7 +147,7 @@
                 </div>
 
                 <!-- Stat 3: Jarak Lari (Permintaan GSC 5K saja) -->
-                <div class="flex items-center justify-center gap-4 px-2">
+                <div data-aos="zoom-in" data-aos-delay="300" class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                     </svg>
@@ -133,13 +158,13 @@
                 </div>
 
                 <!-- Stat 4: Lokasi -->
-                <div class="flex items-center justify-center gap-4 px-2">
+                <div data-aos="zoom-in" data-aos-delay="400" class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">TITIK 0 CILACAP</h3>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
                     </div>
                 </div>
@@ -149,6 +174,64 @@
     </section>
 
     <!-- ========================================== -->
+    <!-- BAGIAN ALUR PENDAFTARAN (HOW IT WORKS)     -->
+    <!-- ========================================== -->
+    <section class="py-20 bg-white relative border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
+                    ALUR <span class="text-[#e85d04]">PENDAFTARAN</span>
+                </h2>
+                <p class="mt-3 text-gray-500 text-sm md:text-base">Ikuti 4 langkah mudah ini untuk mengamankan slot larimu!</p>
+            </div>
+
+            <div class="relative">
+                <!-- Garis Penghubung Horizontal (Hanya Muncul di Layar Desktop) -->
+                <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-1 bg-gray-200 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-4">
+                    
+                    <!-- Step 1 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-20 h-20 bg-white border-4 border-[#0b4d75] text-[#0b4d75] rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-[#0b4d75] group-hover:text-white transition duration-300">
+                            1
+                        </div>
+                        <h3 class="font-bold text-lg text-[#0b4d75] mb-2 uppercase tracking-wide">Isi Data Diri</h3>
+                        <p class="text-sm text-gray-500 px-4">Lengkapi formulir dengan data KTP, email aktif, dan pilih ukuran jersey.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-20 h-20 bg-white border-4 border-[#e85d04] text-[#e85d04] rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-[#e85d04] group-hover:text-white transition duration-300">
+                            2
+                        </div>
+                        <h3 class="font-bold text-lg text-[#e85d04] mb-2 uppercase tracking-wide">Transfer & Upload</h3>
+                        <p class="text-sm text-gray-500 px-4">Lakukan pembayaran sesuai nominal dan unggah bukti transfer ke sistem.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="300">
+                        <div class="w-20 h-20 bg-white border-4 border-cyan-500 text-cyan-500 rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-cyan-500 group-hover:text-white transition duration-300">
+                            3
+                        </div>
+                        <h3 class="font-bold text-lg text-cyan-600 mb-2 uppercase tracking-wide">Cek Status & Email</h3>
+                        <p class="text-sm text-gray-500 px-4">Tunggu validasi admin. E-Ticket & QR Code akan otomatis masuk ke Email Anda.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="400">
+                        <div class="w-20 h-20 bg-white border-4 border-green-500 text-green-500 rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-green-500 group-hover:text-white transition duration-300">
+                            4
+                        </div>
+                        <h3 class="font-bold text-lg text-green-600 mb-2 uppercase tracking-wide">Ambil Race Pack</h3>
+                        <p class="text-sm text-gray-500 px-4">Tunjukkan QR Code di HP Anda ke panitia pada hari pengambilan atribut.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ========================================== -->
     <!-- BAGIAN 4: TENTANG KAMI (ID: tentang)       -->
     <!-- ========================================== -->
     <section id="tentang" class="bg-white pt-20 pb-24">
@@ -157,7 +240,7 @@
             <!-- Grid Tentang Kami -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
                 <!-- Kiri: Teks -->
-                <div>
+                <div data-aos="fade-right">
                     <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] mb-6 uppercase leading-tight">
                         {{ $settings->about_title ?? 'LEBIH DARI SEKEDAR LARI, INI TENTANG PERUBAHAN.' }}
                     </h2>
@@ -172,20 +255,20 @@
                 </div>
 
                 <!-- Kanan: Gambar/Grafis -->
-                <div class="relative w-full flex justify-center lg:justify-end">
+                <div data-aos="fade-left" data-aos-delay="200" class="relative w-full flex justify-center lg:justify-end">
                     <img src="{{ !empty($settings->about_image) ? asset('storage/' . $settings->about_image) : asset('img/about-graphic.png') }}" alt="Tentang Octoberun" class="w-full max-w-md object-contain rounded-lg">
                 </div>
             </div>
 
             <!-- Kotak Tujuan Kami (Background Biru Pudar) -->
-            <div class="bg-cyan-50 rounded-3xl p-8 md:p-12 border border-cyan-100 shadow-sm">
+            <div data-aos="fade-up" class="bg-cyan-50 rounded-3xl p-8 md:p-12 border border-cyan-100 shadow-sm">
                 <h3 class="text-center font-sporty font-black text-2xl italic text-cyan-600 mb-10 uppercase tracking-wider">
                     TUJUAN KAMI
                 </h3>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-cyan-200">
                     <!-- Tujuan 1 -->
-                    <div class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
+                    <div data-aos="fade-up" data-aos-delay="100" class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-[#0b4d75] mb-4 shadow-sm border border-cyan-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                         </div>
@@ -193,7 +276,7 @@
                         <p class="text-sm text-gray-500 leading-relaxed">Menginspirasi masyarakat untuk hidup sehat dan aktif melalui olahraga lari.</p>
                     </div>
                     <!-- Tujuan 2 -->
-                    <div class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
+                    <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-[#0b4d75] mb-4 shadow-sm border border-cyan-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                         </div>
@@ -201,7 +284,7 @@
                         <p class="text-sm text-gray-500 leading-relaxed">Mempererat kebersamaan dan membangun komunitas pelari yang positif.</p>
                     </div>
                     <!-- Tujuan 3 -->
-                    <div class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
+                    <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-[#0b4d75] mb-4 shadow-sm border border-cyan-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                         </div>
@@ -209,7 +292,7 @@
                         <p class="text-sm text-gray-500 leading-relaxed">Memberikan pengalaman menantang bagi setiap peserta untuk melampui batas diri.</p>
                     </div>
                     <!-- Tujuan 4 -->
-                    <div class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
+                    <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-[#0b4d75] mb-4 shadow-sm border border-cyan-100">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                         </div>
@@ -226,14 +309,14 @@
     <!-- ========================================== -->
     <section class="bg-gray-50 py-16 mb-10 border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-center font-sporty font-black text-2xl md:text-3xl italic text-[#0b4d75] mb-12 uppercase tracking-wider">
+            <h2 data-aos="fade-up" class="text-center font-sporty font-black text-2xl md:text-3xl italic text-[#0b4d75] mb-12 uppercase tracking-wider">
                 FREQUENTLY ASKED <span class="text-cyan-500">QUESTIONS</span>
             </h2>
             
             <div class="space-y-4">
                 
-                @forelse($faqs ?? [] as $faq)
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
+                @forelse($faqs ?? [] as $index => $faq)
+                <div data-aos="fade-up" data-aos-delay="{{ $index * 100 }}" class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
                     <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
                         <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">{{ $faq->question }}</span>
                         <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
@@ -509,5 +592,36 @@
                 imgElement.src = ''; // Kosongkan src
             }, 300);
         }
+
+        // Countdown Timer Logic
+        @if(!empty($settings->registration_deadline))
+        const deadline = new Date("{{ $settings->registration_deadline }}").getTime();
+        const btnsDaftar = document.querySelectorAll('.btn-daftar-global');
+        
+        const countdownTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = deadline - now;
+            
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('cd-days').innerText = "00";
+                document.getElementById('cd-hours').innerText = "00";
+                document.getElementById('cd-minutes').innerText = "00";
+                document.getElementById('cd-seconds').innerText = "00";
+                
+                btnsDaftar.forEach(btn => {
+                    btn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                    btn.classList.remove('bg-[#0b4d75]', 'hover:bg-blue-800', 'hover:-translate-y-1');
+                    btn.removeAttribute('href');
+                    btn.innerHTML = 'PENDAFTARAN DITUTUP';
+                });
+            } else {
+                document.getElementById('cd-days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('cd-hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('cd-minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('cd-seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
+        @endif
     </script>
 @endsection

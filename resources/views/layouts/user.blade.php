@@ -12,6 +12,9 @@
     <!-- Memanggil Font -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,800;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-sporty { font-family: 'Montserrat', sans-serif; }
@@ -29,5 +32,14 @@
 
     <!-- Nanti kamu bisa buat komponen footer terpisah dan panggil pakai <x-footer /> -->
 
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true, // Animasi hanya berjalan sekali saat di-scroll
+            offset: 50, // Mulai animasi sedikit lebih awal sebelum elemen muncul penuh
+            duration: 800, // Durasi animasi standar (0.8 detik)
+        });
+    </script>
 </body>
 </html>

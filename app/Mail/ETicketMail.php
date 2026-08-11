@@ -17,6 +17,7 @@ class ETicketMail extends Mailable
 
     public $participant;
     public $settings;
+    public $qrCodeData;
 
     /**
      * Create a new message instance.
@@ -25,6 +26,14 @@ class ETicketMail extends Mailable
     {
         $this->participant = $participant;
         $this->settings = $settings;
+
+        // Mengambil QR Code berformat PNG dari external API karena Imagick tidak tersedia di server lokal saat ini
+        // dan Gmail tidak mendukung SVG yang di-embed
+        try {
+            $this->qrCodeData = file_get_contents('https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=2&data=' . urlencode($participant->order_id));
+        } catch (\Exception $e) {
+            $this->qrCodeData = null;
+        }
     }
 
     /**

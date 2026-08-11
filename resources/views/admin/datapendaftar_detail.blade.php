@@ -122,10 +122,10 @@
                     <div class="flex gap-2">
                         <select name="payment_status" id="detail-status-select"
                             class="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75]">
-                            <option value="paid"    {{ $participant->payment_status === 'paid'    ? 'selected' : '' }}>✅ Lunas</option>
-                            <option value="pending" {{ $participant->payment_status === 'pending' ? 'selected' : '' }}>⏳ Pending</option>
-                            <option value="failed"  {{ $participant->payment_status === 'failed'  ? 'selected' : '' }}>❌ Gagal</option>
-                            <option value="expired" {{ $participant->payment_status === 'expired' ? 'selected' : '' }}>🕒 Expired</option>
+                            <option value="paid"    {{ $participant->payment_status === 'paid'    ? 'selected' : '' }}> Lunas</option>
+                            <option value="pending" {{ $participant->payment_status === 'pending' ? 'selected' : '' }}> Pending</option>
+                            <option value="failed"  {{ $participant->payment_status === 'failed'  ? 'selected' : '' }}> Gagal</option>
+                            <option value="expired" {{ $participant->payment_status === 'expired' ? 'selected' : '' }}> Expired</option>
                         </select>
                         <button type="submit" id="btn-simpan-status"
                             class="px-4 py-2 bg-[#0b4d75] text-white font-bold text-sm rounded-lg hover:bg-[#083b5c] transition">
