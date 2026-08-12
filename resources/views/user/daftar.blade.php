@@ -32,10 +32,10 @@
     @endif
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row gap-8 items-start">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
 
             {{-- ============ KOLOM KIRI: FORM ============ --}}
-            <div class="w-full lg:w-2/3">
+            <div class="w-full lg:col-span-2">
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 md:p-8">
 
                     <div class="flex items-center gap-3 mb-8 border-b pb-4">
@@ -201,7 +201,7 @@
             </div>
 
             {{-- ============ KOLOM KANAN: RINGKASAN ============ --}}
-            <div class="w-full lg:w-1/3 sticky top-24 space-y-6">
+            <div class="w-full lg:col-span-1">
 
                 {{-- Kotak Harga --}}
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">

@@ -8,22 +8,27 @@
     <!-- ========================================== -->
     <!-- BAGIAN 1: HERO SECTION (ID: beranda)       -->
     <!-- ========================================== -->
-    <section id="beranda" class="relative bg-gray-100 pt-28 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-[75vh] flex items-center" 
-             style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: right center;">
+    <section id="beranda" class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-[85vh] flex items-center justify-center md:justify-start" 
+             style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: center;">
         
-        <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div>
+        <!-- MOBILE OVERLAY (Lapisan putih tipis agar teks biru tetap terbaca di atas foto) -->
+        <div class="block md:hidden absolute inset-0 bg-white/60 backdrop-blur-[2px] z-0"></div>
+        
+        <!-- DESKTOP GRADIENT OVERLAY (Transisi putih dari kiri ke kanan) -->
+        <div class="hidden md:block absolute inset-0 z-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div> 
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="max-w-2xl">
+        <!-- WADAH TEKS -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start text-center md:text-left">
+            <div class="max-w-2xl w-full flex flex-col items-center md:items-start">
                 
-                <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase">
+                <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase drop-shadow-sm">
                     {{ $settings->event_name ?? 'OCTOBERUN 2026' }}
                 </h3>
                 <h1 data-aos="fade-right" data-aos-delay="100" class="font-sporty text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-[#0b4d75] leading-none mb-4 uppercase drop-shadow-md">
                     {{ $settings->hero_title ?? 'RUN BEYOND LIMITS' }}
                 </h1>
                 
-                <div data-aos="fade-right" data-aos-delay="200" class="flex items-center gap-2 md:gap-3 text-[#0b4d75] font-bold text-xs md:text-sm tracking-widest mb-6 uppercase flex-wrap">
+                <div data-aos="fade-right" data-aos-delay="200" class="flex items-center justify-center md:justify-start gap-2 md:gap-3 text-[#0b4d75] font-bold text-xs md:text-sm tracking-widest mb-6 uppercase flex-wrap drop-shadow-sm">
                     <span>Faster</span>
                     <div class="w-1.5 h-1.5 rounded-full bg-[#e85d04]"></div>
                     <span>Stronger</span>
@@ -31,28 +36,28 @@
                     <span>Together</span>
                 </div>
 
-                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-700 mb-8 max-w-md text-sm md:text-base leading-relaxed">
+                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-800 md:text-gray-700 font-semibold md:font-normal mb-8 max-w-md text-sm md:text-base leading-relaxed drop-shadow-md md:drop-shadow-none">
                     Bergabunglah dalam event lari terbesar di bulan Oktober. Rasakan pengalaman lari yang seru, menantang, dan penuh makna bersama ribuan pelari lainnya!
                 </p>
 
                 <!-- Countdown Timer -->
                 @if(!empty($settings->registration_deadline))
-                <div data-aos="zoom-in" data-aos-delay="400" class="mb-8" id="countdown-container">
-                    <p class="text-[#0b4d75] font-bold text-sm mb-2 tracking-wide">PENDAFTARAN DITUTUP DALAM:</p>
-                    <div class="flex gap-2 sm:gap-3 text-center">
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                <div data-aos="zoom-in" data-aos-delay="400" class="mb-8 w-full flex flex-col items-center md:items-start" id="countdown-container">
+                    <p class="text-[#0b4d75] font-bold text-sm mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                    <div class="flex gap-2 sm:gap-3 justify-center md:justify-start">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
                             <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-days">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
                             <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-hours">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
                             <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-minutes">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-md">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
                             <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-seconds">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
                         </div>
@@ -60,8 +65,8 @@
                 </div>
                 @endif
 
-                <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-center gap-4">
-                    <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-full sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3 px-8 rounded flex items-center gap-2 transition duration-300 shadow-lg transform hover:-translate-y-1">
+                <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 w-full">
+                    <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-[80%] sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
                         DAFTAR SEKARANG
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />

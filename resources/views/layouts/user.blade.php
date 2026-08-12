@@ -18,15 +18,17 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-sporty { font-family: 'Montserrat', sans-serif; }
+        
+        
     </style>
 </head>
-<body class="bg-gray-50 text-slate-800 antialiased pt-20">
+<body class="bg-gray-50 text-slate-800 antialiased pt-20 flex flex-col min-h-screen">
 
     <!-- Memanggil file komponen navbar -->
     <x-navbar />
 
     <!-- Area ini akan diisi oleh konten dari halaman lain -->
-    <main>
+    <main class="flex-grow">
         @yield('content')
     </main>
 
