@@ -32,7 +32,7 @@
     @endif
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col lg:flex-row gap-8">
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
 
             {{-- ============ KOLOM KIRI: FORM ============ --}}
             <div class="w-full lg:w-2/3">
@@ -56,7 +56,7 @@
 
                         {{-- Nama BIB --}}
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                 Nama di BIB <span class="text-red-500">*</span>
                                 <span class="text-gray-400 font-normal">(Maks 10 Huruf)</span>
                             </label>
@@ -65,42 +65,42 @@
                                 maxlength="10"
                                 oninput="this.value = this.value.toUpperCase()"
                                 placeholder="CTH : NAZRIL"
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] uppercase {{ $errors->has('bib_name') ? 'border-red-400' : '' }}"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] uppercase py-2.5 px-3 text-sm {{ $errors->has('bib_name') ? 'border-red-400' : '' }}"
                                 required>
-                            <p class="text-xs text-gray-400 mt-1">Nama ini yang akan tercetak di nomor dada (BIB)</p>
+                            <p class="text-xs text-gray-400 mt-1.5">Nama ini yang akan tercetak di nomor dada (BIB)</p>
                         </div>
 
                         {{-- Nama Lengkap --}}
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                 Nama Lengkap <span class="text-red-500">*</span>
                                 <span class="text-gray-400 font-normal">(Sesuai KTP/Passport)</span>
                             </label>
                             <input type="text" name="full_name" id="full_name"
                                 value="{{ old('full_name') }}"
                                 placeholder="Masukkan nama lengkap"
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('full_name') ? 'border-red-400' : '' }}"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('full_name') ? 'border-red-400' : '' }}"
                                 required>
                         </div>
 
                         {{-- No ID & Jersey --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                     No. ID (KTP / Passport) <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="id_number" id="id_number"
                                     value="{{ old('id_number') }}"
                                     placeholder="Masukkan nomor ID"
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('id_number') ? 'border-red-400' : '' }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('id_number') ? 'border-red-400' : '' }}"
                                     required>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                     Pilih Size Jersey <span class="text-red-500">*</span>
                                 </label>
                                 <select name="jersey_size" id="jersey_size"
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
                                     required>
                                     <option value="" disabled {{ old('jersey_size') ? '' : 'selected' }}>Pilih Ukuran</option>
                                     @foreach(['XS','S','M','L','XL','XXL'] as $s)
@@ -113,35 +113,35 @@
                         {{-- Email & WhatsApp --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                     Email <span class="text-red-500">*</span>
                                 </label>
                                 <input type="email" name="email" id="email"
                                     value="{{ old('email') }}"
                                     placeholder="contoh@email.com"
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('email') ? 'border-red-400' : '' }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('email') ? 'border-red-400' : '' }}"
                                     required>
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                     No. WhatsApp <span class="text-red-500">*</span>
                                 </label>
                                 <input type="tel" name="whatsapp" id="whatsapp"
                                     value="{{ old('whatsapp') }}"
                                     placeholder="08xxxxxxxxxx"
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('whatsapp') ? 'border-red-400' : '' }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('whatsapp') ? 'border-red-400' : '' }}"
                                     required>
                             </div>
                         </div>
 
                         {{-- Alamat --}}
                         <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                 Alamat Domisili <span class="text-red-500">*</span>
                             </label>
                             <textarea name="address" id="address" rows="3"
                                 placeholder="Masukkan alamat lengkap"
-                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('address') ? 'border-red-400' : '' }}"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('address') ? 'border-red-400' : '' }}"
                                 required>{{ old('address') }}</textarea>
                         </div>
 
@@ -151,33 +151,33 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {{-- Jenis Kelamin --}}
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-2">
+                                <label class="block text-sm font-semibold text-gray-600 mb-2">
                                     Jenis Kelamin <span class="text-red-500">*</span>
                                 </label>
-                                <div class="flex items-center gap-6 mt-1">
+                                <div class="flex items-center gap-6 mt-2">
                                     <label class="flex items-center gap-2 cursor-pointer">
                                         <input type="radio" name="gender" value="male"
                                             {{ old('gender') === 'male' ? 'checked' : '' }}
-                                            class="text-[#0b4d75] focus:ring-[#0b4d75]" required>
+                                            class="text-[#0b4d75] focus:ring-[#0b4d75] h-4 w-4" required>
                                         <span class="text-sm text-gray-700">Laki-laki</span>
                                     </label>
                                     <label class="flex items-center gap-2 cursor-pointer">
                                         <input type="radio" name="gender" value="female"
                                             {{ old('gender') === 'female' ? 'checked' : '' }}
-                                            class="text-[#0b4d75] focus:ring-[#0b4d75]">
+                                            class="text-[#0b4d75] focus:ring-[#0b4d75] h-4 w-4">
                                         <span class="text-sm text-gray-700">Perempuan</span>
                                     </label>
                                 </div>
                             </div>
                             {{-- Kota --}}
                             <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                     Kota <span class="text-red-500">*</span>
                                 </label>
                                 <input type="text" name="city" id="city"
                                     value="{{ old('city') }}"
                                     placeholder="Masukkan asal kota"
-                                    class="w-full border-gray-300 rounded-md shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] {{ $errors->has('city') ? 'border-red-400' : '' }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('city') ? 'border-red-400' : '' }}"
                                     required>
                             </div>
                         </div>
@@ -201,73 +201,70 @@
             </div>
 
             {{-- ============ KOLOM KANAN: RINGKASAN ============ --}}
-            <div class="w-full lg:w-1/3">
-                <div class="sticky top-28 space-y-6">
+            <div class="w-full lg:w-1/3 sticky top-24 space-y-6">
 
-                    {{-- Kotak Harga --}}
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                        <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0b4d75]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
-                            <h2 class="font-bold text-[#0b4d75] text-lg uppercase tracking-wide">RINGKASAN PESANAN</h2>
-                        </div>
-
-                        <div class="space-y-3 text-sm text-gray-600 mb-6">
-                            <div class="flex justify-between">
-                                <span>Kategori</span>
-                                <span class="font-bold text-gray-900">5K RUN</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Total Peserta</span>
-                                <span class="font-bold text-gray-900">1 Orang</span>
-                            </div>
-                        </div>
-
-                        <div class="space-y-3 text-sm text-gray-600 border-t pt-4 mb-6">
-                            <div class="flex justify-between">
-                                <span>Subtotal Tiket</span>
-                                <span class="font-bold text-gray-900">Rp 150.000</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Biaya Admin</span>
-                                <span class="font-bold text-gray-900">Rp 5.000</span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center border-t pt-4 mb-6">
-                            <span class="font-black text-[#0b4d75] uppercase tracking-wide">TOTAL BAYAR</span>
-                            <span class="font-black text-[#e85d04] text-xl">Rp 155.000</span>
-                        </div>
-
-                        {{-- Tombol submit form --}}
-                        <button type="button"
-                            onclick="document.getElementById('btn-submit-form').click()"
-                            class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition uppercase tracking-widest shadow-md flex justify-center items-center gap-2 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            DAFTAR & LANJUT BAYAR
-                        </button>
-
-                        <p class="text-center text-xs text-gray-400 mt-3">
-                            🔒 Data kamu aman & terlindungi
-                        </p>
+                {{-- Kotak Harga --}}
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#0b4d75]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+                        <h2 class="font-bold text-[#0b4d75] text-lg uppercase tracking-wide">RINGKASAN PESANAN</h2>
                     </div>
 
-                    {{-- Kotak Informasi --}}
-                    <div class="bg-cyan-50 rounded-xl border border-cyan-100 p-5">
-                        <div class="flex items-center gap-2 mb-3 text-[#0b4d75]">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <h3 class="font-bold uppercase tracking-wide text-sm">INFORMASI</h3>
+                    <div class="space-y-3 text-sm text-gray-600 mb-6">
+                        <div class="flex justify-between">
+                            <span>Kategori</span>
+                            <span class="font-bold text-gray-900">5K RUN</span>
                         </div>
-                        <ol class="text-xs text-gray-600 space-y-2 list-decimal list-inside leading-relaxed">
-                            <li>Pendaftaran sah setelah <strong>bukti bayar</strong> diverifikasi admin.</li>
-                            <li>Batas konfirmasi pembayaran: <strong>1x24 jam</strong> setelah daftar.</li>
-                            <li>Tiket tidak dapat dikembalikan (non-refundable).</li>
-                            <li>Pastikan data yang diinput sudah benar sebelum submit.</li>
-                        </ol>
+                        <div class="flex justify-between">
+                            <span>Total Peserta</span>
+                            <span class="font-bold text-gray-900">1 Orang</span>
+                        </div>
                     </div>
 
+                    <div class="space-y-3 text-sm text-gray-600 border-t pt-4 mb-6">
+                        <div class="flex justify-between">
+                            <span>Subtotal Tiket</span>
+                            <span class="font-bold text-gray-900">Rp 150.000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Biaya Admin</span>
+                            <span class="font-bold text-gray-900">Rp 5.000</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center border-t pt-4 mb-6">
+                        <span class="font-black text-[#0b4d75] uppercase tracking-wide">TOTAL BAYAR</span>
+                        <span class="font-black text-[#e85d04] text-xl">Rp 155.000</span>
+                    </div>
+
+                    {{-- Tombol submit form --}}
+                    <button type="button"
+                        onclick="document.getElementById('btn-submit-form').click()"
+                        class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition uppercase tracking-widest shadow-md flex justify-center items-center gap-2 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        DAFTAR & LANJUT BAYAR
+                    </button>
+
+                    <p class="text-center text-xs text-gray-400 mt-3">
+                        Data kamu aman & terlindungi!
+                    </p>
                 </div>
-            </div>
 
+                {{-- Kotak Informasi --}}
+                <div class="bg-cyan-50 rounded-xl border border-cyan-100 p-5">
+                    <div class="flex items-center gap-2 mb-3 text-[#0b4d75]">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <h3 class="font-bold uppercase tracking-wide text-sm">INFORMASI</h3>
+                    </div>
+                    <ol class="text-xs text-gray-600 space-y-2 list-decimal list-inside leading-relaxed">
+                        <li>Pendaftaran sah setelah <strong>bukti bayar</strong> diverifikasi admin.</li>
+                        <li>Batas konfirmasi pembayaran: <strong>1x24 jam</strong> setelah daftar.</li>
+                        <li>Tiket tidak dapat dikembalikan (non-refundable).</li>
+                        <li>Pastikan data yang diinput sudah benar sebelum submit.</li>
+                    </ol>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

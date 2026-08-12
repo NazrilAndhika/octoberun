@@ -8,7 +8,7 @@
     <!-- ========================================== -->
     <!-- BAGIAN 1: HERO SECTION (ID: beranda)       -->
     <!-- ========================================== -->
-    <section id="beranda" class="relative bg-gray-100 pt-28 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-[650px] flex items-center" 
+    <section id="beranda" class="relative bg-gray-100 pt-28 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-[75vh] flex items-center" 
              style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: right center;">
         
         <div class="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div>
@@ -81,44 +81,7 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- BAGIAN 2: KARTU LAYANAN (ID: info)         -->
-    <!-- ========================================== -->
-    <section id="info" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-10 pb-16">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            
-            <!-- Kartu 1: Jersey (Memicu Pop-up modal-jersey) -->
-            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-cyan-500 flex items-center justify-center mb-4 text-cyan-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                </div>
-                <h4 class="font-sporty font-bold text-lg md:text-xl text-[#0b4d75] italic mb-2 uppercase">JERSEY & SIZE</h4>
-                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->jersey_card_desc ?? 'Bahan High Performance yang ringan, sejuk, dan anti-bau.' }}</p>
-                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL &rarr;</button>
-            </div>
-
-            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl border-t-4 border-[#e85d04] p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-100 rounded-full flex items-center justify-center text-[#e85d04] mb-4 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
-                <h4 class="font-sporty font-bold text-lg md:text-xl text-[#e85d04] italic mb-2 uppercase">RACE PACK</h4>
-                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->racepack_card_desc ?? 'Jersey, Medali, BIB, dan 1 Bibit Pohon spesial untukmu.' }}</p>
-                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP &rarr;</button>
-            </div>
-
-            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-500 mb-4 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                </div>
-                <h4 class="font-sporty font-bold text-lg md:text-xl text-cyan-500 italic mb-2 uppercase">RUTE LARI</h4>
-                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->route_card_desc ?? 'Rute 5K melewati landmark ikonik kota.' }}</p>
-                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded text-sm transition">LIHAT PETA &rarr;</button>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- BAGIAN 3: BANNER STATISTIK (KEMBALI UTUH)  -->
+    <!-- BAGIAN 2: BANNER STATISTIK                 -->
     <!-- ========================================== -->
     <section class="bg-[#0b4d75] text-white py-10 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -170,6 +133,49 @@
                 </div>
 
             </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- BAGIAN 3: KARTU LAYANAN (ID: info)         -->
+    <!-- ========================================== -->
+    <section id="info" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-16 pb-16">
+        <div class="text-center mb-12">
+            <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
+                INFORMASI <span class="text-[#e85d04]">EVENT</span>
+            </h2>
+            <p class="mt-3 text-gray-500 text-sm md:text-base">Temukan segala hal yang perlu kamu ketahui tentang perlengkapan dan rute lari.</p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            
+            <!-- Kartu 1: Jersey (Memicu Pop-up modal-jersey) -->
+            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-cyan-500 flex items-center justify-center mb-4 text-cyan-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <h4 class="font-sporty font-bold text-lg md:text-xl text-[#0b4d75] italic mb-2 uppercase">JERSEY & SIZE</h4>
+                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->jersey_card_desc ?? 'Bahan High Performance yang ringan, sejuk, dan anti-bau.' }}</p>
+                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL &rarr;</button>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl border-t-4 border-[#e85d04] p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-100 rounded-full flex items-center justify-center text-[#e85d04] mb-4 shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <h4 class="font-sporty font-bold text-lg md:text-xl text-[#e85d04] italic mb-2 uppercase">RACE PACK</h4>
+                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->racepack_card_desc ?? 'Jersey, Medali, BIB, dan 1 Bibit Pohon spesial untukmu.' }}</p>
+                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP &rarr;</button>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+                <div class="w-12 h-12 md:w-16 md:h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-500 mb-4 shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </div>
+                <h4 class="font-sporty font-bold text-lg md:text-xl text-cyan-500 italic mb-2 uppercase">RUTE LARI</h4>
+                <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->route_card_desc ?? 'Rute 5K melewati landmark ikonik kota.' }}</p>
+                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded text-sm transition">LIHAT PETA &rarr;</button>
+            </div>
+
         </div>
     </section>
 
