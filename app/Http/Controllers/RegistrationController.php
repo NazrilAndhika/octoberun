@@ -20,10 +20,19 @@ class RegistrationController extends Controller
     // -------------------------------------------------------
     // GET /daftar  → tampilkan form
     // -------------------------------------------------------
+    // -------------------------------------------------------
+    // GET /daftar  → tampilkan form
+    // -------------------------------------------------------
     public function index()
     {
         $settings = EventSetting::first();
         
+        // --- TAMBAHKAN PROTEKSI PENUTUPAN DI SINI ---
+        if (!$settings || $settings->is_registration_open == false) {
+            return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
+        }
+        // --------------------------------------------
+
         $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
         $jumlahPendaftar = Participant::whereIn('payment_status', ['paid', 'pending'])->count();
         
@@ -39,14 +48,23 @@ class RegistrationController extends Controller
     // -------------------------------------------------------
     public function store(Request $request)
     {
-        // Cek Kuota
         $settings = EventSetting::first() ?? new EventSetting();
+
+        // --- TAMBAHKAN PROTEKSI PENUTUPAN DI SINI JUGA ---
+        if (!$settings || $settings->is_registration_open == false) {
+            return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
+        }
+        // -------------------------------------------------
+
+        // Cek Kuota
         $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
         $jumlahPendaftar = Participant::whereIn('payment_status', ['paid', 'pending'])->count();
         
         if ($kapasitasMaksimal - $jumlahPendaftar <= 0) {
             return redirect('/')->with('error', 'Maaf, kuota pendaftaran sudah penuh!');
         }
+
+        // ... (Kodingan validasi dan simpan ke bawahnya tetap sama, biarkan saja) ...
 
         $request->validate([
             'bib_name'   => 'required|string|max:10',
