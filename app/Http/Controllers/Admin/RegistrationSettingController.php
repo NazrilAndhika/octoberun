@@ -20,8 +20,15 @@ class RegistrationSettingController extends Controller
     {
         $settings = EventSetting::first() ?? new EventSetting();
         
-        // Kita HANYA mengambil 4 data ini agar aman dan tidak menimpa data Konten Website
-        $data = $request->only(['event_date', 'event_location', 'target_runners', 'registration_deadline']);
+        // Kita HANYA mengambil data yang diperbolehkan agar aman dan tidak menimpa data Konten Website
+        $data = $request->only([
+            'event_date', 
+            'event_location', 
+            'target_runners', 
+            'registration_deadline',
+            'ticket_price',
+            'admin_fee'
+        ]);
         
         $settings->fill($data);
         $settings->save();

@@ -7,13 +7,15 @@ use App\Models\Participant;
 use App\Models\EventSetting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Midtrans\Config;
+use Midtrans\Snap;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+use App\Mail\ETicketMail;
 
 class RegistrationController extends Controller
 {
-    // Harga flat 5K (bisa diubah dari sini nanti)
-    const HARGA_TIKET  = 150000;
-    const BIAYA_ADMIN  = 5000;
-    const TOTAL_BAYAR  = self::HARGA_TIKET + self::BIAYA_ADMIN;
+    // Konstanta hardcode lama telah dihapus dan diganti dengan database dinamis
 
     // -------------------------------------------------------
     // GET /daftar  → tampilkan form
@@ -21,6 +23,14 @@ class RegistrationController extends Controller
     public function index()
     {
         $settings = EventSetting::first();
+        
+        $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
+        $jumlahPendaftar = Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+        
+        if ($kapasitasMaksimal - $jumlahPendaftar <= 0) {
+            return redirect('/')->with('error', 'Maaf, kuota pendaftaran sudah penuh!');
+        }
+
         return view('user.daftar', compact('settings'));
     }
 
@@ -29,12 +39,21 @@ class RegistrationController extends Controller
     // -------------------------------------------------------
     public function store(Request $request)
     {
+        // Cek Kuota
+        $settings = EventSetting::first() ?? new EventSetting();
+        $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
+        $jumlahPendaftar = Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+        
+        if ($kapasitasMaksimal - $jumlahPendaftar <= 0) {
+            return redirect('/')->with('error', 'Maaf, kuota pendaftaran sudah penuh!');
+        }
+
         $request->validate([
             'bib_name'   => 'required|string|max:10',
             'full_name'  => 'required|string|max:255',
-            'id_number'  => 'required|string|max:50',
+            'id_number'  => 'required|numeric|digits:16',
             'jersey_size'=> 'required|in:XS,S,M,L,XL,XXL',
-            'email'      => 'required|email|max:255',
+            'email'      => 'required|email:rfc,dns|max:255',
             'whatsapp'   => 'required|string|max:20',
             'address'    => 'required|string',
             'gender'     => 'required|in:male,female',
@@ -44,9 +63,12 @@ class RegistrationController extends Controller
             'bib_name.max'         => 'Nama BIB maksimal 10 huruf.',
             'full_name.required'   => 'Nama lengkap wajib diisi.',
             'id_number.required'   => 'Nomor KTP/Passport wajib diisi.',
+            'id_number.numeric'    => 'Nomor KTP harus berupa angka.',
+            'id_number.digits'     => 'Nomor KTP harus tepat 16 digit.',
             'jersey_size.required' => 'Pilih ukuran jersey.',
             'email.required'       => 'Email wajib diisi.',
             'email.email'          => 'Format email tidak valid.',
+            'email.unique'         => 'Email ini sudah terdaftar. Silakan gunakan email lain atau cek status pendaftaran Anda.',
             'whatsapp.required'    => 'Nomor WhatsApp wajib diisi.',
             'address.required'     => 'Alamat wajib diisi.',
             'gender.required'      => 'Jenis kelamin wajib dipilih.',
@@ -56,24 +78,84 @@ class RegistrationController extends Controller
         // Generate Order ID unik
         $orderId = 'ORD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
-        // Simpan ke database dengan status PENDING
-        $participant = Participant::create([
-            'order_id'           => $orderId,
-            'kategori'           => '5K',
-            'gross_amount'       => self::TOTAL_BAYAR,
-            'payment_status'     => 'pending',
-            'payment_method'     => 'manual_transfer',
-            'bib_name'           => strtoupper($request->bib_name),
-            'full_name'          => $request->full_name,
-            'id_number'          => $request->id_number,
-            'jersey_size'        => $request->jersey_size,
-            'email'              => $request->email,
-            'whatsapp'           => $request->whatsapp,
-            'address'            => $request->address,
-            'gender'             => $request->gender,
-            'city'               => $request->city,
-            'payment_expired_at' => now()->addHours(24),
-        ]);
+        $settings = EventSetting::first() ?? new EventSetting();
+        $ticketPrice = $settings->ticket_price ?? 150000;
+        $adminFee = $settings->admin_fee ?? 5000;
+        $grossAmount = $ticketPrice + $adminFee;
+
+        // Cek email manual
+        $existingParticipant = Participant::where('email', $request->email)->first();
+        if ($existingParticipant) {
+            if (in_array($existingParticipant->payment_status, ['paid', 'pending'])) {
+                return back()->withInput()->withErrors(['email' => 'Email ini sudah terdaftar. Silakan gunakan email lain atau cek status pendaftaran Anda.']);
+            }
+            
+            // Jika expired/failed, update data lama
+            $participant = $existingParticipant;
+            $participant->update([
+                'order_id'           => $orderId,
+                'kategori'           => '5K',
+                'gross_amount'       => $grossAmount,
+                'payment_status'     => 'pending',
+                'payment_method'     => null,
+                'bib_name'           => strtoupper($request->bib_name),
+                'full_name'          => $request->full_name,
+                'id_number'          => $request->id_number,
+                'jersey_size'        => $request->jersey_size,
+                'whatsapp'           => $request->whatsapp,
+                'address'            => $request->address,
+                'gender'             => $request->gender,
+                'city'               => $request->city,
+                'payment_expired_at' => now()->addHours(24),
+                'snap_token'         => null,
+            ]);
+        } else {
+            // Simpan ke database dengan status PENDING
+            $participant = Participant::create([
+                'order_id'           => $orderId,
+                'kategori'           => '5K',
+                'gross_amount'       => $grossAmount,
+                'payment_status'     => 'pending',
+                'payment_method'     => null,
+                'bib_name'           => strtoupper($request->bib_name),
+                'full_name'          => $request->full_name,
+                'id_number'          => $request->id_number,
+                'jersey_size'        => $request->jersey_size,
+                'email'              => $request->email,
+                'whatsapp'           => $request->whatsapp,
+                'address'            => $request->address,
+                'gender'             => $request->gender,
+                'city'               => $request->city,
+                'payment_expired_at' => now()->addHours(24),
+            ]);
+        }
+
+        // Konfigurasi Midtrans
+        Config::$serverKey = config('midtrans.server_key');
+        Config::$isProduction = config('midtrans.is_production');
+        Config::$isSanitized = config('midtrans.is_sanitized');
+        Config::$is3ds = config('midtrans.is_3ds');
+
+        // Parameter untuk Snap
+        $params = [
+            'transaction_details' => [
+                'order_id' => $participant->order_id,
+                'gross_amount' => $participant->gross_amount,
+            ],
+            'customer_details' => [
+                'first_name' => $participant->full_name,
+                'email' => $participant->email,
+                'phone' => $participant->whatsapp,
+            ],
+        ];
+
+        // Dapatkan Snap Token
+        try {
+            $snapToken = Snap::getSnapToken($params);
+            $participant->update(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            return back()->withInput()->with('error', 'Gagal memproses pembayaran: ' . $e->getMessage());
+        }
 
         // Redirect ke halaman pembayaran dengan order_id
         return redirect()->route('pembayaran.show', $participant->order_id)
@@ -86,44 +168,91 @@ class RegistrationController extends Controller
     public function showPembayaran($order_id)
     {
         $participant = Participant::where('order_id', $order_id)->firstOrFail();
-        return view('user.pembayaran', compact('participant'));
+        $settings = EventSetting::first() ?? new EventSetting();
+        return view('user.pembayaran', compact('participant', 'settings'));
     }
 
     // -------------------------------------------------------
-    // POST /pembayaran/upload-bukti  → terima foto bukti
+    // POST /api/midtrans-callback  → Webhook dari Midtrans
     // -------------------------------------------------------
-    public function uploadBukti(Request $request)
+    public function webhook(Request $request)
     {
-        $request->validate([
-            'order_id'      => 'required|exists:participants,order_id',
-            'payment_proof' => 'required|image|mimes:jpg,jpeg,png|max:3072',
-        ], [
-            'payment_proof.required' => 'Foto bukti transfer wajib diupload.',
-            'payment_proof.image'    => 'File harus berupa gambar (JPG/PNG).',
-            'payment_proof.max'      => 'Ukuran foto maksimal 3MB.',
-        ]);
+        Log::info('Midtrans Webhook Payload: ', $request->all());
 
-        $participant = Participant::where('order_id', $request->order_id)->firstOrFail();
+        $payload = $request->all();
 
-        // Tolak jika sudah paid
+        $order_id = $payload['order_id'] ?? '';
+        $status_code = $payload['status_code'] ?? '';
+        $gross_amount = $payload['gross_amount'] ?? '';
+        $signature_key = $payload['signature_key'] ?? '';
+        $server_key = config('midtrans.server_key');
+
+        // 1. Validasi Signature Key (Gunakan gross_amount ASLI dari Midtrans)
+        $expected_signature = hash('sha512', $order_id . $status_code . $gross_amount . $server_key);
+        if ($expected_signature !== $signature_key) {
+            Log::error("Midtrans Webhook: Invalid Signature Key for Order ID: $order_id");
+            return response()->json(['message' => 'Invalid Signature'], 403);
+        }
+
+        $participant = Participant::where('order_id', $order_id)->first();
+        if (!$participant) {
+            Log::error("Midtrans Webhook: Participant not found for Order ID: $order_id");
+            return response()->json(['message' => 'Participant not found'], 404);
+        }
+
+        // 2. Validasi Gross Amount (Hapus desimal .00)
+        $requestAmount = (int) floor($gross_amount);
+
+        // Ambil dari database, TANPA HARDCODE
+        $settings = EventSetting::first() ?? new EventSetting();
+        $ticketPrice = $settings->ticket_price ?? 150000;
+        $adminFee = $settings->admin_fee ?? 5000;
+        $expectedAmount = $ticketPrice + $adminFee;
+
+        if ($requestAmount !== (int)$expectedAmount && $requestAmount !== (int)$participant->gross_amount) {
+             Log::error("Midtrans Webhook: Invalid Gross Amount for Order ID: $order_id. Expected: $expectedAmount, Got: $requestAmount");
+             return response()->json(['message' => 'Invalid Amount'], 400);
+        }
+
+        $transaction = $payload['transaction_status'] ?? '';
+        $type = $payload['payment_type'] ?? '';
+        $fraud = $payload['fraud_status'] ?? '';
+
+        $participant->payment_method = $type;
+
+        if ($transaction == 'capture') {
+            if ($type == 'credit_card') {
+                if ($fraud == 'challenge') {
+                    $participant->payment_status = 'pending';
+                } else {
+                    $participant->payment_status = 'paid';
+                }
+            }
+        } else if ($transaction == 'settlement') {
+            $participant->payment_status = 'paid';
+        } else if ($transaction == 'pending') {
+            $participant->payment_status = 'pending';
+        } else if ($transaction == 'deny') {
+            $participant->payment_status = 'failed';
+        } else if ($transaction == 'expire') {
+            $participant->payment_status = 'expired';
+        } else if ($transaction == 'cancel') {
+            $participant->payment_status = 'failed';
+        }
+
+        $participant->save();
+
+        // 3. Jika lunas, kirim E-Ticket
         if ($participant->payment_status === 'paid') {
-            return back()->with('error', 'Pembayaran ini sudah dikonfirmasi sebagai LUNAS.');
+            try {
+                Mail::to($participant->email)->send(new ETicketMail($participant, $settings));
+                Log::info("Midtrans Webhook: E-Ticket sent to {$participant->email} for Order ID: $order_id");
+            } catch (\Exception $e) {
+                Log::error("Midtrans Webhook: Failed to send E-Ticket for Order ID: $order_id. Error: " . $e->getMessage());
+            }
         }
 
-        // Hapus bukti lama jika ada
-        if ($participant->payment_proof && Storage::disk('public')->exists($participant->payment_proof)) {
-            Storage::disk('public')->delete($participant->payment_proof);
-        }
-
-        // Simpan bukti baru
-        $path = $request->file('payment_proof')->store('bukti-bayar', 'public');
-
-        $participant->update([
-            'payment_proof'  => $path,
-            'payment_status' => 'pending', // tetap pending sampai admin konfirmasi
-        ]);
-
-        return redirect()->route('pembayaran.sukses', $participant->order_id);
+        return response()->json(['message' => 'OK']);
     }
 
     // -------------------------------------------------------
@@ -144,8 +273,11 @@ class RegistrationController extends Controller
         $settings = EventSetting::first();
         
         if ($request->filled('order_id')) {
-            $orderId = trim($request->order_id);
-            $participant = Participant::where('order_id', 'like', '%' . $orderId)->first();
+            $query = trim($request->order_id);
+            $participant = Participant::where('order_id', 'like', '%' . $query)
+                                      ->orWhere('email', $query)
+                                      ->latest()
+                                      ->first();
         }
 
         return view('user.cek-status', compact('participant', 'settings'));

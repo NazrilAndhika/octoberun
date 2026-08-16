@@ -15,8 +15,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                 </div>
-                <h1 class="text-2xl font-black text-white mb-2">Bukti Diterima!</h1>
-                <p class="text-green-100 text-sm">Terima kasih, bukti transfer kamu sudah kami terima.</p>
+                <h1 class="text-2xl font-black text-white mb-2">Terima Kasih!</h1>
+                <p class="text-green-100 text-sm">Pendaftaran Anda sedang diproses oleh sistem.</p>
             </div>
 
             {{-- Body --}}
@@ -47,32 +47,47 @@
                             <p class="text-xs text-gray-400">{{ $participant->created_at->format('d M Y, H:i') }} WIB</p>
                         </div>
                     </div>
+                    
+                    {{-- Step 2: Menunggu Pembayaran / Berhasil --}}
                     <div class="flex items-start gap-3">
+                        @if($participant->payment_status === 'paid')
                         <div class="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-gray-800">Bukti transfer diterima</p>
-                            <p class="text-xs text-gray-400">Baru saja</p>
+                            <p class="text-sm font-bold text-gray-800">Pembayaran Berhasil</p>
+                            <p class="text-xs text-gray-400">Terverifikasi otomatis oleh sistem</p>
                         </div>
-                    </div>
-                    <div class="flex items-start gap-3">
+                        @else
                         <div class="w-7 h-7 rounded-full bg-amber-400 flex items-center justify-center flex-shrink-0 mt-0.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-gray-800">Verifikasi oleh admin</p>
-                            <p class="text-xs text-gray-400">Estimasi 1x24 jam</p>
+                            <p class="text-sm font-bold text-gray-800">Menunggu Pembayaran</p>
+                            <p class="text-xs text-gray-400">Verifikasi otomatis oleh sistem</p>
                         </div>
+                        @endif
                     </div>
+                    
+                    {{-- Step 3: Lunas --}}
                     <div class="flex items-start gap-3">
+                        @if($participant->payment_status === 'paid')
+                        <div class="w-7 h-7 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                        </div>
+                        <div>
+                            <p class="text-sm font-bold text-gray-800">Status: LUNAS ✅</p>
+                            <p class="text-xs text-gray-400">E-Ticket dikirim ke email</p>
+                        </div>
+                        @else
                         <div class="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                             <span class="w-2 h-2 rounded-full bg-gray-300"></span>
                         </div>
                         <div>
                             <p class="text-sm font-bold text-gray-400">Status: LUNAS ✅</p>
-                            <p class="text-xs text-gray-400">Setelah admin konfirmasi</p>
+                            <p class="text-xs text-gray-400">E-Ticket akan dikirim otomatis</p>
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -87,12 +102,12 @@
                 </div>
 
                 {{-- Info Email E-Ticket --}}
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-left flex items-start gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p class="text-xs text-amber-800 leading-relaxed font-medium">
-                        Silakan pantau kotak masuk atau folder spam Email Anda. <strong>E-Ticket</strong> dan <strong>Jadwal Pengambilan Race Pack</strong> akan dikirimkan otomatis setelah admin memvalidasi pembayaran Anda.
+                    <p class="text-xs text-blue-800 leading-relaxed font-medium">
+                        Silakan pantau kotak masuk atau folder spam Email Anda. <strong>E-Ticket</strong> akan dikirimkan otomatis jika pembayaran Anda telah berhasil.
                     </p>
                 </div>
 

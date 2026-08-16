@@ -15,7 +15,12 @@ use App\Http\Controllers\Admin\RacePackController;
 Route::get('/', function () {
     $settings = EventSetting::first();
     $faqs = Faq::active()->get();
-    return view('user.home', compact('settings', 'faqs'));
+    
+    $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
+    $jumlahPendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+    $sisaKuota = $kapasitasMaksimal - $jumlahPendaftar;
+
+    return view('user.home', compact('settings', 'faqs', 'sisaKuota'));
 });
 
 // Rute Halaman Pendaftaran
@@ -25,9 +30,10 @@ Route::post('/daftar', [RegistrationController::class, 'store'])->name('daftar.s
 // Rute Cek Status
 Route::get('/cek-status', [RegistrationController::class, 'cekStatus'])->name('cek-status');
 
+// Webhook Midtrans
+Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook'])->name('midtrans.callback');
 // Rute Pembayaran
 Route::get('/pembayaran/{order_id}', [RegistrationController::class, 'showPembayaran'])->name('pembayaran.show');
-Route::post('/pembayaran/upload-bukti', [RegistrationController::class, 'uploadBukti'])->name('pembayaran.upload');
 Route::get('/pembayaran/sukses/{order_id}', [RegistrationController::class, 'sukses'])->name('pembayaran.sukses');
 
 // ... rute pendaftaran & frontend di atasnya biarkan saja ...
@@ -61,7 +67,9 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     Route::get('/datapendaftar', [DatapendaftarController::class, 'index'])->name('admin.datapendaftar');
     Route::get('/datapendaftar/export', [DatapendaftarController::class, 'exportCsv'])->name('admin.datapendaftar.export');
     Route::get('/datapendaftar/{id}', [DatapendaftarController::class, 'show'])->name('admin.datapendaftar.show');
-    Route::patch('/datapendaftar/{id}/status', [DatapendaftarController::class, 'updateStatus'])->name('admin.datapendaftar.status');
+    Route::get('/datapendaftar/{id}/edit', [DatapendaftarController::class, 'edit'])->name('admin.datapendaftar.edit');
+    Route::put('/datapendaftar/{id}', [DatapendaftarController::class, 'update'])->name('admin.datapendaftar.update');
+    Route::post('/datapendaftar/{id}/resend-email', [DatapendaftarController::class, 'resendEmail'])->name('admin.datapendaftar.resendEmail');
     Route::delete('/datapendaftar/{id}', [DatapendaftarController::class, 'destroy'])->name('admin.datapendaftar.destroy');
 
     // === Rute Distribusi Race Pack ===

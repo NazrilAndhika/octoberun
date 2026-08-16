@@ -24,9 +24,9 @@
             <div class="w-full md:w-1/4">
                 <h4 class="font-bold text-sm tracking-widest mb-6 uppercase">MENU</h4>
                 <ul class="space-y-3 text-sm text-gray-300">
-                    <li><a href="#" class="hover:text-white hover:underline transition">Beranda</a></li>
-                    <li><a href="#" class="hover:text-white hover:underline transition">Tentang</a></li>
-                    <li><a href="#" class="hover:text-white hover:underline transition">Info</a></li>
+                    <li><a href="{{ url('/#beranda') }}" class="hover:text-white hover:underline transition">Beranda</a></li>
+                    <li><a href="{{ url('/#info') }}" class="hover:text-white hover:underline transition">Info</a></li>
+                    <li><a href="{{ url('/#tentang') }}" class="hover:text-white hover:underline transition">Tentang</a></li>
                 </ul>
             </div>
 
@@ -49,17 +49,7 @@
                 </ul>
             </div>
 
-            <!-- Kolom 4: Newsletter
-            <div class="w-full md:w-1/4">
-                <h4 class="font-bold text-sm tracking-widest mb-6 uppercase">NEWSLETTER</h4>
-                <p class="text-sm text-gray-300 mb-4">Dapatkan update terbaru seputar OCTOBERUN 2026</p>
-                <form action="#" class="flex mt-2 max-w-sm mx-auto md:mx-0">
-                    <input type="email" placeholder="Email kamu" class="w-full px-4 py-2 text-sm text-gray-900 bg-white rounded-l focus:outline-none focus:ring-2 focus:ring-[#e85d04]" required>
-                    <button type="submit" class="bg-white px-4 py-2 rounded-r hover:bg-gray-100 transition border-l border-gray-200 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#0b4d75]" viewBox="0 0 20 20" fill="currentColor"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" /></svg>
-                    </button>
-                </form>
-            </div> -->
+
 
         </div>
 

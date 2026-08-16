@@ -72,29 +72,21 @@ class DatapendaftarController extends Controller
         return view('admin.datapendaftar_detail', compact('participant'));
     }
 
-    public function updateStatus(Request $request, $id)
+    public function resendEmail(Request $request, $id)
     {
         $participant = Participant::findOrFail($id);
-        $oldStatus = $participant->payment_status;
-        $newStatus = $request->payment_status;
 
-        $participant->update(['payment_status' => $newStatus]);
-
-        $message = 'Status pembayaran berhasil diperbarui!';
-
-        // Jika status berubah menjadi Lunas (paid), kirim email E-Ticket
-        if ($oldStatus !== 'paid' && $newStatus === 'paid') {
-            try {
-                $settings = EventSetting::first() ?? new EventSetting();
-                Mail::to($participant->email)->send(new ETicketMail($participant, $settings));
-                $message .= ' Email E-Ticket telah berhasil dikirim ke peserta.';
-            } catch (\Exception $e) {
-                // Jangan gagalkan update status hanya karena email gagal
-                $message .= ' Namun, email E-Ticket gagal dikirim: ' . $e->getMessage();
-            }
+        if ($participant->payment_status !== 'paid') {
+            return back()->with('error', 'Tidak dapat mengirim E-Ticket karena status pembayaran belum Lunas.');
         }
 
-        return back()->with('success', $message);
+        try {
+            $settings = EventSetting::first() ?? new EventSetting();
+            Mail::to($participant->email)->send(new ETicketMail($participant, $settings));
+            return back()->with('success', 'Email E-Ticket berhasil dikirim ulang ke peserta.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal mengirim email E-Ticket: ' . $e->getMessage());
+        }
     }
 
     public function exportCsv(Request $request)
@@ -130,64 +122,47 @@ class DatapendaftarController extends Controller
             $query->whereDate('created_at', '<=', $request->date_to);
         }
 
-        $participants = $query->latest()->get();
+        return \Maatwebsite\Excel\Facades\Excel::download(
+            new \App\Exports\PendaftarExport($query), 
+            'Data_Pendaftar_OCTOBERUN.xlsx'
+        );
+    }
 
-        $filename = 'data-pendaftar-octoberun-' . now()->format('Ymd-His') . '.csv';
+    public function edit($id)
+    {
+        $participant = Participant::findOrFail($id);
+        return view('admin.datapendaftar_edit', compact('participant'));
+    }
 
-        $headers = [
-            'Content-Type' => 'text/csv; charset=UTF-8',
-            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
-        ];
+    public function update(Request $request, $id)
+    {
+        $participant = Participant::findOrFail($id);
 
-        $response = new StreamedResponse(function () use ($participants) {
-            $handle = fopen('php://output', 'w');
+        $request->validate([
+            'bib_name'   => 'required|string|max:10',
+            'full_name'  => 'required|string|max:255',
+            'id_number'  => 'required|string|max:50',
+            'email'      => 'required|email|max:255',
+            'whatsapp'   => 'required|string|max:20',
+            'gender'     => 'required|in:male,female',
+            'city'       => 'required|string|max:255',
+            'address'    => 'required|string',
+            'jersey_size'=> 'required|in:XXS,XS,S,M,L,XL,XXL',
+        ]);
 
-            // BOM untuk UTF-8
-            fprintf($handle, chr(0xEF) . chr(0xBB) . chr(0xBF));
+        $participant->update([
+            'bib_name'   => $request->bib_name,
+            'full_name'  => $request->full_name,
+            'id_number'  => $request->id_number,
+            'email'      => $request->email,
+            'whatsapp'   => $request->whatsapp,
+            'gender'     => $request->gender,
+            'city'       => $request->city,
+            'address'    => $request->address,
+            'jersey_size'=> $request->jersey_size,
+        ]);
 
-            // Header CSV
-            fputcsv($handle, [
-                'No. Order',
-                'Nama Lengkap',
-                'Nama BIB',
-                'No. KTP/Passport',
-                'Ukuran Jersey',
-                'Email',
-                'No. WhatsApp',
-                'Jenis Kelamin',
-                'Kota',
-                'Alamat',
-                'Status Pembayaran',
-                'Status Race Pack',
-                'Metode Pembayaran',
-                'Total Bayar',
-                'Tanggal Daftar',
-            ]);
-
-            foreach ($participants as $p) {
-                fputcsv($handle, [
-                    $p->order_id,
-                    $p->full_name,
-                    $p->bib_name,
-                    $p->id_number,
-                    $p->jersey_size,
-                    $p->email,
-                    $p->whatsapp,
-                    $p->gender === 'male' ? 'Laki-laki' : 'Perempuan',
-                    $p->city,
-                    $p->address,
-                    ucfirst($p->payment_status),
-                    $p->is_racepack_taken ? 'Sudah Diambil' : 'Belum Diambil',
-                    $p->payment_method ?? '-',
-                    'Rp ' . number_format($p->gross_amount, 0, ',', '.'),
-                    $p->created_at->format('d M Y H:i'),
-                ]);
-            }
-
-            fclose($handle);
-        }, 200, $headers);
-
-        return $response;
+        return redirect()->route('admin.datapendaftar.show', $participant->id)->with('success', 'Data berhasil diperbarui');
     }
 
     public function destroy($id)

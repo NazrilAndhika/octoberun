@@ -9,11 +9,7 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-black text-gray-900 tracking-tight">Tambah FAQ</h1>
-            <nav class="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-medium">
-                <a href="{{ route('admin.faq') }}" class="hover:text-[#0b4d75] transition">FAQ (Pertanyaan)</a>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <span class="text-[#0b4d75] font-bold">Tambah FAQ</span>
-            </nav>
+
         </div>
         <a href="{{ route('admin.faq') }}"
             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-[#0b4d75] hover:border-[#0b4d75] transition">

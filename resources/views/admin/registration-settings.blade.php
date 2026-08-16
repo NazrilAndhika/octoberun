@@ -51,5 +51,25 @@
                 </div>
             </div>
         </div>
+
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-6">
+            <h2 class="text-lg font-bold text-[#e85d04] border-b pb-3 mb-6">Harga Tiket & Biaya Admin</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Harga Tiket -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Harga Tiket (Rp)</label>
+                    <input type="number" name="ticket_price" value="{{ $settings->ticket_price }}" class="w-full border-gray-300 rounded-md focus:ring-[#0b4d75]">
+                    <p class="text-xs text-gray-500 mt-1">Harga dasar tiket pendaftaran (tanpa titik/koma, contoh: 150000).</p>
+                </div>
+                
+                <!-- Biaya Admin -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Biaya Admin (Rp)</label>
+                    <input type="number" name="admin_fee" value="{{ $settings->admin_fee }}" class="w-full border-gray-300 rounded-md focus:ring-[#0b4d75]">
+                    <p class="text-xs text-gray-500 mt-1">Biaya admin atau platform fee (contoh: 5000).</p>
+                </div>
+            </div>
+        </div>
     </form>
 @endsection

@@ -6,7 +6,7 @@
 
     {{-- Header Banner --}}
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-        <div class="bg-[#0b4d75] rounded-xl p-8 text-white bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] relative overflow-hidden">
+        <div class="bg-[#0b4d75] rounded-xl p-8 text-white relative overflow-hidden">
             <div class="relative z-10">
                 <h1 class="font-sporty text-4xl font-black italic mb-2">OCTOBERUN <span class="text-[#e85d04]">2026</span></h1>
                 <p class="text-blue-100 max-w-xl text-sm">Lengkapi data dirimu untuk bergabung dalam event lari terbesar di bulan Oktober. Bersama, kita raih semangat tanpa batas!</p>
@@ -94,6 +94,9 @@
                                     placeholder="Masukkan nomor ID"
                                     class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('id_number') ? 'border-red-400' : '' }}"
                                     required>
+                                @error('id_number')
+                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-600 mb-1.5">
@@ -121,6 +124,9 @@
                                     placeholder="contoh@email.com"
                                     class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('email') ? 'border-red-400' : '' }}"
                                     required>
+                                @error('email')
+                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-semibold text-gray-600 mb-1.5">
@@ -201,7 +207,7 @@
             </div>
 
             {{-- ============ KOLOM KANAN: RINGKASAN ============ --}}
-            <div class="w-full lg:col-span-1">
+<div class="w-full lg:col-span-1 sticky top-32 space-y-6">
 
                 {{-- Kotak Harga --}}
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -224,17 +230,22 @@
                     <div class="space-y-3 text-sm text-gray-600 border-t pt-4 mb-6">
                         <div class="flex justify-between">
                             <span>Subtotal Tiket</span>
-                            <span class="font-bold text-gray-900">Rp 150.000</span>
+                            <span class="font-bold text-gray-900">Rp {{ number_format($settings->ticket_price ?? 150000, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span>Biaya Admin</span>
-                            <span class="font-bold text-gray-900">Rp 5.000</span>
+                            <span class="font-bold text-gray-900">Rp {{ number_format($settings->admin_fee ?? 5000, 0, ',', '.') }}</span>
                         </div>
                     </div>
 
                     <div class="flex justify-between items-center border-t pt-4 mb-6">
                         <span class="font-black text-[#0b4d75] uppercase tracking-wide">TOTAL BAYAR</span>
-                        <span class="font-black text-[#e85d04] text-xl">Rp 155.000</span>
+                        @php
+                            $ticket = $settings->ticket_price ?? 150000;
+                            $admin = $settings->admin_fee ?? 5000;
+                            $total = $ticket + $admin;
+                        @endphp
+                        <span class="font-black text-[#e85d04] text-xl">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
 
                     {{-- Tombol submit form --}}

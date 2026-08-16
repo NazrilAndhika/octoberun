@@ -10,13 +10,7 @@
 ============================================================ --}}
 <div class="mb-2">
     <h1 class="text-2xl font-black text-gray-900 tracking-tight">Data Pendaftar</h1>
-    <nav class="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-medium">
-        <span>Dashboard</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span>Pendaftar</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-[#0b4d75] font-bold">Data Pendaftar</span>
-    </nav>
+
 </div>
 
 
@@ -188,14 +182,23 @@
                                 class="w-8 h-8 flex items-center justify-center rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-600 transition border border-sky-200">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                             </a>
-                            {{-- Edit Status --}}
-                            <button type="button"
-                                id="btn-edit-{{ $participant->id }}"
-                                title="Ubah Status"
-                                onclick="openStatusModal({{ $participant->id }}, '{{ $participant->payment_status }}', '{{ $participant->full_name }}')"
+                            {{-- Edit Data --}}
+                            <a href="{{ route('admin.datapendaftar.edit', $participant->id) }}"
+                                title="Edit Data"
                                 class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 transition border border-amber-200">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                            </button>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                            </a>
+                            {{-- Kirim Ulang E-Ticket --}}
+                            @if($participant->payment_status === 'paid')
+                            <form action="{{ route('admin.datapendaftar.resendEmail', $participant->id) }}" method="POST" class="inline-block">
+                                @csrf
+                                <button type="submit"
+                                    title="Kirim Ulang E-Ticket"
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-600 transition border border-amber-200">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                                </button>
+                            </form>
+                            @endif
                             {{-- Hapus Data --}}
                             <form action="{{ route('admin.datapendaftar.destroy', $participant->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data peserta ini?');" class="inline-block">
                                 @csrf
@@ -311,40 +314,6 @@
 </div>
 
 
-{{-- ============================================================
-     MODAL UBAH STATUS PEMBAYARAN
-============================================================ --}}
-<div id="status-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 backdrop-blur-sm">
-    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm mx-4 overflow-hidden">
-        <div class="bg-gradient-to-r from-[#0b4d75] to-[#0d6096] p-5">
-            <h3 class="text-white font-bold text-lg">Ubah Status Pembayaran</h3>
-            <p class="text-blue-200 text-sm mt-0.5" id="modal-peserta-name">–</p>
-        </div>
-        <form id="status-form" method="POST" class="p-6">
-            @csrf
-            @method('PATCH')
-            <label class="block text-sm font-semibold text-gray-700 mb-2">Status Baru</label>
-            <select name="payment_status" id="modal-status-select"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] text-sm mb-6 font-medium">
-                <option value="paid">Lunas</option>
-                <option value="pending">Pending</option>
-                <option value="failed">Gagal</option>
-                <option value="expired">Expired</option>
-            </select>
-            <div class="flex gap-3">
-                <button type="button" onclick="closeStatusModal()"
-                    class="flex-1 py-2.5 rounded-xl border border-gray-300 text-gray-600 font-semibold text-sm hover:bg-gray-50 transition">
-                    Batal
-                </button>
-                <button type="submit" id="btn-modal-simpan"
-                    class="flex-1 py-2.5 rounded-xl bg-[#0b4d75] hover:bg-[#083b5c] text-white font-bold text-sm transition">
-                    Simpan
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
-
 @endsection
 
 @push('scripts')
@@ -352,25 +321,6 @@
     // Auto-submit filter on select change
     document.querySelectorAll('#status-filter, #jersey-filter, #racepack-filter').forEach(el => {
         el.addEventListener('change', () => document.getElementById('filter-form').submit());
-    });
-
-    // Modal helpers
-    function openStatusModal(id, currentStatus, name) {
-        document.getElementById('modal-peserta-name').textContent = name;
-        document.getElementById('modal-status-select').value = currentStatus;
-        document.getElementById('status-form').action = `/admin-gsc/datapendaftar/${id}/status`;
-        document.getElementById('status-modal').classList.remove('hidden');
-        document.getElementById('status-modal').classList.add('flex');
-    }
-
-    function closeStatusModal() {
-        document.getElementById('status-modal').classList.add('hidden');
-        document.getElementById('status-modal').classList.remove('flex');
-    }
-
-    // Close modal on backdrop click
-    document.getElementById('status-modal').addEventListener('click', function(e) {
-        if (e.target === this) closeStatusModal();
     });
 </script>
 @endpush

@@ -5,7 +5,7 @@
     <h1 class="text-2xl font-black text-gray-900 tracking-tight mb-8">Dashboard Utama</h1>
 
     <!-- Kotak-kotak Statistik -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
         <!-- Total Pendaftar -->
         <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 shadow-sm flex flex-col justify-center transition hover:-translate-y-1">
             <span class="text-sm font-bold text-blue-600 mb-1 uppercase tracking-wider">Total Pendaftar</span>
@@ -31,6 +31,30 @@
                 <span class="text-4xl font-black text-purple-700">{{ $sisaKuota < 0 ? 0 : $sisaKuota }}</span>
                 <span class="text-sm font-bold text-purple-400">/ {{ $kuotaTotal }}</span>
             </div>
+        </div>
+
+        <!-- Total Pendapatan -->
+        <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-6 shadow-sm flex flex-col justify-center transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-indigo-600 mb-1 uppercase tracking-wider">Total Pendapatan</span>
+            <span class="text-2xl font-black text-indigo-700 mt-1">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</span>
+        </div>
+    </div>
+
+    <!-- Area Grafik Analitik -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8 p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Grafik Pendapatan Bulanan ({{ $selectedYear }})</h2>
+            <form method="GET" action="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
+                <label for="year" class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filter Tahun:</label>
+                <select name="year" id="year" onchange="this.form.submit()" class="border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-1.5 px-3 text-sm text-gray-700 font-bold">
+                    @foreach($availableYears as $year)
+                        <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
+        <div class="relative h-[300px] w-full">
+            <canvas id="incomeChart"></canvas>
         </div>
     </div>
 
@@ -98,4 +122,54 @@
             </table>
         </div>
     </div>
+
+    <!-- Chart.js CDN & Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('incomeChart').getContext('2d');
+            var chartData = @json($monthlyIncomeData);
+            
+            var incomeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    datasets: [{
+                        label: 'Total Pendapatan (Rp)',
+                        data: chartData,
+                        backgroundColor: '#0b4d75',
+                        hoverBackgroundColor: '#e85d04',
+                        borderRadius: 4,
+                        barPercentage: 0.6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return 'Rp ' + (value / 1000000) + ' Jt';
+                                    }
+                                    return 'Rp ' + new Intl.NumberFormat('id-ID').format(value);
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' Pendapatan: Rp ' + new Intl.NumberFormat('id-ID').format(context.raw);
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

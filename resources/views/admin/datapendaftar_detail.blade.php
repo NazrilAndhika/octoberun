@@ -9,17 +9,20 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-black text-gray-900 tracking-tight">Detail Pendaftar</h1>
-            <nav class="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-medium">
-                <a href="{{ route('admin.datapendaftar') }}" class="hover:text-[#0b4d75] transition">Data Pendaftar</a>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                <span class="text-[#0b4d75] font-bold">{{ $participant->order_id }}</span>
-            </nav>
+
         </div>
-        <a href="{{ route('admin.datapendaftar') }}"
-            class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-[#0b4d75] hover:border-[#0b4d75] transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            Kembali
-        </a>
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.datapendaftar') }}"
+                class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-[#0b4d75] hover:border-[#0b4d75] transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Kembali
+            </a>
+            <a href="{{ route('admin.datapendaftar.edit', $participant->id) }}"
+                class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-[#0b4d75] bg-[#0b4d75] text-white hover:bg-blue-800 transition shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                Edit Data
+            </a>
+        </div>
     </div>
 </div>
 
@@ -115,45 +118,25 @@
 
             {{-- Ubah Status --}}
             <div class="px-6 pb-6">
-                <form method="POST" action="{{ route('admin.datapendaftar.status', $participant->id) }}">
-                    @csrf
-                    @method('PATCH')
-                    <label class="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">Ubah Status Pembayaran</label>
-                    <div class="flex gap-2">
-                        <select name="payment_status" id="detail-status-select"
-                            class="flex-1 text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75]">
-                            <option value="paid"    {{ $participant->payment_status === 'paid'    ? 'selected' : '' }}> Lunas</option>
-                            <option value="pending" {{ $participant->payment_status === 'pending' ? 'selected' : '' }}> Pending</option>
-                            <option value="failed"  {{ $participant->payment_status === 'failed'  ? 'selected' : '' }}> Gagal</option>
-                            <option value="expired" {{ $participant->payment_status === 'expired' ? 'selected' : '' }}> Expired</option>
-                        </select>
-                        <button type="submit" id="btn-simpan-status"
-                            class="px-4 py-2 bg-[#0b4d75] text-white font-bold text-sm rounded-lg hover:bg-[#083b5c] transition">
-                            Simpan
-                        </button>
-                    </div>
-                </form>
+                <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 text-sm text-blue-700">
+                    <p class="font-bold mb-1">Status Pembayaran Otomatis</p>
+                    <p class="text-xs">Status dikelola secara otomatis oleh Midtrans. Anda tidak perlu mengubah status secara manual.</p>
+                </div>
             </div>
         </div>
 
-        {{-- Bukti Pembayaran --}}
+        {{-- Bukti Pembayaran (Legacy) --}}
         @if($participant->payment_proof)
-        <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100">
-                <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#0b4d75]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    Bukti Pembayaran
+        <div class="bg-gray-50 rounded-xl border border-gray-200 shadow-sm overflow-hidden opacity-75">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="font-bold text-gray-600 text-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    Bukti Pembayaran (Lama)
                 </h2>
+                <p class="text-xs text-gray-500 mt-1">Data lama dari sistem manual.</p>
             </div>
             <div class="p-4">
-                <a href="{{ Storage::url($participant->payment_proof) }}" target="_blank">
-                    <img src="{{ Storage::url($participant->payment_proof) }}" alt="Bukti Bayar" class="w-full rounded-lg object-cover border border-gray-200 hover:opacity-90 transition">
-                </a>
-                <a href="{{ Storage::url($participant->payment_proof) }}" target="_blank"
-                    class="mt-3 flex items-center justify-center gap-2 text-sm font-semibold text-[#0b4d75] hover:underline">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    Lihat Ukuran Penuh
-                </a>
+                <a href="{{ Storage::url($participant->payment_proof) }}" target="_blank" class="text-xs text-blue-600 hover:underline">Lihat Bukti Bayar Manual</a>
             </div>
         </div>
         @endif

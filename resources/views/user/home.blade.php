@@ -5,6 +5,15 @@
     <!-- CSS untuk Smooth Scroll ke id section saat navbar diklik -->
     <style> html { scroll-behavior: smooth; } </style>
 
+    @if(session('error'))
+        <div class="bg-red-500 text-white text-center py-3 px-4 font-bold z-50 relative flex justify-center items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+            {{ session('error') }}
+        </div>
+    @endif
+
     <!-- ========================================== -->
     <!-- BAGIAN 1: HERO SECTION (ID: beranda)       -->
     <!-- ========================================== -->
@@ -46,19 +55,19 @@
                     <p class="text-[#0b4d75] font-bold text-sm mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
                     <div class="flex gap-2 sm:gap-3 justify-center md:justify-start">
                         <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-days">00</div>
+                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-days">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
                         </div>
                         <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-hours">00</div>
+                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-hours">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
                         </div>
                         <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-minutes">00</div>
+                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-minutes">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
                         </div>
                         <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-[#e85d04]" id="cd-seconds">00</div>
+                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-seconds">00</div>
                             <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
                         </div>
                     </div>
@@ -66,12 +75,15 @@
                 @endif
 
                 <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 w-full">
-                    <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-[80%] sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
-                        DAFTAR SEKARANG
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 btn-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </a>
+                    @if(isset($sisaKuota) && $sisaKuota <= 0)
+                        <button disabled class="w-[80%] sm:w-auto justify-center bg-gray-400 cursor-not-allowed text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 shadow-xl uppercase tracking-wider">
+                            KUOTA PENUH / PENDAFTARAN DITUTUP
+                        </button>
+                    @else
+                        <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-[80%] sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
+                            DAFTAR SEKARANG
+                        </a>
+                    @endif
                     <!-- <a href="#" class="w-full sm:w-auto justify-center bg-white/80 backdrop-blur-sm border border-gray-300 hover:border-gray-400 text-[#0b4d75] text-sm font-bold py-3 px-8 rounded flex items-center gap-2 transition duration-300 shadow-sm transform hover:-translate-y-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#e85d04]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
@@ -144,41 +156,41 @@
     <!-- ========================================== -->
     <!-- BAGIAN 3: KARTU LAYANAN (ID: info)         -->
     <!-- ========================================== -->
-    <section id="info" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-16 pb-16">
+    <section id="info" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-16 pb-16">
         <div class="text-center mb-12">
             <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
-                INFORMASI <span class="text-[#e85d04]">EVENT</span>
+                INFORMASI EVENT
             </h2>
             <p class="mt-3 text-gray-500 text-sm md:text-base">Temukan segala hal yang perlu kamu ketahui tentang perlengkapan dan rute lari.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             
             <!-- Kartu 1: Jersey (Memicu Pop-up modal-jersey) -->
-            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-cyan-500 flex items-center justify-center mb-4 text-cyan-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-[#0b4d75] italic mb-2 uppercase">JERSEY & SIZE</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->jersey_card_desc ?? 'Bahan High Performance yang ringan, sejuk, dan anti-bau.' }}</p>
-                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL &rarr;</button>
+                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL</button>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl border-t-4 border-[#e85d04] p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-100 rounded-full flex items-center justify-center text-[#e85d04] mb-4 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-[#e85d04] italic mb-2 uppercase">RACE PACK</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->racepack_card_desc ?? 'Jersey, Medali, BIB, dan 1 Bibit Pohon spesial untukmu.' }}</p>
-                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP &rarr;</button>
+                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP</button>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl border-t-4 border-cyan-500 p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
+            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
                 <div class="w-12 h-12 md:w-16 md:h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-500 mb-4 shadow-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-cyan-500 italic mb-2 uppercase">RUTE LARI</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->route_card_desc ?? 'Rute 5K melewati landmark ikonik kota.' }}</p>
-                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded text-sm transition">LIHAT PETA &rarr;</button>
+                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded text-sm transition">LIHAT PETA</button>
             </div>
 
         </div>
@@ -187,55 +199,114 @@
     <!-- ========================================== -->
     <!-- BAGIAN ALUR PENDAFTARAN (HOW IT WORKS)     -->
     <!-- ========================================== -->
-    <section class="py-20 bg-white relative border-t border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
+    <section class="py-20 bg-gray-50 relative border-t border-gray-100 overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
                 <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
-                    ALUR <span class="text-[#e85d04]">PENDAFTARAN</span>
+                    ALUR PENDAFTARAN
                 </h2>
-                <p class="mt-3 text-gray-500 text-sm md:text-base">Ikuti 4 langkah mudah ini untuk mengamankan slot larimu!</p>
+                <p class="mt-3 text-gray-500 text-sm md:text-base">Ikuti 5 langkah mudah ini untuk mengamankan slot larimu!</p>
             </div>
 
             <div class="relative">
-                <!-- Garis Penghubung Horizontal (Hanya Muncul di Layar Desktop) -->
-                <div class="hidden md:block absolute top-10 left-[12.5%] right-[12.5%] h-1 bg-gray-200 z-0"></div>
+                <!-- Vertical Dashed Line -->
+                <div class="absolute left-6 md:left-8 lg:left-1/2 top-0 bottom-0 w-0 border-l-2 border-dashed border-gray-300 lg:-translate-x-1/2 z-0"></div>
 
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-4">
+                <div class="space-y-12 lg:space-y-0 lg:-space-y-4 relative z-10">
                     
-                    <!-- Step 1 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="100">
-                        <div class="w-20 h-20 bg-white border-4 border-[#0b4d75] text-[#0b4d75] rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-[#0b4d75] group-hover:text-white transition duration-300">
-                            1
+                    <!-- Step 1 (Kiri) -->
+                    <div class="relative flex lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up">
+                        <!-- Node Mobile -->
+                        <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        <!-- Node Desktop -->
+                        <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        
+                        <!-- Garis konektor horizontal desktop -->
+                        <div class="hidden lg:block absolute left-[46%] right-1/2 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-300 z-0"></div>
+
+                        <!-- Card -->
+                        <div class="w-full lg:w-[46%] pl-14 md:pl-16 lg:pl-0 relative z-10">
+                            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 lg:border-l-0 lg:border-r-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                                <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 lg:left-4 lg:right-auto leading-none pointer-events-none">1</div>
+                                <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 lg:text-right">REGISTRASI DATA DIRI</h3>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Lengkapi formulir pendaftaran dengan data diri yang valid serta pastikan ukuran jersey yang Anda pilih sudah sesuai.</p>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-lg text-[#0b4d75] mb-2 uppercase tracking-wide">Isi Data Diri</h3>
-                        <p class="text-sm text-gray-500 px-4">Lengkapi formulir dengan data KTP, email aktif, dan pilih ukuran jersey.</p>
+                        
+                        <div class="hidden lg:block lg:w-[46%]"></div>
                     </div>
 
-                    <!-- Step 2 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="200">
-                        <div class="w-20 h-20 bg-white border-4 border-[#e85d04] text-[#e85d04] rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-[#e85d04] group-hover:text-white transition duration-300">
-                            2
+                    <!-- Step 2 (Kanan) -->
+                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="100">
+                        <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+
+                        <div class="hidden lg:block absolute right-[46%] left-1/2 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-300 z-0"></div>
+
+                        <div class="hidden lg:block lg:w-[46%]"></div>
+
+                        <!-- Card -->
+                        <div class="w-full lg:w-[46%] pr-0 pl-14 md:pl-16 lg:pl-0 relative z-10">
+                            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                                <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 leading-none pointer-events-none">2</div>
+                                <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 text-left">SELESAIKAN PEMBAYARAN</h3>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Pilih metode pembayaran yang Anda inginkan seperti BCA, Mandiri, QRIS, atau e-Wallet. Sistem memverifikasi otomatis.</p>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-lg text-[#e85d04] mb-2 uppercase tracking-wide">Transfer & Upload</h3>
-                        <p class="text-sm text-gray-500 px-4">Lakukan pembayaran sesuai nominal dan unggah bukti transfer ke sistem.</p>
                     </div>
 
-                    <!-- Step 3 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="300">
-                        <div class="w-20 h-20 bg-white border-4 border-cyan-500 text-cyan-500 rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-cyan-500 group-hover:text-white transition duration-300">
-                            3
+                    <!-- Step 3 (Kiri) -->
+                    <div class="relative flex lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="150">
+                        <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        
+                        <div class="hidden lg:block absolute left-[46%] right-1/2 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-300 z-0"></div>
+
+                        <div class="w-full lg:w-[46%] pl-14 md:pl-16 lg:pl-0 relative z-10">
+                            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 lg:border-l-0 lg:border-r-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                                <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 lg:left-4 lg:right-auto leading-none pointer-events-none">3</div>
+                                <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 lg:text-right">CEK STATUS & E-TICKET</h3>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Pantau status pesanan Anda. E-Ticket akan dikirimkan ke alamat email setelah pembayaran berhasil.</p>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-lg text-cyan-600 mb-2 uppercase tracking-wide">Cek Status & Email</h3>
-                        <p class="text-sm text-gray-500 px-4">Tunggu validasi admin. E-Ticket & QR Code akan otomatis masuk ke Email Anda.</p>
+                        
+                        <div class="hidden lg:block lg:w-[46%]"></div>
                     </div>
 
-                    <!-- Step 4 -->
-                    <div class="relative z-10 flex flex-col items-center text-center group" data-aos="fade-up" data-aos-delay="400">
-                        <div class="w-20 h-20 bg-white border-4 border-green-500 text-green-500 rounded-full flex items-center justify-center font-black text-2xl mb-5 shadow-md group-hover:bg-green-500 group-hover:text-white transition duration-300">
-                            4
+                    <!-- Step 4 (Kanan) -->
+                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="200">
+                        <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+
+                        <div class="hidden lg:block absolute right-[46%] left-1/2 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-300 z-0"></div>
+
+                        <div class="hidden lg:block lg:w-[46%]"></div>
+
+                        <div class="w-full lg:w-[46%] pr-0 pl-14 md:pl-16 lg:pl-0 relative z-10">
+                            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                                <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 leading-none pointer-events-none">4</div>
+                                <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 text-left">AMBIL RACE PACK</h3>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Tunjukkan QR Code pada E-Ticket Anda kepada panitia di lokasi penukaran untuk mengambil perlengkapan lari.</p>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-lg text-green-600 mb-2 uppercase tracking-wide">Ambil Race Pack</h3>
-                        <p class="text-sm text-gray-500 px-4">Tunjukkan QR Code di HP Anda ke panitia pada hari pengambilan atribut.</p>
+                    </div>
+
+                    <!-- Step 5 (Kiri) -->
+                    <div class="relative flex lg:justify-between items-center w-full" data-aos="fade-up" data-aos-delay="250">
+                        <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
+                        
+                        <div class="hidden lg:block absolute left-[46%] right-1/2 top-1/2 -translate-y-1/2 border-t-2 border-dashed border-gray-300 z-0"></div>
+
+                        <div class="w-full lg:w-[46%] pl-14 md:pl-16 lg:pl-0 relative z-10">
+                            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 lg:border-l-0 lg:border-r-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
+                                <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 lg:left-4 lg:right-auto leading-none pointer-events-none">5</div>
+                                <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 lg:text-right">RACE DAY!</h3>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Siapkan fisik dan semangat Anda! Hadir tepat waktu di lokasi pada tanggal pelaksanaan dan raih garis finis.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="hidden lg:block lg:w-[46%]"></div>
                     </div>
 
                 </div>
@@ -245,13 +316,14 @@
     <!-- ========================================== -->
     <!-- BAGIAN 4: TENTANG KAMI (ID: tentang)       -->
     <!-- ========================================== -->
-    <section id="tentang" class="bg-white pt-20 pb-24">
+    <section id="tentang" class="scroll-mt-28 bg-white pt-20 pb-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Grid Tentang Kami -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
                 <!-- Kiri: Teks -->
                 <div data-aos="fade-right">
+                    <p class="uppercase text-xs md:text-sm text-[#e85d04] font-bold tracking-[0.2em] mb-2">TENTANG OCTOBERUN</p>
                     <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] mb-6 uppercase leading-tight">
                         {{ $settings->about_title ?? 'LEBIH DARI SEKEDAR LARI, INI TENTANG PERUBAHAN.' }}
                     </h2>
@@ -320,14 +392,14 @@
     <!-- ========================================== -->
     <section class="bg-gray-50 py-16 mb-10 border-t border-gray-200">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 data-aos="fade-up" class="text-center font-sporty font-black text-2xl md:text-3xl italic text-[#0b4d75] mb-12 uppercase tracking-wider">
+            <h2 class="text-center font-sporty font-black text-2xl md:text-3xl italic text-[#0b4d75] mb-12 uppercase tracking-wider">
                 FREQUENTLY ASKED <span class="text-cyan-500">QUESTIONS</span>
             </h2>
             
             <div class="space-y-4">
                 
                 @forelse($faqs ?? [] as $index => $faq)
-                <div data-aos="fade-up" data-aos-delay="{{ $index * 100 }}" class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
+                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
                     <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
                         <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">{{ $faq->question }}</span>
                         <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
@@ -350,162 +422,187 @@
     
     <!-- Modal Jersey -->
     <div id="modal-jersey" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity opacity-0 p-4">
-        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform scale-95 transition-transform duration-300 max-h-[90vh]">
+        <!-- Wrapper Modal dengan Border dan Max-Height -->
+        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[95vh] relative border-[3px] border-[#e85d04] flex flex-col">
             
-            <!-- Sisi Kiri: Gambar Full -->
-            <div class="md:w-3/5 bg-gray-100 flex items-center justify-center p-6 relative group">
-                @if(!empty($settings->jersey_image))
-                    <div class="relative w-full h-full max-h-[50vh] md:max-h-[75vh] group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->jersey_image) }}')">
-                        <img src="{{ asset('storage/' . $settings->jersey_image) }}" class="max-w-full max-h-full object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Detail Jersey & Size Chart">
-                        <!-- Overlay Perbesar Gambar -->
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
-                            <span class="bg-[#0b4d75] text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
-                                Perbesar Gambar
-                            </span>
-                        </div>
-                    </div>
-                @else
-                    <div class="text-center text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                        <p>Panitia belum mengunggah foto Jersey</p>
-                    </div>
-                @endif
+            <!-- Tombol Close Floating Fixed -->
+            <button onclick="closeModal('modal-jersey')" class="absolute top-4 right-4 z-50 text-gray-900 hover:text-white hover:bg-red-500 bg-white shadow-md p-1.5 rounded-full transition border-2 border-gray-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- Header Modal Mobile -->
+            <div class="md:hidden pt-6 pb-4 px-6 border-b border-gray-100 bg-white z-40">
+                <h3 class="font-sporty text-xl text-[#0b4d75] font-black italic uppercase leading-none pr-10">DETAIL JERSEY<br><span class="text-cyan-500">& SIZE CHART</span></h3>
             </div>
 
-            <!-- Sisi Kanan: Informasi -->
-            <div class="md:w-2/5 p-6 md:p-8 flex flex-col bg-white overflow-y-auto">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="font-sporty text-3xl text-[#0b4d75] font-black italic uppercase leading-none">DETAIL JERSEY<br><span class="text-cyan-500">& SIZE CHART</span></h3>
-                    <button onclick="closeModal('modal-jersey')" class="text-gray-400 hover:text-red-500 bg-gray-100 hover:bg-red-50 p-2 rounded-full transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-                
-                <div class="prose text-gray-600 text-sm mb-8 flex-grow">
-                    <p class="mb-4">{{ $settings->jersey_modal_desc ?? 'Desain exclusive OCTOBERUN dengan material Premium Dry-Fit Tech yang super ringan, menyerap keringat dengan cepat, dan memiliki sirkulasi udara maksimal untuk menjaga performa larimu.' }}</p>
-                    
-                    <div class="bg-cyan-50 border border-cyan-100 p-4 rounded-lg mt-6">
-                        <p class="font-bold text-[#0b4d75] mb-3 text-xs tracking-wider uppercase">Panduan Ukuran (Toleransi 1-2 cm)</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">S</span>
-                            <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">M</span>
-                            <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">L</span>
-                            <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XL</span>
-                            <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XXL</span>
+            <!-- Konten Scrollable -->
+            <div class="overflow-y-auto flex flex-col md:flex-row w-full flex-grow">
+                <!-- Sisi Kiri: Gambar -->
+                <div class="md:w-1/2 bg-gray-100 flex items-center justify-center p-6 relative group min-h-[40vh] md:min-h-0 shrink-0">
+                    @if(!empty($settings->jersey_image))
+                        <div class="relative w-full h-full group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->jersey_image) }}')">
+                            <img src="{{ asset('storage/' . $settings->jersey_image) }}" class="max-w-full max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Detail Jersey & Size Chart">
+                            <!-- Overlay Perbesar Gambar -->
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
+                                <span class="bg-[#0b4d75] text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                                    Perbesar Gambar
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="text-center text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                            <p>Panitia belum mengunggah foto Jersey</p>
+                        </div>
+                    @endif
                 </div>
 
-                <button onclick="closeModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                <!-- Sisi Kanan: Informasi -->
+                <div class="md:w-1/2 p-6 md:p-8 flex flex-col bg-white shrink-0">
+                    <div class="hidden md:flex justify-between items-start mb-6">
+                        <h3 class="font-sporty text-3xl text-[#0b4d75] font-black italic uppercase leading-none">DETAIL JERSEY<br><span class="text-cyan-500">& SIZE CHART</span></h3>
+                    </div>
+                    
+                    <div class="prose text-gray-600 text-sm mb-8 flex-grow">
+                        <p class="mb-4">{{ $settings->jersey_modal_desc ?? 'Desain exclusive OCTOBERUN dengan material Premium Dry-Fit Tech yang super ringan, menyerap keringat dengan cepat, dan memiliki sirkulasi udara maksimal untuk menjaga performa larimu.' }}</p>
+                        
+                        <div class="bg-cyan-50 border border-cyan-100 p-4 rounded-lg mt-6">
+                            <p class="font-bold text-[#0b4d75] mb-3 text-xs tracking-wider uppercase">Panduan Ukuran (Toleransi 1-2 cm)</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">S</span>
+                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">M</span>
+                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">L</span>
+                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XL</span>
+                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XXL</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button onclick="closeModal('modal-jersey')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Race Pack -->
     <div id="modal-racepack" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity opacity-0 p-4">
-        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform scale-95 transition-transform duration-300 max-h-[90vh]">
+        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[95vh] relative border-[3px] border-[#e85d04] flex flex-col">
             
-            <div class="md:w-3/5 bg-gray-100 flex items-center justify-center p-6">
-                @if(!empty($settings->racepack_image))
-                    <div class="relative w-full h-full max-h-[50vh] md:max-h-[75vh] group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->racepack_image) }}')">
-                        <img src="{{ asset('storage/' . $settings->racepack_image) }}" class="max-w-full max-h-full object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Isi Race Pack">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
-                            <span class="bg-[#e85d04] text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
-                                Perbesar Gambar
-                            </span>
-                        </div>
-                    </div>
-                @else
-                    <div class="text-center text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
-                        <p>Panitia belum mengunggah foto Race Pack</p>
-                    </div>
-                @endif
+            <button onclick="closeModal('modal-racepack')" class="absolute top-4 right-4 z-50 text-gray-900 hover:text-white hover:bg-red-500 bg-white shadow-md p-1.5 rounded-full transition border-2 border-gray-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="md:hidden pt-6 pb-4 px-6 border-b border-gray-100 bg-white z-40">
+                <h3 class="font-sporty text-xl text-[#e85d04] font-black italic uppercase leading-none pr-10">RACE PACK<br><span class="text-gray-800">BENEFITS</span></h3>
             </div>
 
-            <div class="md:w-2/5 p-6 md:p-8 flex flex-col bg-white overflow-y-auto">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="font-sporty text-3xl text-[#e85d04] font-black italic uppercase leading-none">RACE PACK<br><span class="text-gray-800">BENEFITS</span></h3>
-                    <button onclick="closeModal('modal-racepack')" class="text-gray-400 hover:text-red-500 bg-gray-100 hover:bg-red-50 p-2 rounded-full transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-                
-                <div class="text-gray-600 text-sm mb-8 flex-grow">
-                    <p class="mb-5">{{ $settings->racepack_modal_desc ?? 'Setiap pendaftar OCTOBERUN akan mendapatkan paket eksklusif yang tidak hanya mendukung performa larimu, tapi juga berdampak positif bagi lingkungan.' }}</p>
-                    
-                    <ul class="space-y-4">
-                        <li class="flex items-start gap-3">
-                            <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                            <div><strong class="text-gray-800 block">{{ $settings->benefit_1_title ?? 'Jersey Premium Exclusive' }}</strong><span class="text-xs">{{ $settings->benefit_1_desc ?? 'Bahan anti-bau dan super sejuk.' }}</span></div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                            <div><strong class="text-gray-800 block">{{ $settings->benefit_2_title ?? 'Medali Finisher 3D' }}</strong><span class="text-xs">{{ $settings->benefit_2_desc ?? 'Bagi peserta yang berhasil melewati garis finish.' }}</span></div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg></div>
-                            <div><strong class="text-gray-800 block">{{ $settings->benefit_3_title ?? 'Nomor Dada (BIB) & String Bag' }}</strong><span class="text-xs">{{ $settings->benefit_3_desc ?? 'Identitas resmi pelari dan tas serut fungsional.' }}</span></div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                            <div><strong class="text-gray-800 block">{{ $settings->benefit_4_title ?? '1 Bibit Pohon' }}</strong><span class="text-xs">{{ $settings->benefit_4_desc ?? 'Sumbangan pelestarian alam atas namamu.' }}</span></div>
-                        </li>
-                    </ul>
+            <div class="overflow-y-auto flex flex-col md:flex-row w-full flex-grow">
+                <div class="md:w-1/2 bg-gray-100 flex items-center justify-center p-6 relative group min-h-[40vh] md:min-h-0 shrink-0">
+                    @if(!empty($settings->racepack_image))
+                        <div class="relative w-full h-full group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->racepack_image) }}')">
+                            <img src="{{ asset('storage/' . $settings->racepack_image) }}" class="max-w-full max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Isi Race Pack">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
+                                <span class="bg-[#e85d04] text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                                    Perbesar Gambar
+                                </span>
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                            <p>Panitia belum mengunggah foto Race Pack</p>
+                        </div>
+                    @endif
                 </div>
 
-                <button onclick="closeModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                <div class="md:w-1/2 p-6 md:p-8 flex flex-col bg-white shrink-0">
+                    <div class="hidden md:flex justify-between items-start mb-6">
+                        <h3 class="font-sporty text-3xl text-[#e85d04] font-black italic uppercase leading-none">RACE PACK<br><span class="text-gray-800">BENEFITS</span></h3>
+                    </div>
+                    
+                    <div class="text-gray-600 text-sm mb-8 flex-grow">
+                        <p class="mb-5">{{ $settings->racepack_modal_desc ?? 'Setiap pendaftar OCTOBERUN akan mendapatkan paket eksklusif yang tidak hanya mendukung performa larimu, tapi juga berdampak positif bagi lingkungan.' }}</p>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                <div><strong class="text-gray-800 block">{{ $settings->benefit_1_title ?? 'Jersey Premium Exclusive' }}</strong><span class="text-xs">{{ $settings->benefit_1_desc ?? 'Bahan anti-bau dan super sejuk.' }}</span></div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                <div><strong class="text-gray-800 block">{{ $settings->benefit_2_title ?? 'Medali Finisher 3D' }}</strong><span class="text-xs">{{ $settings->benefit_2_desc ?? 'Bagi peserta yang berhasil melewati garis finish.' }}</span></div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg></div>
+                                <div><strong class="text-gray-800 block">{{ $settings->benefit_3_title ?? 'Nomor Dada (BIB) & String Bag' }}</strong><span class="text-xs">{{ $settings->benefit_3_desc ?? 'Identitas resmi pelari dan tas serut fungsional.' }}</span></div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                                <div><strong class="text-gray-800 block">{{ $settings->benefit_4_title ?? '1 Bibit Pohon' }}</strong><span class="text-xs">{{ $settings->benefit_4_desc ?? 'Sumbangan pelestarian alam atas namamu.' }}</span></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="closeModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal Rute -->
     <div id="modal-rute" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity opacity-0 p-4">
-        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row transform scale-95 transition-transform duration-300 max-h-[90vh]">
+        <div class="bg-white rounded-2xl w-full max-w-5xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[95vh] relative border-[3px] border-[#e85d04] flex flex-col">
             
-            <div class="md:w-3/5 bg-gray-100 flex items-center justify-center p-6">
-                @if(!empty($settings->route_image))
-                    <div class="relative w-full h-full max-h-[50vh] md:max-h-[75vh] group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->route_image) }}')">
-                        <img src="{{ asset('storage/' . $settings->route_image) }}" class="max-w-full max-h-full object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Peta Rute Lari">
-                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
-                            <span class="bg-cyan-500 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
-                                Perbesar Gambar
-                            </span>
-                        </div>
-                    </div>
-                @else
-                    <div class="text-center text-gray-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
-                        <p>Panitia belum mengunggah Peta Rute</p>
-                    </div>
-                @endif
+            <button onclick="closeModal('modal-rute')" class="absolute top-4 right-4 z-50 text-gray-900 hover:text-white hover:bg-red-500 bg-white shadow-md p-1.5 rounded-full transition border-2 border-gray-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="md:hidden pt-6 pb-4 px-6 border-b border-gray-100 bg-white z-40">
+                <h3 class="font-sporty text-xl text-cyan-600 font-black italic uppercase leading-none pr-10">PETA RUTE<br><span class="text-gray-800">LARI 5K</span></h3>
             </div>
 
-            <div class="md:w-2/5 p-6 md:p-8 flex flex-col bg-white overflow-y-auto">
-                <div class="flex justify-between items-start mb-6">
-                    <h3 class="font-sporty text-3xl text-cyan-500 font-black italic uppercase leading-none">PETA RUTE<br><span class="text-gray-800">LARI 5K</span></h3>
-                    <button onclick="closeModal('modal-rute')" class="text-gray-400 hover:text-red-500 bg-gray-100 hover:bg-red-50 p-2 rounded-full transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    </button>
-                </div>
-                
-                <div class="text-gray-600 text-sm mb-8 flex-grow">
-                    <p class="mb-4">{{ $settings->route_modal_desc ?? 'Tantang dirimu di rute 5 Kilometer yang telah dikurasi khusus! Mengelilingi pusat kota, melintasi landmark ikonik, dengan kontur jalan rata yang sangat bersahabat bagi pelari pemula (*newbie friendly*) namun menantang bagi pro yang mengejar *Personal Best* (PB).' }}</p>
-                    
-                    <div class="mt-6 border-l-4 border-cyan-500 pl-4 bg-cyan-50 py-3 pr-3 rounded-r-lg">
-                        <p class="font-bold text-gray-800 text-xs uppercase mb-1">Titik Start & Finish</p>
-                        <p class="text-[#0b4d75] font-bold">{{ $settings->route_start_finish ?? 'Alun-Alun Utama Kota' }}</p>
-                    </div>
-                    <div class="mt-3 border-l-4 border-orange-400 pl-4 bg-orange-50 py-3 pr-3 rounded-r-lg">
-                        <p class="font-bold text-gray-800 text-xs uppercase mb-1">Fasilitas Rute</p>
-                        <p class="text-orange-800 font-bold text-xs">{{ $settings->route_facilities ?? 'Water Station di KM 2.5 • Tim Medis Mobile • Marshall di setiap persimpangan' }}</p>
-                    </div>
+            <div class="overflow-y-auto flex flex-col md:flex-row w-full flex-grow">
+                <div class="md:w-1/2 bg-gray-100 flex items-center justify-center p-6 relative group min-h-[40vh] md:min-h-0 shrink-0">
+                    @if(!empty($settings->route_image))
+                        <div class="relative w-full h-full group cursor-pointer flex justify-center items-center" onclick="openImagePreview('{{ asset('storage/' . $settings->route_image) }}')">
+                            <img src="{{ asset('storage/' . $settings->route_image) }}" class="max-w-full max-h-[50vh] md:max-h-[75vh] object-contain drop-shadow-xl transition duration-300 group-hover:scale-105" alt="Peta Rute Lari">
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">
+                                <span class="bg-cyan-500 text-white px-5 py-2.5 rounded-full font-bold text-sm flex items-center gap-2 shadow-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" /></svg>
+                                    Perbesar Gambar
+                                </span>
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center text-gray-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto mb-2 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
+                            <p>Panitia belum mengunggah Peta Rute</p>
+                        </div>
+                    @endif
                 </div>
 
-                <button onclick="closeModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                <div class="md:w-1/2 p-6 md:p-8 flex flex-col bg-white shrink-0">
+                    <div class="hidden md:flex justify-between items-start mb-6">
+                        <h3 class="font-sporty text-3xl text-cyan-500 font-black italic uppercase leading-none">PETA RUTE<br><span class="text-gray-800">LARI 5K</span></h3>
+                    </div>
+                    
+                    <div class="text-gray-600 text-sm mb-8 flex-grow">
+                        <p class="mb-4">{{ $settings->route_modal_desc ?? 'Tantang dirimu di rute 5 Kilometer yang telah dikurasi khusus! Mengelilingi pusat kota, melintasi landmark ikonik, dengan kontur jalan rata yang sangat bersahabat bagi pelari pemula (*newbie friendly*) namun menantang bagi pro yang mengejar *Personal Best* (PB).' }}</p>
+                        
+                        <div class="mt-6 border-l-4 border-cyan-500 pl-4 bg-cyan-50 py-3 pr-3 rounded-r-lg">
+                            <p class="font-bold text-gray-800 text-xs uppercase mb-1">Titik Start & Finish</p>
+                            <p class="text-[#0b4d75] font-bold">{{ $settings->route_start_finish ?? 'Alun-Alun Utama Kota' }}</p>
+                        </div>
+                        <div class="mt-3 border-l-4 border-orange-400 pl-4 bg-orange-50 py-3 pr-3 rounded-r-lg">
+                            <p class="font-bold text-gray-800 text-xs uppercase mb-1">Fasilitas Rute</p>
+                            <p class="text-orange-800 font-bold text-xs">{{ $settings->route_facilities ?? 'Water Station di KM 2.5 • Tim Medis Mobile • Marshall di setiap persimpangan' }}</p>
+                        </div>
+                    </div>
+
+                    <button onclick="closeModal('modal-rute')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-md mt-4 uppercase tracking-wider text-sm">Kembali</button>
+                </div>
             </div>
         </div>
     </div>
@@ -542,6 +639,8 @@
             const modal = document.getElementById(modalId);
             const content = modal.querySelector('div');
             
+            document.body.classList.add('overflow-hidden'); // Mengunci scroll halaman belakang
+            
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             
@@ -558,6 +657,8 @@
             const modal = document.getElementById(modalId);
             const content = modal.querySelector('div');
             
+            document.body.classList.remove('overflow-hidden'); // Membuka kembali scroll halaman belakang
+            
             // Animasi Fade Out & Zoom out
             modal.classList.add('opacity-0');
             content.classList.remove('scale-100');
@@ -573,6 +674,8 @@
         function openImagePreview(imageUrl) {
             const modal = document.getElementById('modal-image-preview');
             const imgElement = document.getElementById('preview-image-src');
+            
+            document.body.classList.add('overflow-hidden'); // Mengunci scroll halaman belakang
             
             imgElement.src = imageUrl;
             
