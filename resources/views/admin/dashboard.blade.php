@@ -63,7 +63,7 @@
         
         <!-- Header Tabel -->
         <div class="bg-gray-50 border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">5 Pendaftar Terbaru</h2>
+            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">{{ count($recentParticipants) }} Pendaftar Terbaru</h2>
             <!-- Link menuju halaman Data Pendaftar buatan Annisa -->
             <a href="{{ url('/admin-gsc/datapendaftar') }}" class="text-xs font-bold text-[#e85d04] hover:text-orange-700 hover:underline flex items-center gap-1">
                 Lihat Semua Data
