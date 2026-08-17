@@ -32,7 +32,7 @@
         @yield('content')
     </main>
 
-    <!-- Nanti kamu bisa buat komponen footer terpisah dan panggil pakai <x-footer /> -->
+    <x-footer />
 
     <!-- AOS JS -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
