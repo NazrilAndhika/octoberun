@@ -50,11 +50,11 @@ class RegistrationController extends Controller
     {
         $settings = EventSetting::first() ?? new EventSetting();
 
-        // --- TAMBAHKAN PROTEKSI PENUTUPAN DI SINI JUGA ---
-        if (!$settings || $settings->is_registration_open == false) {
+        // --- UBAH BAGIAN INI MENJADI DEADLINE ---
+        if (!$settings || now()->greaterThan($settings->registration_deadline)) {
             return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
         }
-        // -------------------------------------------------
+        // ----------------------------------------
 
         // Cek Kuota
         $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
