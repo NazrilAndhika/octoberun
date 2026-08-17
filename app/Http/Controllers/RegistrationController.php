@@ -28,8 +28,8 @@ class RegistrationController extends Controller
         $settings = EventSetting::first();
         
         // --- TAMBAHKAN PROTEKSI PENUTUPAN DI SINI ---
-        if (!$settings || $settings->is_registration_open == false) {
-            return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
+        if (!$settings || now()->greaterThan($settings->registration_deadline)) {
+    return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
         }
         // --------------------------------------------
 
