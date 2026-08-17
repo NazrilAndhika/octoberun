@@ -39,8 +39,8 @@ Route::get('/pembayaran/sukses/{order_id}', [RegistrationController::class, 'suk
 // ... rute pendaftaran & frontend di atasnya biarkan saja ...
 
 // Rute Halaman Login
-Route::get('/login-panitia', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login-panitia', [AuthController::class, 'authenticate']);
+Route::get('/portal-rahasia-gsc', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/portal-rahasia-gsc', [AuthController::class, 'authenticate']);
 Route::post('/logout-panitia', [AuthController::class, 'logout'])->name('logout');
 
 // Rute Admin yang DIKUNCI (Middleware Auth)
