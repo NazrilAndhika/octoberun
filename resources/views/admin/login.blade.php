@@ -23,7 +23,7 @@
             </div>
         @endif
 
-        <form action="{{ url('/login-panitia') }}" method="POST" class="space-y-5">
+        <form action="{{ route('login') }}" method="POST" class="space-y-5">
             @csrf
             <div>
                 <label class="block text-sm font-semibold text-gray-600 mb-1.5">Email Panitia</label>
