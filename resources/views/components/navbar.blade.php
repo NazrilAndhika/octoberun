@@ -1,4 +1,18 @@
 <!-- resources/views/components/navbar.blade.php -->
+@php
+    $navbarSettings = \App\Models\EventSetting::first();
+    $isClosed = false;
+    if (!$navbarSettings || now()->greaterThan($navbarSettings->registration_deadline)) {
+        $isClosed = true;
+    } else {
+        $kapasitas = (int) ($navbarSettings->target_runners ?? 0);
+        $pendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+        if ($kapasitas - $pendaftar <= 0) {
+            $isClosed = true;
+        }
+    }
+@endphp
+
 <nav class="bg-white shadow-sm fixed w-full z-50 top-0">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
@@ -29,9 +43,15 @@
 
             <!-- Bagian Tombol Kanan (Ditambah rute pendaftaran) -->
             <div class="hidden md:flex">
-                <a href="{{ route('daftar') }}" class="btn-daftar-global bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
-                    DAFTAR SEKARANG
-                </a>
+                @if($isClosed)
+                    <button disabled class="bg-gray-400 cursor-not-allowed text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2">
+                        PENDAFTARAN DITUTUP
+                    </button>
+                @else
+                    <a href="{{ route('daftar') }}" class="btn-daftar-global bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
+                        DAFTAR SEKARANG
+                    </a>
+                @endif
             </div>
 
         </div>
@@ -44,9 +64,16 @@
             <a href="{{ url('/#tentang') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">TENTANG</a>
             <a href="{{ url('/#info') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">INFO</a>
             <a href="{{ route('cek-status') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">CEK STATUS</a>
-            <a href="{{ route('daftar') }}" class="btn-daftar-global block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
-                DAFTAR SEKARANG
-            </a>
+            
+            @if($isClosed)
+                <button disabled class="block mt-4 w-full text-center bg-gray-400 cursor-not-allowed text-white font-bold py-3 rounded">
+                    PENDAFTARAN DITUTUP
+                </button>
+            @else
+                <a href="{{ route('daftar') }}" class="btn-daftar-global block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
+                    DAFTAR SEKARANG
+                </a>
+            @endif
         </div>
     </div>
 </nav>
@@ -55,6 +82,16 @@
 <script>
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
         const menu = document.getElementById('mobile-menu');
+        const iconPath = this.querySelector('path');
+        
         menu.classList.toggle('hidden');
+        
+        if (menu.classList.contains('hidden')) {
+            // Jika menu disembunyikan, tampilkan ikon hamburger
+            iconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+        } else {
+            // Jika menu terbuka, tampilkan ikon silang (X)
+            iconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+        }
     });
 </script>

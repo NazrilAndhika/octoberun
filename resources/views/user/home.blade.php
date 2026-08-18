@@ -400,13 +400,15 @@
             <div class="space-y-4">
                 
                 @forelse($faqs ?? [] as $index => $faq)
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300">
+                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300 faq-item">
                     <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
                         <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">{{ $faq->question }}</span>
-                        <span class="text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
+                        <span class="faq-icon text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
                     </button>
-                    <div class="hidden px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                        {{ $faq->answer }}
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
+                            {{ $faq->answer }}
+                        </div>
                     </div>
                 </div>
                 @empty
@@ -624,14 +626,24 @@
         // Fungsi untuk FAQ Dropdown
         function toggleFaq(button) {
             const answerDiv = button.nextElementSibling;
-            const icon = button.querySelector('span:last-child');
+            const icon = button.querySelector('.faq-icon');
             
-            if (answerDiv.classList.contains('hidden')) {
-                answerDiv.classList.remove('hidden');
+            // Periksa apakah item ini sedang terbuka (maxHeight diset dan tidak 0)
+            const isOpen = answerDiv.style.maxHeight && answerDiv.style.maxHeight !== '0px';
+            
+            // Tutup semua FAQ yang lain
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(item => {
+                const ans = item.querySelector('.faq-answer');
+                const ic = item.querySelector('.faq-icon');
+                if (ans) ans.style.maxHeight = null; // Menghapus style agar kembali ke class max-h-0
+                if (ic) ic.style.transform = 'rotate(0deg)';
+            });
+            
+            // Buka yang ditekan jika sebelumnya tertutup
+            if (!isOpen) {
+                answerDiv.style.maxHeight = answerDiv.scrollHeight + 'px';
                 icon.style.transform = 'rotate(45deg)'; // Ubah + jadi x
-            } else {
-                answerDiv.classList.add('hidden');
-                icon.style.transform = 'rotate(0deg)'; // Balik ke +
             }
         }
 
