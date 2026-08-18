@@ -17,17 +17,17 @@
     <!-- ========================================== -->
     <!-- BAGIAN 1: HERO SECTION (ID: beranda)       -->
     <!-- ========================================== -->
-    <section id="beranda" class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden min-h-[85vh] flex items-center justify-center md:justify-start" 
-             style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: center;">
+    <section id="beranda" class="relative pt-20 pb-16 lg:pt-40 lg:pb-32 overflow-hidden min-h-[120vw] md:min-h-[85vh] flex items-center justify-center md:justify-start" 
+             style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: 75% center;">
         
-        <!-- MOBILE OVERLAY (Lapisan putih tipis agar teks biru tetap terbaca di atas foto) -->
-        <div class="block md:hidden absolute inset-0 bg-white/60 backdrop-blur-[2px] z-0"></div>
+        <!-- MOBILE OVERLAY (Gradient dari transparan ke putih agar pelari & tugu di atas terlihat jelas, teks di bawah tetap terbaca) -->
+        <div class="block md:hidden absolute inset-0 bg-gradient-to-b from-white/0 via-white/60 to-white/95 z-0"></div>
         
         <!-- DESKTOP GRADIENT OVERLAY (Transisi putih dari kiri ke kanan) -->
         <div class="hidden md:block absolute inset-0 z-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div> 
 
         <!-- WADAH TEKS -->
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start text-center md:text-left">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start text-center md:text-left mt-40 md:mt-0">
             <div class="max-w-2xl w-full flex flex-col items-center md:items-start">
                 
                 <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase drop-shadow-sm">
