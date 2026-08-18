@@ -17,7 +17,7 @@
     <!-- ========================================== -->
     <!-- BAGIAN 1: HERO SECTION (ID: beranda)       -->
     <!-- ========================================== -->
-    <section id="beranda" class="relative pt-20 pb-16 lg:pt-40 lg:pb-32 overflow-hidden min-h-[120vw] md:min-h-[85vh] flex items-center justify-center md:justify-start" 
+    <section id="beranda" class="relative py-12 md:pt-40 md:pb-32 overflow-hidden aspect-square max-h-[500px] md:max-h-none md:aspect-auto md:min-h-[85vh] flex items-center justify-center md:justify-start" 
              style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: 75% center;">
         
         <!-- MOBILE OVERLAY (Gradient dari transparan ke putih agar pelari & tugu di atas terlihat jelas, teks di bawah tetap terbaca) -->
@@ -27,17 +27,17 @@
         <div class="hidden md:block absolute inset-0 z-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div> 
 
         <!-- WADAH TEKS -->
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center md:items-start text-center md:text-left mt-40 md:mt-0">
-            <div class="max-w-2xl w-full flex flex-col items-center md:items-start">
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-start text-left mt-0">
+            <div class="max-w-2xl w-full flex flex-col items-start">
                 
-                <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-lg md:text-xl italic tracking-wide mb-2 uppercase drop-shadow-sm">
+                <h3 data-aos="fade-down" class="text-[#e85d04] font-sporty font-bold text-sm md:text-xl italic tracking-wide mb-1 md:mb-2 uppercase drop-shadow-sm">
                     {{ $settings->event_name ?? 'OCTOBERUN 2026' }}
                 </h3>
-                <h1 data-aos="fade-right" data-aos-delay="100" class="font-sporty text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-[#0b4d75] leading-none mb-4 uppercase drop-shadow-md">
+                <h1 data-aos="fade-right" data-aos-delay="100" class="font-sporty text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black italic tracking-tighter text-[#0b4d75] leading-none mb-2 md:mb-4 uppercase drop-shadow-md">
                     {{ $settings->hero_title ?? 'RUN BEYOND LIMITS' }}
                 </h1>
                 
-                <div data-aos="fade-right" data-aos-delay="200" class="flex items-center justify-center md:justify-start gap-2 md:gap-3 text-[#0b4d75] font-bold text-xs md:text-sm tracking-widest mb-6 uppercase flex-wrap drop-shadow-sm">
+                <div data-aos="fade-right" data-aos-delay="200" class="flex items-center justify-start gap-1.5 md:gap-3 text-[#0b4d75] font-bold text-[10px] md:text-sm tracking-widest mb-3 md:mb-6 uppercase flex-wrap drop-shadow-sm">
                     <span>Faster</span>
                     <div class="w-1.5 h-1.5 rounded-full bg-[#e85d04]"></div>
                     <span>Stronger</span>
@@ -45,42 +45,42 @@
                     <span>Together</span>
                 </div>
 
-                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-800 md:text-gray-700 font-semibold md:font-normal mb-8 max-w-md text-sm md:text-base leading-relaxed drop-shadow-md md:drop-shadow-none">
+                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-800 md:text-gray-700 font-semibold md:font-normal mb-4 md:mb-8 max-w-[280px] md:max-w-md text-[10px] sm:text-xs md:text-base leading-tight md:leading-relaxed drop-shadow-md md:drop-shadow-none">
                     Bergabunglah dalam event lari terbesar di bulan Oktober. Rasakan pengalaman lari yang seru, menantang, dan penuh makna bersama ribuan pelari lainnya!
                 </p>
 
                 <!-- Countdown Timer -->
                 @if(!empty($settings->registration_deadline))
-                <div data-aos="zoom-in" data-aos-delay="400" class="mb-8 w-full flex flex-col items-center md:items-start" id="countdown-container">
-                    <p class="text-[#0b4d75] font-bold text-sm mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
-                    <div class="flex gap-2 sm:gap-3 justify-center md:justify-start">
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-days">00</div>
-                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
+                <div data-aos="zoom-in" data-aos-delay="400" class="mb-4 md:mb-8 w-full flex flex-col items-start" id="countdown-container">
+                    <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                    <div class="flex gap-1.5 md:gap-3 justify-start">
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                            <div class="font-black text-lg md:text-3xl text-black" id="cd-days">00</div>
+                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-hours">00</div>
-                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                            <div class="font-black text-lg md:text-3xl text-black" id="cd-hours">00</div>
+                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-minutes">00</div>
-                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                            <div class="font-black text-lg md:text-3xl text-black" id="cd-minutes">00</div>
+                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
                         </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-xl p-2 w-[70px] sm:w-[80px] shadow-lg">
-                            <div class="font-black text-2xl sm:text-3xl text-black" id="cd-seconds">00</div>
-                            <div class="text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
+                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                            <div class="font-black text-lg md:text-3xl text-black" id="cd-seconds">00</div>
+                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
                         </div>
                     </div>
                 </div>
                 @endif
 
-                <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 w-full">
+                <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-start justify-start gap-2 md:gap-4 w-full">
                     @if(isset($sisaKuota) && $sisaKuota <= 0)
-                        <button disabled class="w-[80%] sm:w-auto justify-center bg-gray-400 cursor-not-allowed text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 shadow-xl uppercase tracking-wider">
-                            KUOTA PENUH / PENDAFTARAN DITUTUP
+                        <button disabled class="w-auto inline-flex justify-center bg-gray-400 cursor-not-allowed text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 shadow-xl uppercase tracking-wider">
+                            KUOTA PENUH / DITUTUP
                         </button>
                     @else
-                        <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-[80%] sm:w-auto justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-3.5 px-8 rounded-xl flex items-center gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
+                        <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-auto inline-flex justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
                             DAFTAR SEKARANG
                         </a>
                     @endif
