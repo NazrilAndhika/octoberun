@@ -100,24 +100,26 @@
     <!-- ========================================== -->
     <!-- BAGIAN 2: BANNER STATISTIK                 -->
     <!-- ========================================== -->
-    <section class="bg-[#0b4d75] text-white py-10 relative z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 divide-x-0 md:divide-x-2 divide-blue-600/50">
-                
+    <section class="bg-[#0b4d75] text-white py-5 relative z-20 overflow-hidden">
+        <!-- MARQUEE CONTAINER -->
+        <div class="flex whitespace-nowrap">
+            
+            <!-- GROUP 1 -->
+            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-12 md:gap-24 px-6 md:px-12 animate-marquee">
                 <!-- Stat 1: Pelari -->
-                <div data-aos="zoom-in" data-aos-delay="100" class="flex items-center justify-center gap-4 px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none">{{ $settings->target_runners ?? '3.000+' }}+</h3>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
                     </div>
                 </div>
 
                 <!-- Stat 2: Tanggal -->
-                <div data-aos="zoom-in" data-aos-delay="200" class="flex items-center justify-center gap-4 px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <div>
@@ -127,8 +129,8 @@
                 </div>
 
                 <!-- Stat 3: Jarak Lari (Permintaan GSC 5K saja) -->
-                <div data-aos="zoom-in" data-aos-delay="300" class="flex items-center justify-center gap-4 px-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                     </svg>
                     <div>
@@ -138,8 +140,7 @@
                 </div>
 
                 <!-- Stat 4: Lokasi -->
-                <div data-aos="zoom-in" data-aos-delay="400" class="flex items-center justify-center gap-4 px-2">
-                    <!-- Tambahkan shrink-0 dan style="flex-shrink: 0;" di sini -->
+                <div class="flex items-center justify-center gap-4 px-2">
                     <svg style="flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -149,8 +150,56 @@
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
                     </div>
                 </div>
-
             </div>
+
+            <!-- GROUP 2 (DUPLICATE FOR SEAMLESS LOOP) -->
+            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-12 md:gap-24 px-6 md:px-12 animate-marquee" aria-hidden="true">
+                <!-- Stat 1: Pelari -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
+                    </div>
+                </div>
+
+                <!-- Stat 2: Tanggal -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-black font-sporty italic leading-tight">{{ $settings->event_date ?? '18 OKTOBER 2026' }}</h3>
+                        <p class="text-xs tracking-widest font-bold uppercase text-blue-200">MINGGU</p>
+                    </div>
+                </div>
+
+                <!-- Stat 3: Jarak Lari (Permintaan GSC 5K saja) -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xs tracking-widest font-bold uppercase text-blue-200 mb-0.5">JARAK LARI</h3>
+                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none">5K</p>
+                    </div>
+                </div>
+
+                <!-- Stat 4: Lokasi -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg style="flex-shrink: 0;" xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </section>
 

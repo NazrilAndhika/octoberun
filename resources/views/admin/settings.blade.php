@@ -59,6 +59,11 @@
                             <input type="text" name="event_name" value="{{ $settings->event_name }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm" placeholder="Contoh: OCTOBERUN 2026">
                             <p class="text-xs text-gray-400 mt-1">Teks kecil berwarna oranye di atas judul utama.</p>
                         </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Statistik Jumlah Pelari (Teks Banner)</label>
+                            <input type="text" name="target_runners_stat" value="{{ $settings->target_runners_stat }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm" placeholder="Contoh: 3100">
+                            <p class="text-xs text-gray-400 mt-1">Teks stat biru di beranda untuk menarik pengguna, tidak mempengaruhi limit pendaftaran. Otomatis akan ditambahkan tanda '+' di belakangnya.</p>
+                        </div>
                     </div>
 
                     <div class="pt-4">
