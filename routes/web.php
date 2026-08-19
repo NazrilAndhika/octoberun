@@ -90,3 +90,8 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     Route::post('/pengaturan-pendaftaran', [RegistrationSettingController::class, 'update'])->name('admin.registration.update');
 
 });
+
+Route::get('/buat-jembatan', function () {
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    return 'Jembatan foto berhasil dibangun!';
+});
