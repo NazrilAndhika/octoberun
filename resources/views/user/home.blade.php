@@ -105,17 +105,19 @@
         <div class="flex whitespace-nowrap">
             
             <!-- GROUP 1 -->
-            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-12 md:gap-24 px-6 md:px-12 animate-marquee">
+            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-8 md:gap-16 px-4 md:px-8 animate-marquee">
                 <!-- Stat 1: Pelari -->
                 <div class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-[#e85d04]">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
 
                 <!-- Stat 2: Tanggal -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -128,16 +130,20 @@
                     </div>
                 </div>
 
-                <!-- Stat 3: Jarak Lari (Permintaan GSC 5K saja) -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 3: Jarak Lari -->
                 <div class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                     </svg>
                     <div>
                         <h3 class="text-xs tracking-widest font-bold uppercase text-blue-200 mb-0.5">JARAK LARI</h3>
-                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none">5K</p>
+                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-[#e85d04]">5K</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
 
                 <!-- Stat 4: Lokasi -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -150,20 +156,50 @@
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 5: Medali -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">MEDALI</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">FINISHER</p>
+                    </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 6: Jersey -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">JERSEY</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">EKSKLUSIF</p>
+                    </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
             </div>
 
             <!-- GROUP 2 (DUPLICATE FOR SEAMLESS LOOP) -->
-            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-12 md:gap-24 px-6 md:px-12 animate-marquee" aria-hidden="true">
+            <div class="flex flex-row items-center justify-around min-w-full shrink-0 gap-8 md:gap-16 px-4 md:px-8 animate-marquee" aria-hidden="true">
                 <!-- Stat 1: Pelari -->
                 <div class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-[#e85d04]">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
 
                 <!-- Stat 2: Tanggal -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -176,16 +212,20 @@
                     </div>
                 </div>
 
-                <!-- Stat 3: Jarak Lari (Permintaan GSC 5K saja) -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 3: Jarak Lari -->
                 <div class="flex items-center justify-center gap-4 px-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
                     </svg>
                     <div>
                         <h3 class="text-xs tracking-widest font-bold uppercase text-blue-200 mb-0.5">JARAK LARI</h3>
-                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none">5K</p>
+                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-[#e85d04]">5K</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
 
                 <!-- Stat 4: Lokasi -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -198,6 +238,34 @@
                         <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
                     </div>
                 </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 5: Medali -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">MEDALI</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">FINISHER</p>
+                    </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+
+                <!-- Stat 6: Jersey -->
+                <div class="flex items-center justify-center gap-4 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-90 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">JERSEY</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">EKSKLUSIF</p>
+                    </div>
+                </div>
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
             </div>
             
         </div>
