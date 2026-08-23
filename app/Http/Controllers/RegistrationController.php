@@ -291,9 +291,9 @@ class RegistrationController extends Controller
         $settings = EventSetting::first();
         
         if ($request->filled('order_id')) {
-            $query = trim($request->order_id);
-            $participant = Participant::where('order_id', 'like', '%' . $query)
-                                      ->orWhere('email', $query)
+            $query = strtolower(trim($request->order_id));
+            $participant = Participant::whereRaw('LOWER(order_id) LIKE ?', ['%' . $query])
+                                      ->orWhereRaw('LOWER(email) = ?', [$query])
                                       ->latest()
                                       ->first();
         }

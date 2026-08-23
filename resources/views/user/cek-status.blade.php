@@ -15,19 +15,19 @@
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
             <form action="{{ route('cek-status') }}" method="GET">
                 <label for="order_id" class="block text-sm font-bold text-gray-700 mb-2">
-                    Masukkan Nomor Order atau Email Anda
+                    Masukkan Email atau nomor order Anda yang sudah terdaftar
                 </label>
                 <div class="flex gap-3">
                     <input type="text" name="order_id" id="order_id" 
-                           class="flex-1 rounded-lg border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] shadow-sm uppercase px-4 py-3"
-                           placeholder="Contoh: ORD-12345 atau email@kamu.com" 
+                           class="flex-1 rounded-lg border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] shadow-sm px-4 py-3"
+                           placeholder="Contoh: email@gmail.com" 
                            value="{{ request('order_id') }}"
                            required>
                     <button type="submit" class="bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
                         Cari
                     </button>
                 </div>
-                <p class="text-xs text-gray-400 mt-2">*Masukkan 6 karakter acak dari belakang nomor order Anda, atau nomor order lengkap (ORD-...).</p>
+                <p class="text-xs text-gray-400 mt-2">*Masukkan email atau 6 karakter acak dari belakang nomor order Anda</p>
             </form>
         </div>
 
@@ -60,7 +60,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
-                        <h2 class="text-xl font-bold text-green-700 mb-2">Pendaftaran Berhasil! 🎉</h2>
+                        <h2 class="text-xl font-bold text-green-700 mb-2">Pendaftaran Berhasil!</h2>
                         
                         <div class="bg-white border-2 border-dashed border-green-400 rounded-xl p-4 my-6 flex flex-col items-center">
                             <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">E-Ticket / No. Order</p>

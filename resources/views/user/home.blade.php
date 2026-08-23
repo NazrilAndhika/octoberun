@@ -45,7 +45,7 @@
                     <span>Together</span>
                 </div>
 
-                <p data-aos="fade-up" data-aos-delay="300" class="text-gray-800 md:text-gray-700 font-semibold md:font-normal mb-4 md:mb-8 max-w-[280px] md:max-w-md text-[10px] sm:text-xs md:text-base leading-tight md:leading-relaxed drop-shadow-md md:drop-shadow-none">
+                <p data-aos="fade-up" data-aos-delay="300" class="hidden md:block text-gray-800 md:text-gray-700 font-semibold md:font-normal mb-4 md:mb-8 max-w-[280px] md:max-w-md text-[10px] sm:text-xs md:text-base leading-tight md:leading-relaxed drop-shadow-md md:drop-shadow-none">
                     Bergabunglah dalam event lari terbesar di bulan Oktober. Rasakan pengalaman lari yang seru, menantang, dan penuh makna bersama ribuan pelari lainnya!
                 </p>
 
@@ -112,12 +112,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-[#e85d04]">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-white">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">PELARI</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 2: Tanggal -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -125,12 +125,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <div>
-                        <h3 class="text-lg md:text-xl font-black font-sporty italic leading-tight">{{ $settings->event_date ?? '18 OKTOBER 2026' }}</h3>
-                        <p class="text-xs tracking-widest font-bold uppercase text-blue-200">MINGGU</p>
+                        <h3 class="text-lg md:text-xl font-black font-sporty italic leading-tight text-white">{{ $settings->event_date ?? '18 OKTOBER 2026' }}</h3>
+                        <p class="text-xs tracking-widest font-bold uppercase text-white">MINGGU</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 3: Jarak Lari -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -139,11 +139,11 @@
                     </svg>
                     <div>
                         <h3 class="text-xs tracking-widest font-bold uppercase text-blue-200 mb-0.5">JARAK LARI</h3>
-                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-[#e85d04]">5K</p>
+                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-white">5K</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 4: Lokasi -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -152,12 +152,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">LOKASI EVENT</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 5: Medali -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -165,12 +165,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">MEDALI</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">FINISHER</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">MEDALI</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">FINISHER</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 6: Jersey -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -178,12 +178,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">JERSEY</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">EKSKLUSIF</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">JERSEY</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">EKSKLUSIF</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
             </div>
 
             <!-- GROUP 2 (DUPLICATE FOR SEAMLESS LOOP) -->
@@ -194,12 +194,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-[#e85d04]">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">PELARI</p>
+                        <h3 class="text-2xl md:text-3xl font-black font-sporty italic leading-none text-white">{{ $settings->target_runners_stat ?? '3000' }}+</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">PELARI</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 2: Tanggal -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -207,12 +207,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     <div>
-                        <h3 class="text-lg md:text-xl font-black font-sporty italic leading-tight">{{ $settings->event_date ?? '18 OKTOBER 2026' }}</h3>
-                        <p class="text-xs tracking-widest font-bold uppercase text-blue-200">MINGGU</p>
+                        <h3 class="text-lg md:text-xl font-black font-sporty italic leading-tight text-white">{{ $settings->event_date ?? '18 OKTOBER 2026' }}</h3>
+                        <p class="text-xs tracking-widest font-bold uppercase text-white">MINGGU</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 3: Jarak Lari -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -221,11 +221,11 @@
                     </svg>
                     <div>
                         <h3 class="text-xs tracking-widest font-bold uppercase text-blue-200 mb-0.5">JARAK LARI</h3>
-                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-[#e85d04]">5K</p>
+                        <p class="text-xl md:text-2xl font-black font-sporty italic leading-none text-white">5K</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 4: Lokasi -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -234,12 +234,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">LOKASI EVENT</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">{{ $settings->event_location ?? 'TITIK 0 CILACAP' }}</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">LOKASI EVENT</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 5: Medali -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -247,12 +247,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">MEDALI</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">FINISHER</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">MEDALI</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">FINISHER</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
 
                 <!-- Stat 6: Jersey -->
                 <div class="flex items-center justify-center gap-4 px-2">
@@ -260,12 +260,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
                     <div>
-                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight">JERSEY</h3>
-                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-blue-200">EKSKLUSIF</p>
+                        <h3 class="text-xl md:text-2xl font-black font-sporty italic leading-tight text-white">JERSEY</h3>
+                        <p class="text-xs tracking-widest font-bold mt-1 uppercase text-white">EKSKLUSIF</p>
                     </div>
                 </div>
 
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-[#e85d04] shrink-0 opacity-80"><path fill-rule="evenodd" d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z" clip-rule="evenodd" /></svg>
+                <span class="text-3xl text-orange-400 opacity-90 leading-none">&bull;</span>
             </div>
             
         </div>
@@ -274,8 +274,33 @@
     <!-- ========================================== -->
     <!-- BAGIAN 3: KARTU LAYANAN (ID: info)         -->
     <!-- ========================================== -->
-    <section id="info" class="scroll-mt-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 pt-16 pb-16">
-        <div class="text-center mb-12">
+    <section id="info" class="scroll-mt-28 relative z-20 py-12 lg:py-16 overflow-hidden bg-slate-50 border-b-2 border-dashed border-gray-300">
+        
+        <!-- Animated Sporty Background (Diagonal Speed Lines) -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.04]">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="speedlines" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+                        <line x1="0" y1="15" x2="60" y2="15" stroke="#0b4d75" stroke-width="2" />
+                        <line x1="0" y1="30" x2="60" y2="30" stroke="#e85d04" stroke-width="4" stroke-dasharray="20 10" class="speed-animate" />
+                        <line x1="0" y1="45" x2="60" y2="45" stroke="#0b4d75" stroke-width="2" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#speedlines)" />
+            </svg>
+            <style>
+                .speed-animate {
+                    animation: speedLinesAnim 1s linear infinite;
+                }
+                @keyframes speedLinesAnim {
+                    to { stroke-dashoffset: -30; }
+                }
+            </style>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-slate-50 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12">
             <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
                 INFORMASI EVENT
             </h2>
@@ -284,31 +309,37 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             
             <!-- Kartu 1: Jersey (Memicu Pop-up modal-jersey) -->
-            <div data-aos="fade-up" data-aos-delay="100" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-cyan-500 flex items-center justify-center mb-4 text-cyan-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            <div data-aos="fade-up" data-aos-delay="100" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-blue-50 rounded-full flex items-center justify-center mb-5 text-[#0b4d75] shadow-inner group-hover:scale-110 transition-transform duration-300 group-hover:bg-blue-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10 drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.25c-1.258 0-2.317.848-2.617 2.012l-.083.323a.75.75 0 01-.726.565H5.432c-.896 0-1.745.45-2.255 1.205l-1.92 2.88a1.5 1.5 0 00.323 2.072l2.368 1.84a1.5 1.5 0 01.572 1.192v7.16c0 1.243 1.007 2.25 2.25 2.25h10.5c1.243 0 2.25-1.007 2.25-2.25v-7.16a1.5 1.5 0 01.572-1.192l2.368-1.84a1.5 1.5 0 00.323-2.072l-1.92-2.88a2.5 2.5 0 00-2.255-1.205h-3.142a.75.75 0 01-.726-.565l-.083-.323A2.75 2.75 0 0012 2.25z" />
+                    </svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-[#0b4d75] italic mb-2 uppercase">JERSEY & SIZE</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->jersey_card_desc ?? 'Bahan High Performance yang ringan, sejuk, dan anti-bau.' }}</p>
-                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded text-sm transition">LIHAT DETAIL</button>
+                <button onclick="openModal('modal-jersey')" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-sm transition-colors shadow-md hover:shadow-lg">LIHAT DETAIL</button>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="200" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-orange-100 rounded-full flex items-center justify-center text-[#e85d04] mb-4 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <div data-aos="fade-up" data-aos-delay="200" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-orange-50 rounded-full flex items-center justify-center text-[#e85d04] mb-5 shadow-inner group-hover:scale-110 transition-transform duration-300 group-hover:bg-orange-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10 drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9.375 3a1.875 1.875 0 000 3.75h1.875v4.5H3.375A1.875 1.875 0 011.5 9.375v-.75c0-1.036.84-1.875 1.875-1.875h3.193A3.375 3.375 0 0112 2.753a3.375 3.375 0 015.432 3.997h3.193c1.035 0 1.875.84 1.875 1.875v.75c0 1.036-.84 1.875-1.875 1.875H12.75v-4.5h1.875a1.875 1.875 0 10-1.875-1.875V6.75h-1.5V4.875C11.25 3.839 10.41 3 9.375 3zM3 12.75a.75.75 0 00-.75.75v6.75c0 1.035.84 1.875 1.875 1.875h15.75c1.035 0 1.875-.84 1.875-1.875v-6.75a.75.75 0 00-.75-.75h-7.5v9h-1.5v-9H3z" />
+                    </svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-[#e85d04] italic mb-2 uppercase">RACE PACK</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->racepack_card_desc ?? 'Jersey, Medali, BIB, dan 1 Bibit Pohon spesial untukmu.' }}</p>
-                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded text-sm transition">ISI LENGKAP</button>
+                <button onclick="openModal('modal-racepack')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-2.5 rounded-lg text-sm transition-colors shadow-md hover:shadow-lg">ISI LENGKAP</button>
             </div>
 
-            <div data-aos="fade-up" data-aos-delay="300" class="bg-white rounded-lg shadow-xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition duration-300">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-cyan-100 rounded-full flex items-center justify-center text-cyan-500 mb-4 shadow-inner">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 md:h-8 md:w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            <div data-aos="fade-up" data-aos-delay="300" class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl p-6 md:p-8 text-center flex flex-col items-center hover:-translate-y-2 transition-all duration-300 border border-gray-100">
+                <div class="w-16 h-16 md:w-20 md:h-20 bg-cyan-50 rounded-full flex items-center justify-center text-cyan-500 mb-5 shadow-inner group-hover:scale-110 transition-transform duration-300 group-hover:bg-cyan-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 md:h-10 md:w-10 drop-shadow-sm" viewBox="0 0 24 24" fill="currentColor">
+                        <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+                    </svg>
                 </div>
                 <h4 class="font-sporty font-bold text-lg md:text-xl text-cyan-500 italic mb-2 uppercase">RUTE LARI</h4>
                 <p class="text-gray-500 text-xs md:text-sm mb-6 flex-grow">{{ $settings->route_card_desc ?? 'Rute 5K melewati landmark ikonik kota.' }}</p>
-                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded text-sm transition">LIHAT PETA</button>
+                <button onclick="openModal('modal-rute')" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2.5 rounded-lg text-sm transition-colors shadow-md hover:shadow-lg">LIHAT PETA</button>
             </div>
 
         </div>
@@ -317,9 +348,9 @@
     <!-- ========================================== -->
     <!-- BAGIAN ALUR PENDAFTARAN (HOW IT WORKS)     -->
     <!-- ========================================== -->
-    <section class="py-20 bg-gray-50 relative border-t border-gray-100 overflow-hidden">
+    <section class="py-12 lg:py-16 bg-white bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] relative border-b-2 border-dashed border-gray-300 overflow-hidden">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20">
+            <div class="text-center mb-12 lg:mb-16">
                 <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
                     ALUR PENDAFTARAN
                 </h2>
@@ -330,10 +361,10 @@
                 <!-- Vertical Dashed Line -->
                 <div class="absolute left-6 md:left-8 lg:left-1/2 top-0 bottom-0 w-0 border-l-2 border-dashed border-gray-300 lg:-translate-x-1/2 z-0"></div>
 
-                <div class="space-y-12 lg:space-y-0 lg:-space-y-4 relative z-10">
+                <div class="space-y-8 lg:space-y-0 lg:-space-y-12 relative z-10">
                     
                     <!-- Step 1 (Kiri) -->
-                    <div class="relative flex lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up">
+                    <div class="relative flex lg:justify-between items-center w-full" data-aos="fade-up">
                         <!-- Node Mobile -->
                         <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
                         <!-- Node Desktop -->
@@ -355,7 +386,7 @@
                     </div>
 
                     <!-- Step 2 (Kanan) -->
-                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full" data-aos="fade-up" data-aos-delay="100">
                         <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
                         <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
 
@@ -374,7 +405,7 @@
                     </div>
 
                     <!-- Step 3 (Kiri) -->
-                    <div class="relative flex lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="150">
+                    <div class="relative flex lg:justify-between items-center w-full" data-aos="fade-up" data-aos-delay="150">
                         <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
                         <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
                         
@@ -392,7 +423,7 @@
                     </div>
 
                     <!-- Step 4 (Kanan) -->
-                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full mb-12 lg:mb-0" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative flex flex-row-reverse lg:flex-row lg:justify-between items-center w-full" data-aos="fade-up" data-aos-delay="200">
                         <div class="lg:hidden absolute left-6 md:left-8 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
                         <div class="hidden lg:block absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 bg-[#e85d04] rounded-full shadow-md border-4 border-white z-20"></div>
 
@@ -434,30 +465,51 @@
     <!-- ========================================== -->
     <!-- BAGIAN 4: TENTANG KAMI (ID: tentang)       -->
     <!-- ========================================== -->
-    <section id="tentang" class="scroll-mt-28 bg-white pt-20 pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="tentang" class="relative overflow-hidden scroll-mt-28 bg-gradient-to-b from-white to-slate-50 pt-12 pb-16 lg:pt-16 lg:pb-20 border-b-2 border-dashed border-gray-300">
+        <!-- SVG Dot Cluster (Top Left) -->
+        <div class="absolute top-0 left-0 -translate-x-1/4 -translate-y-1/4 z-0 opacity-20 pointer-events-none text-gray-400">
+            <svg width="404" height="404" fill="none" viewBox="0 0 404 404" aria-hidden="true">
+                <defs>
+                    <pattern id="dot-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                        <rect x="0" y="0" width="4" height="4" fill="currentColor" />
+                    </pattern>
+                </defs>
+                <rect width="404" height="404" fill="url(#dot-pattern)" />
+            </svg>
+        </div>
+        <!-- Animated Dashed Line -->
+        <div class="absolute top-1/2 left-0 w-full h-0 z-0 opacity-20 pointer-events-none -translate-y-1/2">
+            <svg width="100%" height="2" viewBox="0 0 1000 2" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="1" x2="1000" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="15 15" class="text-gray-500 line-dash-anim" />
+            </svg>
+            <style>
+                .line-dash-anim { animation: lineMove 10s linear infinite; }
+                @keyframes lineMove { from { stroke-dashoffset: 0; } to { stroke-dashoffset: -300; } }
+            </style>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <!-- Grid Tentang Kami -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-16 lg:mb-20">
                 <!-- Kiri: Teks -->
-                <div data-aos="fade-right">
+                <div class="lg:col-span-7" data-aos="fade-right">
                     <p class="uppercase text-xs md:text-sm text-[#e85d04] font-bold tracking-[0.2em] mb-2">TENTANG OCTOBERUN</p>
-                    <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] mb-6 uppercase leading-tight">
+                    <h2 class="font-sporty font-black text-3xl md:text-4xl lg:text-5xl italic text-[#0b4d75] mb-6 uppercase leading-tight">
                         {{ $settings->about_title ?? 'LEBIH DARI SEKEDAR LARI, INI TENTANG PERUBAHAN.' }}
                     </h2>
                     
-                    <div class="space-y-4 text-gray-600 text-sm md:text-base leading-relaxed">
+                    <div class="space-y-4 text-gray-700 text-base md:text-lg leading-relaxed">
                         <p>{{ $settings->about_text ?? 'OCTOBERUN 2026 adalah event lari tahunan yang diselenggarakan oleh GSC pada bulan Oktober untuk menginspirasi gaya hidup sehat, memperkuat kebersamaan, dan mendorong setiap individu untuk melampaui batas diri.' }}</p>
                     </div>
 
-                    <p class="font-sporty font-bold italic text-[#0b4d75] text-lg mt-8 uppercase tracking-wide">
+                    <p class="font-sporty font-bold italic text-[#0b4d75] text-lg md:text-xl mt-8 uppercase tracking-wide">
                         RUN TOGETHER, <span class="text-cyan-500">STRONGER</span> FOREVER.
                     </p>
                 </div>
 
                 <!-- Kanan: Gambar/Grafis -->
-                <div data-aos="fade-left" data-aos-delay="200" class="relative w-full flex justify-center lg:justify-end">
-                    <img src="{{ !empty($settings->about_image) ? asset('storage/' . $settings->about_image) : asset('img/about-graphic.png') }}" alt="Tentang Octoberun" class="w-full max-w-md object-contain rounded-lg">
+                <div class="lg:col-span-5 relative w-full flex justify-center mt-8 lg:mt-0" data-aos="fade-left" data-aos-delay="200">
+                    <img src="{{ !empty($settings->about_image) ? asset('storage/' . $settings->about_image) : asset('img/about-graphic.png') }}" alt="Tentang Octoberun" class="w-full max-w-xs md:max-w-sm lg:max-w-md object-contain rounded-lg mx-auto">
                 </div>
             </div>
 
@@ -495,10 +547,12 @@
                     <!-- Tujuan 4 -->
                     <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col items-center text-center px-4 pt-6 sm:pt-0">
                         <div class="w-16 h-16 rounded-full bg-white flex items-center justify-center text-[#0b4d75] mb-4 shadow-sm border border-cyan-100">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                            </svg>
                         </div>
-                        <h4 class="font-black font-sporty text-[#0b4d75] text-lg mb-2 uppercase italic">BERDAMPAK</h4>
-                        <p class="text-sm text-gray-500 leading-relaxed">Memberikan dampak positif bagi lingkungan dan masyarakat sekitar.</p>
+                        <h4 class="font-black font-sporty text-[#0b4d75] text-lg mb-2 uppercase italic">PENGALAMAN BERKESAN</h4>
+                        <p class="text-sm text-gray-500 leading-relaxed">Menghadirkan rute dan festival lari yang menyenangkan serta tak terlupakan bagi semua kalangan.</p>
                     </div>
                 </div>
             </div>
@@ -508,8 +562,20 @@
     <!-- ========================================== -->
     <!-- BAGIAN 5: FREQUENTLY ASKED QUESTIONS       -->
     <!-- ========================================== -->
-    <section class="bg-gray-50 py-16 mb-10 border-t border-gray-200">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white pt-12 pb-20 lg:pt-16 lg:pb-24">
+        <!-- SVG Grid Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-5">
+            <svg class="absolute h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="faq-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" stroke-width="1"></path>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#faq-grid)" class="text-gray-900"></rect>
+            </svg>
+        </div>
+        
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-center font-sporty font-black text-2xl md:text-3xl italic text-[#0b4d75] mb-12 uppercase tracking-wider">
                 FREQUENTLY ASKED <span class="text-cyan-500">QUESTIONS</span>
             </h2>
@@ -517,7 +583,7 @@
             <div class="space-y-4">
                 
                 @forelse($faqs ?? [] as $index => $faq)
-                <div class="border-2 border-[#0b4d75] rounded-xl overflow-hidden bg-white transition-all duration-300 faq-item">
+                <div class="border border-gray-200 shadow-sm hover:shadow-md rounded-xl overflow-hidden bg-white transition-all duration-300 faq-item">
                     <button onclick="toggleFaq(this)" class="w-full p-4 md:p-5 flex items-center justify-between focus:outline-none hover:bg-blue-50 transition">
                         <span class="font-bold text-[#0b4d75] text-left text-sm md:text-base">{{ $faq->question }}</span>
                         <span class="faq-icon text-2xl text-[#e85d04] font-bold transform transition-transform duration-300">+</span>
@@ -587,15 +653,49 @@
                     <div class="prose text-gray-600 text-sm mb-8 flex-grow">
                         <p class="mb-4">{{ $settings->jersey_modal_desc ?? 'Desain exclusive OCTOBERUN dengan material Premium Dry-Fit Tech yang super ringan, menyerap keringat dengan cepat, dan memiliki sirkulasi udara maksimal untuk menjaga performa larimu.' }}</p>
                         
-                        <div class="bg-cyan-50 border border-cyan-100 p-4 rounded-lg mt-6">
+                        <div class="bg-cyan-50 border border-cyan-100 p-4 rounded-lg mt-6 overflow-x-auto">
                             <p class="font-bold text-[#0b4d75] mb-3 text-xs tracking-wider uppercase">Panduan Ukuran (Toleransi 1-2 cm)</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">S</span>
-                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">M</span>
-                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">L</span>
-                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XL</span>
-                                <span class="px-3 py-1.5 bg-white border border-cyan-200 rounded text-xs font-bold text-cyan-800 shadow-sm">XXL</span>
-                            </div>
+                            <table class="w-full text-left border-collapse text-sm text-gray-700">
+                                <thead>
+                                    <tr class="border-b-2 border-cyan-200 text-[#0b4d75]">
+                                        <th class="py-2 px-4 font-bold uppercase">SIZE</th>
+                                        <th class="py-2 px-4 font-bold uppercase">WIDTH</th>
+                                        <th class="py-2 px-4 font-bold uppercase">LENGTH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">XS</td>
+                                        <td class="py-2 px-4">16"</td>
+                                        <td class="py-2 px-4">27"</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">S</td>
+                                        <td class="py-2 px-4">18"</td>
+                                        <td class="py-2 px-4">28"</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">M</td>
+                                        <td class="py-2 px-4">20"</td>
+                                        <td class="py-2 px-4">29"</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">L</td>
+                                        <td class="py-2 px-4">22"</td>
+                                        <td class="py-2 px-4">30"</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">XL</td>
+                                        <td class="py-2 px-4">24"</td>
+                                        <td class="py-2 px-4">31"</td>
+                                    </tr>
+                                    <tr class="hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">2XL</td>
+                                        <td class="py-2 px-4">26"</td>
+                                        <td class="py-2 px-4">32"</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
