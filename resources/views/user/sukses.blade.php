@@ -84,8 +84,8 @@
                             <span class="w-2 h-2 rounded-full bg-gray-300"></span>
                         </div>
                         <div>
-                            <p class="text-sm font-bold text-gray-400">Status: LUNAS ✅</p>
-                            <p class="text-xs text-gray-400">E-Ticket akan dikirim otomatis</p>
+                            <p class="text-sm font-bold text-gray-400">Status Lunas</p>
+                            <p class="text-xs text-gray-400">E-Ticket akan dikirim setelah pembayaran</p>
                         </div>
                         @endif
                     </div>
@@ -128,4 +128,11 @@
 
     </div>
 </div>
+@if($participant->payment_status !== 'paid')
+<script>
+    setTimeout(function() {
+        window.location.reload();
+    }, 10000);
+</script>
+@endif
 @endsection
