@@ -54,21 +54,6 @@
                         {{-- RACE DATA --}}
                         <h3 class="font-bold text-[#0b4d75] text-sm uppercase tracking-wider mb-4">RACE DATA</h3>
 
-                        {{-- Nama BIB --}}
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
-                                Nama di BIB <span class="text-red-500">*</span>
-                                <span class="text-gray-400 font-normal">(Maks 10 Huruf)</span>
-                            </label>
-                            <input type="text" name="bib_name" id="bib_name"
-                                value="{{ old('bib_name') }}"
-                                maxlength="10"
-                                oninput="this.value = this.value.toUpperCase()"
-                                placeholder="CTH : NAZRIL"
-                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] uppercase py-2.5 px-3 text-sm {{ $errors->has('bib_name') ? 'border-red-400' : '' }}"
-                                required>
-                            <p class="text-xs text-gray-400 mt-1.5">Nama ini yang akan tercetak di nomor dada (BIB)</p>
-                        </div>
 
                         {{-- Nama Lengkap --}}
                         <div>
@@ -83,34 +68,19 @@
                                 required>
                         </div>
 
-                        {{-- No ID & Jersey --}}
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
-                                    No. ID (KTP / Passport) <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" name="id_number" id="id_number"
-                                    value="{{ old('id_number') }}"
-                                    placeholder="Masukkan nomor ID"
-                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('id_number') ? 'border-red-400' : '' }}"
-                                    required>
-                                @error('id_number')
-                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
-                                    Pilih Size Jersey <span class="text-red-500">*</span>
-                                </label>
-                                <select name="jersey_size" id="jersey_size"
-                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
-                                    required>
-                                    <option value="" disabled {{ old('jersey_size') ? '' : 'selected' }}>Pilih Ukuran</option>
-                                    @foreach(['XS','S','M','L','XL','XXL'] as $s)
-                                        <option value="{{ $s }}" {{ old('jersey_size') === $s ? 'selected' : '' }}>{{ $s }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                        {{-- Size Jersey --}}
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                Pilih Size Jersey <span class="text-red-500">*</span>
+                            </label>
+                            <select name="jersey_size" id="jersey_size"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
+                                required>
+                                <option value="" disabled {{ old('jersey_size') ? '' : 'selected' }}>Pilih Ukuran</option>
+                                @foreach(['XS','S','M','L','XL','XXL'] as $s)
+                                    <option value="{{ $s }}" {{ old('jersey_size') === $s ? 'selected' : '' }}>{{ $s }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         {{-- Email & WhatsApp --}}

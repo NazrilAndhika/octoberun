@@ -139,9 +139,7 @@ class DatapendaftarController extends Controller
         $participant = Participant::findOrFail($id);
 
         $request->validate([
-            'bib_name'   => 'required|string|max:10',
             'full_name'  => 'required|string|max:255',
-            'id_number'  => 'required|string|max:50',
             'email'      => 'required|email|max:255',
             'whatsapp'   => 'required|string|max:20',
             'gender'     => 'required|in:male,female',
@@ -151,9 +149,7 @@ class DatapendaftarController extends Controller
         ]);
 
         $participant->update([
-            'bib_name'   => $request->bib_name,
             'full_name'  => $request->full_name,
-            'id_number'  => $request->id_number,
             'email'      => $request->email,
             'whatsapp'   => $request->whatsapp,
             'gender'     => $request->gender,

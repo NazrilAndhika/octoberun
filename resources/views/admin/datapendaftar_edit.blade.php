@@ -84,15 +84,7 @@
                             <input type="text" name="full_name" value="{{ old('full_name', $participant->full_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
                         </div>
                         
-                        <div>
-                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nama BIB (Maks. 10 Huruf)</label>
-                            <input type="text" name="bib_name" value="{{ old('bib_name', $participant->bib_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" maxlength="10" required>
-                        </div>
 
-                        <div>
-                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">No. KTP/Passport</label>
-                            <input type="text" name="id_number" value="{{ old('id_number', $participant->id_number) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
-                        </div>
 
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Email</label>

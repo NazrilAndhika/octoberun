@@ -51,10 +51,7 @@
 
             <div class="participant-details">
                 <h3>Detail Pendaftaran</h3>
-                <div class="detail-row">
-                    <span class="detail-label">Nama BIB:</span>
-                    <span>{{ $participant->bib_name }}</span>
-                </div>
+
                 <div class="detail-row">
                     <span class="detail-label">Kategori:</span>
                     <span>{{ $participant->kategori }}</span>

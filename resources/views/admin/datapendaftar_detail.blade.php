@@ -44,8 +44,6 @@
                     @php
                         $fields = [
                             ['label' => 'Nama Lengkap',    'value' => $participant->full_name],
-                            ['label' => 'Nama BIB',        'value' => $participant->bib_name],
-                            ['label' => 'No. KTP/Passport','value' => $participant->id_number],
                             ['label' => 'Jenis Kelamin',   'value' => $participant->gender === 'male' ? 'Laki-laki' : 'Perempuan'],
                             ['label' => 'Email',           'value' => $participant->email],
                             ['label' => 'No. WhatsApp',    'value' => $participant->whatsapp],

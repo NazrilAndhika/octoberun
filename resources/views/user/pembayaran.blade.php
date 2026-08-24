@@ -92,7 +92,6 @@
                             @php
                             $rows = [
                                 ['label' => 'Nama Peserta', 'value' => $participant->full_name],
-                                ['label' => 'BIB Name',     'value' => $participant->bib_name],
                                 ['label' => 'Kategori',     'value' => $participant->kategori . ' Run'],
                                 ['label' => 'Jersey',       'value' => $participant->jersey_size],
                                 ['label' => 'Email',        'value' => $participant->email],

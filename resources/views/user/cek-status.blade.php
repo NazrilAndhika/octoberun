@@ -33,65 +33,69 @@
 
         {{-- Hasil Pencarian --}}
         @if(request()->filled('order_id'))
-            @if($participant)
-                @if($participant->payment_status === 'pending')
-                    <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center shadow-sm">
-                        <div class="w-16 h-16 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-yellow-700 mb-2">Menunggu Pembayaran</h2>
-                        <p class="text-yellow-600 font-medium">Anda memiliki transaksi yang belum diselesaikan.</p>
-                        
-                        <div class="mt-6 pt-6 border-t border-yellow-200 text-left">
-                            <p class="text-sm text-yellow-700"><strong>Nomor Order:</strong> {{ $participant->order_id }}</p>
-                            <p class="text-sm text-yellow-700"><strong>Nama:</strong> {{ $participant->full_name }}</p>
-                        </div>
-
-                        <a href="{{ route('pembayaran.show', $participant->order_id) }}" class="block w-full text-center bg-[#0b4d75] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-blue-800 transition duration-300">
-                            LANJUTKAN PEMBAYARAN
-                        </a>
-                    </div>
-                @elseif($participant->payment_status === 'paid')
-                    <div class="bg-green-50 border border-green-200 rounded-2xl p-6 text-center shadow-sm">
-                        <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h2 class="text-xl font-bold text-green-700 mb-2">Pendaftaran Berhasil!</h2>
-                        
-                        <div class="bg-white border-2 border-dashed border-green-400 rounded-xl p-4 my-6 flex flex-col items-center">
-                            <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">E-Ticket / No. Order</p>
-                            <p class="text-2xl font-black text-[#0b4d75] tracking-widest mb-2">{{ $participant->order_id }}</p>
-                            <p class="text-sm font-semibold text-gray-600">{{ $participant->full_name }} ({{ $participant->bib_name }})</p>
-                            
-                            <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                {!! QrCode::size(180)->generate($participant->order_id) !!}
+            @if($participants->isNotEmpty())
+                <div class="space-y-6">
+                @foreach($participants as $participant)
+                    @if($participant->payment_status === 'pending')
+                        <div class="bg-yellow-50 border border-yellow-200 rounded-2xl p-6 text-center shadow-sm">
+                            <div class="w-16 h-16 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                             </div>
-                        </div>
+                            <h2 class="text-xl font-bold text-yellow-700 mb-2">Menunggu Pembayaran</h2>
+                            <p class="text-yellow-600 font-medium">Anda memiliki transaksi yang belum diselesaikan.</p>
+                            
+                            <div class="mt-6 pt-6 border-t border-yellow-200 text-left">
+                                <p class="text-sm text-yellow-700"><strong>Nomor Order:</strong> {{ $participant->order_id }}</p>
+                                <p class="text-sm text-yellow-700"><strong>Nama:</strong> {{ $participant->full_name }}</p>
+                            </div>
 
-                        <p class="text-green-700 font-medium bg-green-100 p-4 rounded-lg mb-4 text-sm">
-                            📱 <strong>Screenshot halaman ini!</strong><br>
-                            Silakan tunjukkan QR Code di atas saat pengambilan Race Pack di area EVENT. 
-                        </p>
-                    </div>
-                @elseif(in_array($participant->payment_status, ['expired', 'cancel', 'deny', 'failed']))
-                    <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">
-                        <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                            <a href="{{ route('pembayaran.show', $participant->order_id) }}" class="block w-full text-center bg-[#0b4d75] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-blue-800 transition duration-300">
+                                LANJUTKAN PEMBAYARAN
+                            </a>
                         </div>
-                        <h2 class="text-xl font-bold text-red-700 mb-2">Waktu Pembayaran Habis</h2>
-                        <p class="text-red-600 font-medium">Pendaftaran Anda telah kedaluwarsa dan dibatalkan oleh sistem.</p>
-                        
-                        <a href="{{ route('daftar') }}" class="block w-full text-center bg-[#e85d04] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-orange-700 transition duration-300">
-                            DAFTAR ULANG
-                        </a>
-                    </div>
-                @endif
+                    @elseif($participant->payment_status === 'paid')
+                        <div class="bg-green-50 border border-green-200 rounded-2xl p-6 text-center shadow-sm">
+                            <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-green-700 mb-2">Pendaftaran Berhasil!</h2>
+                            
+                            <div class="bg-white border-2 border-dashed border-green-400 rounded-xl p-4 my-6 flex flex-col items-center">
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">E-Ticket / No. Order</p>
+                                <p class="text-2xl font-black text-[#0b4d75] tracking-widest mb-2">{{ $participant->order_id }}</p>
+                                <p class="text-sm font-semibold text-gray-600">{{ $participant->full_name }}</p>
+                                
+                                <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-100">
+                                    {!! QrCode::size(180)->generate($participant->order_id) !!}
+                                </div>
+                            </div>
+
+                            <p class="text-green-700 font-medium bg-green-100 p-4 rounded-lg mb-4 text-sm">
+                                📱 <strong>Screenshot halaman ini!</strong><br>
+                                Silakan tunjukkan QR Code di atas saat pengambilan Race Pack di area EVENT. 
+                            </p>
+                        </div>
+                    @elseif(in_array($participant->payment_status, ['expired', 'cancel', 'deny', 'failed']))
+                        <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">
+                            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-red-700 mb-2">Waktu Pembayaran Habis</h2>
+                            <p class="text-red-600 font-medium">Pendaftaran Anda telah kedaluwarsa dan dibatalkan oleh sistem.</p>
+                            
+                            <a href="{{ route('daftar') }}" class="block w-full text-center bg-[#e85d04] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-orange-700 transition duration-300">
+                                DAFTAR ULANG
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+                </div>
             @else
                 <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">
                     <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -100,7 +104,7 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-bold text-red-700 mb-2">Data Tidak Ditemukan</h2>
-                    <p class="text-red-600">Maaf, kami tidak menemukan pendaftar dengan nomor order tersebut. Pastikan Anda memasukkan nomor yang benar.</p>
+                    <p class="text-red-600">Maaf, kami tidak menemukan pendaftar dengan nomor order atau email tersebut. Pastikan Anda memasukkan nomor atau email yang benar.</p>
                 </div>
             @endif
         @endif

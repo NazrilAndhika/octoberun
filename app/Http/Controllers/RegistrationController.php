@@ -12,6 +12,7 @@ use Midtrans\Snap;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 use App\Mail\ETicketMail;
+use Illuminate\Validation\Rule;
 
 class RegistrationController extends Controller
 {
@@ -67,26 +68,26 @@ class RegistrationController extends Controller
         // ... (Kodingan validasi dan simpan ke bawahnya tetap sama, biarkan saja) ...
 
         $request->validate([
-            'bib_name'   => 'required|string|max:10',
             'full_name'  => 'required|string|max:255',
-            'id_number'  => 'required|numeric|digits:16',
             'jersey_size'=> 'required|in:XS,S,M,L,XL,XXL',
-            'email'      => 'required|email:rfc,dns|max:255',
+            'email'      => [
+                'required',
+                'email:rfc,dns',
+                'max:255',
+                Rule::unique('participants')->where(function ($query) use ($request) {
+                    return $query->where('full_name', $request->full_name);
+                })
+            ],
             'whatsapp'   => 'required|string|max:20',
             'address'    => 'required|string',
             'gender'     => 'required|in:male,female',
             'city'       => 'required|string|max:100',
         ], [
-            'bib_name.required'    => 'Nama BIB wajib diisi.',
-            'bib_name.max'         => 'Nama BIB maksimal 10 huruf.',
             'full_name.required'   => 'Nama lengkap wajib diisi.',
-            'id_number.required'   => 'Nomor KTP/Passport wajib diisi.',
-            'id_number.numeric'    => 'Nomor KTP harus berupa angka.',
-            'id_number.digits'     => 'Nomor KTP harus tepat 16 digit.',
             'jersey_size.required' => 'Pilih ukuran jersey.',
             'email.required'       => 'Email wajib diisi.',
             'email.email'          => 'Format email tidak valid.',
-            'email.unique'         => 'Email ini sudah terdaftar. Silakan gunakan email lain atau cek status pendaftaran Anda.',
+            'email.unique'         => 'Email dan Nama ini sudah terdaftar. Silakan gunakan email/nama lain.',
             'whatsapp.required'    => 'Nomor WhatsApp wajib diisi.',
             'address.required'     => 'Alamat wajib diisi.',
             'gender.required'      => 'Jenis kelamin wajib dipilih.',
@@ -102,10 +103,13 @@ class RegistrationController extends Controller
         $grossAmount = $ticketPrice + $adminFee;
 
         // Cek email manual
-        $existingParticipant = Participant::where('email', $request->email)->first();
+        $existingParticipant = Participant::where('email', $request->email)
+                                          ->where('full_name', $request->full_name)
+                                          ->first();
+                                          
         if ($existingParticipant) {
             if (in_array($existingParticipant->payment_status, ['paid', 'pending'])) {
-                return back()->withInput()->withErrors(['email' => 'Email ini sudah terdaftar. Silakan gunakan email lain atau cek status pendaftaran Anda.']);
+                return back()->withInput()->withErrors(['email' => 'Email dan Nama ini sudah terdaftar. Silakan cek status pendaftaran Anda.']);
             }
             
             // Jika expired/failed, update data lama
@@ -116,9 +120,9 @@ class RegistrationController extends Controller
                 'gross_amount'       => $grossAmount,
                 'payment_status'     => 'pending',
                 'payment_method'     => null,
-                'bib_name'           => strtoupper($request->bib_name),
+                'bib_name'           => '-', // Generic/empty as requested
                 'full_name'          => $request->full_name,
-                'id_number'          => $request->id_number,
+                'id_number'          => '-', // Default value since NIK is no longer used
                 'jersey_size'        => $request->jersey_size,
                 'whatsapp'           => $request->whatsapp,
                 'address'            => $request->address,
@@ -135,9 +139,9 @@ class RegistrationController extends Controller
                 'gross_amount'       => $grossAmount,
                 'payment_status'     => 'pending',
                 'payment_method'     => null,
-                'bib_name'           => strtoupper($request->bib_name),
+                'bib_name'           => '-', // Generic/empty as requested
                 'full_name'          => $request->full_name,
-                'id_number'          => $request->id_number,
+                'id_number'          => '-', // Default value since NIK is no longer used
                 'jersey_size'        => $request->jersey_size,
                 'email'              => $request->email,
                 'whatsapp'           => $request->whatsapp,
@@ -287,18 +291,18 @@ class RegistrationController extends Controller
     // -------------------------------------------------------
     public function cekStatus(Request $request)
     {
-        $participant = null;
+        $participants = collect();
         $settings = EventSetting::first();
         
         if ($request->filled('order_id')) {
             $query = strtolower(trim($request->order_id));
-            $participant = Participant::whereRaw('LOWER(order_id) LIKE ?', ['%' . $query])
+            $participants = Participant::whereRaw('LOWER(order_id) LIKE ?', ['%' . $query])
                                       ->orWhereRaw('LOWER(email) = ?', [$query])
                                       ->latest()
-                                      ->first();
+                                      ->get();
         }
 
-        return view('user.cek-status', compact('participant', 'settings'));
+        return view('user.cek-status', compact('participants', 'settings'));
     }
 
     // Legacy method (kept for compatibility)
