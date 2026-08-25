@@ -2,7 +2,7 @@
 @php
     $navbarSettings = \App\Models\EventSetting::first();
     $isClosed = false;
-    if (!$navbarSettings || now()->greaterThan($navbarSettings->registration_deadline)) {
+    if (!$navbarSettings || !$navbarSettings->is_registration_open || now()->greaterThan($navbarSettings->registration_deadline)) {
         $isClosed = true;
     } else {
         $kapasitas = (int) ($navbarSettings->target_runners ?? 0);

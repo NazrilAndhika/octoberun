@@ -52,7 +52,11 @@
                 <!-- Countdown Timer -->
                 @if(!empty($settings->registration_deadline))
                 <div data-aos="zoom-in" data-aos-delay="400" class="mb-4 md:mb-8 w-full flex flex-col items-start" id="countdown-container">
-                    <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                    @if(isset($settings) && !$settings->is_registration_open)
+                        <p class="text-red-500 font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN TELAH DITUTUP</p>
+                    @else
+                        <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                    @endif
                     <div class="flex gap-1.5 md:gap-3 justify-start">
                         <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
                             <div class="font-black text-lg md:text-3xl text-black" id="cd-days">00</div>
@@ -75,7 +79,11 @@
                 @endif
 
                 <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-start justify-start gap-2 md:gap-4 w-full">
-                    @if(isset($sisaKuota) && $sisaKuota <= 0)
+                    @if(isset($settings) && !$settings->is_registration_open)
+                        <button disabled class="w-auto inline-flex justify-center bg-gray-400 cursor-not-allowed text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 shadow-xl uppercase tracking-wider">
+                            PENDAFTARAN DITUTUP
+                        </button>
+                    @elseif(isset($sisaKuota) && $sisaKuota <= 0)
                         <button disabled class="w-auto inline-flex justify-center bg-gray-400 cursor-not-allowed text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 shadow-xl uppercase tracking-wider">
                             KUOTA PENUH / DITUTUP
                         </button>
@@ -938,7 +946,7 @@
         }
 
         // Countdown Timer Logic
-        @if(!empty($settings->registration_deadline))
+        @if(!empty($settings->registration_deadline) && $settings->is_registration_open)
         const deadline = new Date("{{ $settings->registration_deadline }}").getTime();
         const btnsDaftar = document.querySelectorAll('.btn-daftar-global');
         

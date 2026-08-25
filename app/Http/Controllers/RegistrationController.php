@@ -29,8 +29,8 @@ class RegistrationController extends Controller
         $settings = EventSetting::first();
         
         // --- TAMBAHKAN PROTEKSI PENUTUPAN DI SINI ---
-        if (!$settings || now()->greaterThan($settings->registration_deadline)) {
-    return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
+        if (!$settings || $settings->is_registration_open == false || now()->greaterThan($settings->registration_deadline)) {
+            return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
         }
         // --------------------------------------------
 
@@ -52,7 +52,7 @@ class RegistrationController extends Controller
         $settings = EventSetting::first() ?? new EventSetting();
 
         // --- UBAH BAGIAN INI MENJADI DEADLINE ---
-        if (!$settings || now()->greaterThan($settings->registration_deadline)) {
+        if (!$settings || $settings->is_registration_open == false || now()->greaterThan($settings->registration_deadline)) {
             return redirect('/')->with('error', 'Mohon maaf, pendaftaran OCTOBERUN 2026 saat ini sedang ditutup.');
         }
         // ----------------------------------------

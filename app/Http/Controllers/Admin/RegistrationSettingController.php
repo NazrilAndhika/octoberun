@@ -27,8 +27,12 @@ class RegistrationSettingController extends Controller
             'target_runners', 
             'registration_deadline',
             'ticket_price',
-            'admin_fee'
+            'admin_fee',
+            'is_registration_open'
         ]);
+        
+        // Checkbox dari form (toggle switch) jika tidak diceklis maka tidak akan terkirim
+        $data['is_registration_open'] = $request->has('is_registration_open');
         
         $settings->fill($data);
         $settings->save();

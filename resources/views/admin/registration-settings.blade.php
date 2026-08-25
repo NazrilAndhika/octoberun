@@ -22,6 +22,34 @@
             <h2 class="text-lg font-bold text-[#e85d04] border-b pb-3 mb-6">Jadwal & Kuota Event</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Sakelar Pendaftaran -->
+                <div class="md:col-span-2 bg-gray-50 border border-gray-200 rounded-lg p-4 flex items-center justify-between mb-2">
+                    <div>
+                        <label class="block text-sm font-bold text-gray-800">Status Pendaftaran Manual</label>
+                        <p class="text-xs text-gray-500 mt-1">Buka atau tutup pendaftaran secara paksa (mengabaikan batas waktu & kuota).</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" name="is_registration_open" class="sr-only peer" value="1" {{ ($settings->is_registration_open ?? true) ? 'checked' : '' }}>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#0b4d75]/30 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-500"></div>
+                        <span class="ml-3 text-sm font-bold text-gray-700 peer-checked:text-green-600 uppercase" id="status-text">{{ ($settings->is_registration_open ?? true) ? 'BUKA' : 'TUTUP' }}</span>
+                    </label>
+                </div>
+                
+                <script>
+                    document.querySelector('input[name="is_registration_open"]').addEventListener('change', function() {
+                        const statusText = document.getElementById('status-text');
+                        if(this.checked) {
+                            statusText.textContent = 'BUKA';
+                            statusText.classList.remove('text-red-600');
+                            statusText.classList.add('text-green-600');
+                        } else {
+                            statusText.textContent = 'TUTUP';
+                            statusText.classList.remove('text-green-600');
+                            statusText.classList.add('text-red-600');
+                        }
+                    });
+                </script>
+
                 <!-- Tanggal Pelaksanaan -->
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Tanggal Pelaksanaan Event</label>
