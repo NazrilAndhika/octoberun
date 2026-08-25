@@ -435,7 +435,7 @@
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
                                 <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 leading-none pointer-events-none">4</div>
                                 <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 text-left">AMBIL RACE PACK</h3>
-                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Tunjukkan QR Code pada E-Ticket Anda kepada panitia di lokasi penukaran untuk mengambil perlengkapan lari.</p>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Pengambilan perlengkapan lari dilaksanakan pada <span style="color: #f26522; font-weight: 800;">9 dan 10 Oktober 2026 (H-2)</span>. Tunjukkan QR Code pada E-Ticket Anda kepada panitia di lokasi penukaran.</p>
                             </div>
                         </div>
                     </div>
@@ -451,7 +451,7 @@
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 lg:border-l-0 lg:border-r-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
                                 <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 lg:left-4 lg:right-auto leading-none pointer-events-none">5</div>
                                 <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 lg:text-right">RACE DAY!</h3>
-                                <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Siapkan fisik dan semangat Anda! Hadir tepat waktu di lokasi pada tanggal pelaksanaan dan raih garis finis.</p>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Siapkan fisik dan semangat Anda! Puncak acara akan digelar pada <span style="color: #f26522; font-weight: 800;">11 Oktober 2026</span>. Hadir tepat waktu di lokasi dan bersiaplah meraih garis finis.</p>
                             </div>
                         </div>
                         
