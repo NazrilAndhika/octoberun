@@ -10,7 +10,7 @@
     <div class="space-y-4">
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Kapan acara ini diselenggarakan?</h3>
-            <p class="text-gray-600">Acara ini akan diselenggarakan pada hari Minggu, 18 Oktober 2026.</p>
+            <p class="text-gray-600">Acara ini akan diselenggarakan pada hari Minggu, 11 Oktober 2026.</p>
         </div>
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Di mana lokasi acara?</h3>
@@ -18,7 +18,7 @@
         </div>
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Apa saja yang didapatkan oleh peserta?</h3>
-            <p class="text-gray-600">Peserta akan mendapatkan Jersey eksklusif, Medali Finisher, BIB, dan fasilitas pendukung lainnya selama acara.</p>
+            <p class="text-gray-600">Peserta akan mendapatkan Jersey eksklusif, Medali Finisher, dan fasilitas pendukung lainnya selama acara.</p>
         </div>
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
             <h3 class="text-lg font-bold text-gray-900 mb-2">Bagaimana cara mendaftar?</h3>
