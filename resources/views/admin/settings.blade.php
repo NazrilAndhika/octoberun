@@ -161,39 +161,84 @@
                             <textarea name="racepack_modal_desc" rows="3" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#e85d04]/30 focus:border-[#e85d04] bg-gray-50 text-sm leading-relaxed" placeholder="Setiap pendaftar akan mendapatkan paket eksklusif...">{{ $settings->racepack_modal_desc }}</textarea>
                         </div>
                         
-                        <div class="border-t border-gray-100 pt-6">
-                            <label class="block text-sm font-bold text-gray-800 mb-4">Daftar Benefit Race Pack</label>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <!-- Benefit 1 -->
-                                <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 1 (Judul)</label>
-                                    <input type="text" name="benefit_1_title" value="{{ $settings->benefit_1_title }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm mb-2" placeholder="Cth: Jersey Premium">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 1 (Deskripsi)</label>
-                                    <input type="text" name="benefit_1_desc" value="{{ $settings->benefit_1_desc }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Bahan anti-bau...">
-                                </div>
-                                <!-- Benefit 2 -->
-                                <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 2 (Judul)</label>
-                                    <input type="text" name="benefit_2_title" value="{{ $settings->benefit_2_title }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm mb-2" placeholder="Cth: Medali Finisher">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 2 (Deskripsi)</label>
-                                    <input type="text" name="benefit_2_desc" value="{{ $settings->benefit_2_desc }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Bagi peserta finish...">
-                                </div>
-                                <!-- Benefit 3 -->
-                                <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 3 (Judul)</label>
-                                    <input type="text" name="benefit_3_title" value="{{ $settings->benefit_3_title }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm mb-2" placeholder="Cth: Nomor Dada (BIB)">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 3 (Deskripsi)</label>
-                                    <input type="text" name="benefit_3_desc" value="{{ $settings->benefit_3_desc }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Identitas pelari...">
-                                </div>
-                                <!-- Benefit 4 -->
-                                <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-100">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 4 (Judul)</label>
-                                    <input type="text" name="benefit_4_title" value="{{ $settings->benefit_4_title }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm mb-2" placeholder="Cth: 1 Bibit Pohon">
-                                    <label class="block text-xs font-semibold text-gray-600 mb-1">Item 4 (Deskripsi)</label>
-                                    <input type="text" name="benefit_4_desc" value="{{ $settings->benefit_4_desc }}" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Sumbangan alam...">
+                        <div class="border-t border-gray-100 pt-6" x-data="racepackBenefits()">
+                            <div class="flex justify-between items-center mb-4">
+                                <label class="block text-sm font-bold text-gray-800">Daftar Benefit Race Pack</label>
+                                <button type="button" @click="addBenefit()" class="bg-[#e85d04] text-white px-3 py-1.5 rounded text-xs font-bold shadow hover:bg-orange-600 transition flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                    Tambah Item
+                                </button>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <template x-for="(item, index) in benefits" :key="index">
+                                    <div class="bg-orange-50/50 p-4 rounded-xl border border-orange-200 relative flex items-start gap-4 transition-all">
+                                        
+                                        <!-- Hapus Button -->
+                                        <button type="button" @click="removeBenefit(index)" class="absolute top-3 right-3 text-red-500 hover:text-white bg-red-50 hover:bg-red-500 p-1.5 rounded-md transition shadow-sm" title="Hapus Item">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4" /></svg>
+                                        </button>
+
+                                        <div class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 pr-10">
+                                            <!-- Title -->
+                                            <div>
+                                                <label class="block text-xs font-semibold text-gray-600 mb-1">Judul Benefit</label>
+                                                <input type="text" x-model="item.title" :name="`racepack_benefits[${index}][title]`" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Cth: Jersey Premium" required>
+                                            </div>
+                                            <!-- Desc -->
+                                            <div>
+                                                <label class="block text-xs font-semibold text-gray-600 mb-1">Deskripsi Singkat</label>
+                                                <input type="text" x-model="item.desc" :name="`racepack_benefits[${index}][desc]`" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="Cth: Bahan anti-bau..." required>
+                                            </div>
+                                            <!-- Icon -->
+                                            <div>
+                                                <label class="block text-xs font-semibold text-gray-600 mb-1">Pilih Icon</label>
+                                                <select x-model="item.icon" :name="`racepack_benefits[${index}][icon]`" class="w-full border-gray-300 rounded-md px-3 py-2 text-sm" required>
+                                                    <option value="check">Ceklis Default</option>
+                                                    <option value="jersey">Baju / Jersey</option>
+                                                    <option value="medal">Medali</option>
+                                                    <option value="ticket">Tiket / BIB</option>
+                                                    <option value="bag">Tas / Goodie Bag</option>
+                                                    <option value="drink">Minuman</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                                
+                                <div x-show="benefits.length === 0" class="text-center py-6 text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-xl">
+                                    Belum ada benefit yang ditambahkan. Klik tombol "+ Tambah Item".
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Alpine Component Script -->
+                        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+                        <script>
+                            document.addEventListener('alpine:init', () => {
+                                Alpine.data('racepackBenefits', () => ({
+                                    benefits: @json($settings->racepack_benefits ?? []),
+                                    
+                                    init() {
+                                        if (!Array.isArray(this.benefits)) {
+                                            if (this.benefits && typeof this.benefits === 'object') {
+                                                this.benefits = Object.values(this.benefits);
+                                            } else {
+                                                this.benefits = [];
+                                            }
+                                        }
+                                    },
+
+                                    addBenefit() {
+                                        this.benefits.push({ title: '', desc: '', icon: 'check' });
+                                    },
+
+                                    removeBenefit(index) {
+                                        this.benefits.splice(index, 1);
+                                    }
+                                }))
+                            })
+                        </script>
                     </div>
                 </div>
             </div>

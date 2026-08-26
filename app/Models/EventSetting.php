@@ -11,4 +11,8 @@ class EventSetting extends Model
 
     // Tambahkan baris ini untuk menonaktifkan blokir keamanan (mengizinkan form disubmit)
     protected $guarded = [];
+
+    protected $casts = [
+        'racepack_benefits' => 'array',
+    ];
 }

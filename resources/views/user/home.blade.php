@@ -754,22 +754,45 @@
                         <p class="mb-5">{{ $settings->racepack_modal_desc ?? 'Setiap pendaftar OCTOBERUN akan mendapatkan paket eksklusif yang tidak hanya mendukung performa larimu, tapi juga berdampak positif bagi lingkungan.' }}</p>
                         
                         <ul class="space-y-4">
-                            <li class="flex items-start gap-3">
-                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                                <div><strong class="text-gray-800 block">{{ $settings->benefit_1_title ?? 'Jersey Premium Exclusive' }}</strong><span class="text-xs">{{ $settings->benefit_1_desc ?? 'Bahan anti-bau dan super sejuk.' }}</span></div>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                                <div><strong class="text-gray-800 block">{{ $settings->benefit_2_title ?? 'Medali Finisher 3D' }}</strong><span class="text-xs">{{ $settings->benefit_2_desc ?? 'Bagi peserta yang berhasil melewati garis finish.' }}</span></div>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg></div>
-                                <div><strong class="text-gray-800 block">{{ $settings->benefit_3_title ?? 'Nomor Dada (BIB) & String Bag' }}</strong><span class="text-xs">{{ $settings->benefit_3_desc ?? 'Identitas resmi pelari dan tas serut fungsional.' }}</span></div>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                                <div><strong class="text-gray-800 block">{{ $settings->benefit_4_title ?? '1 Bibit Pohon' }}</strong><span class="text-xs">{{ $settings->benefit_4_desc ?? 'Sumbangan pelestarian alam atas namamu.' }}</span></div>
-                            </li>
+                            @if(isset($settings->racepack_benefits) && is_array($settings->racepack_benefits) && count($settings->racepack_benefits) > 0)
+                                @foreach($settings->racepack_benefits as $benefit)
+                                    <li class="flex items-start gap-3">
+                                        <div class="bg-orange-100 p-2 rounded text-[#e85d04] mt-0.5">
+                                            @switch($benefit['icon'] ?? 'check')
+                                                @case('jersey')
+                                                    <!-- Icon Baju/Jersey (Lucide Shirt) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+                                                    @break
+                                                @case('medal')
+                                                    <!-- Icon Medali (Lucide Award) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                                                    @break
+                                                @case('ticket')
+                                                    <!-- Icon Tiket/BIB (Lucide Ticket) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg>
+                                                    @break
+                                                @case('bag')
+                                                    <!-- Icon Tas/Goodie Bag (Lucide Shopping Bag) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                                                    @break
+                                                @case('drink')
+                                                    <!-- Icon Minuman (Lucide Cup Soda) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 8 1.75 12.28a2 2 0 0 0 2 1.72h4.54a2 2 0 0 0 2-1.72L18 8"/><path d="M5 8h14"/><path d="M7 15a6.47 6.47 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/><path d="m12 8 1-6h2"/></svg>
+                                                    @break
+                                                @default
+                                                    <!-- Icon Ceklis Default (Lucide Check) -->
+                                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            @endswitch
+                                        </div>
+                                        <div>
+                                            <strong class="text-gray-800 block">{{ $benefit['title'] ?? '' }}</strong>
+                                            <span class="text-xs">{{ $benefit['desc'] ?? '' }}</span>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li class="text-gray-400 italic text-sm">Daftar benefit belum ditambahkan oleh panitia.</li>
+                            @endif
                         </ul>
                     </div>
 

@@ -21,6 +21,9 @@ class SettingController extends Controller
         
         // Ambil SEMUA data teks, KECUALI file gambar (gambar diproses terpisah)
         $data = $request->except(['_token', 'hero_image', 'about_image', 'jersey_image', 'route_image', 'racepack_image']);
+        
+        // Pastikan racepack_benefits tersimpan sebagai array, meskipun kosong
+        $data['racepack_benefits'] = $request->input('racepack_benefits', []);
 
         // Fungsi bantuan (Helper) pintar untuk menghapus foto lama & menyimpan foto baru
         $handleImage = function ($field) use ($request, $settings, &$data) {
