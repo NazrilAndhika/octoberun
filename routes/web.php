@@ -36,7 +36,11 @@ Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook']
 Route::get('/pembayaran/{order_id}', [RegistrationController::class, 'showPembayaran'])->name('pembayaran.show');
 Route::get('/pembayaran/sukses/{order_id}', [RegistrationController::class, 'sukses'])->name('pembayaran.sukses');
 
-// ... rute pendaftaran & frontend di atasnya biarkan saja ...
+// === Rute Halaman Statis Payment Gateway ===
+Route::get('/faq', function () { return view('pages.faq'); });
+Route::get('/refund-policy', function () { return view('pages.refund-policy'); });
+Route::get('/syarat-ketentuan', function () { return view('pages.syarat-ketentuan'); });
+Route::get('/kontak', function () { return view('pages.kontak'); });
 
 // Rute Halaman Login
 Route::get('/portal-rahasia-gsc', [AuthController::class, 'showLogin'])->name('login');
