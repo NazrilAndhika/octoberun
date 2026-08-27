@@ -32,6 +32,9 @@
         <button type="button" onclick="switchTab('tab-rute')" id="btn-rute" class="tab-btn px-4 py-3 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition">
             Rute Lari
         </button>
+        <button type="button" onclick="switchTab('tab-terms')" id="btn-terms" class="tab-btn px-4 py-3 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition">
+            Syarat & Ketentuan
+        </button>
     </div>
 
     <!-- FORM UTAMA MEMBUNGKUS SEMUA TAB -->
@@ -103,6 +106,11 @@
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Ganti Gambar 'Tentang Kami' (Opsional)</label>
                             <input type="file" name="about_image" class="w-full border border-gray-300 rounded-lg focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-[#0b4d75] hover:file:bg-blue-100 text-sm text-gray-500 bg-gray-50">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Link Grup WhatsApp Peserta (Opsional)</label>
+                            <input type="url" name="wa_group_link" value="{{ $settings->wa_group_link ?? '' }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm" placeholder="Contoh: https://chat.whatsapp.com/...">
+                            <p class="text-xs text-gray-400 mt-1">Link ini akan muncul di halaman sukses pembayaran & E-Ticket (jika status peserta sudah LUNAS).</p>
                         </div>
                     </div>
                 </div>
@@ -276,6 +284,25 @@
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">Fasilitas Rute</label>
                                 <input type="text" name="route_facilities" value="{{ $settings->route_facilities }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-teal-500/30 focus:border-teal-500 bg-gray-50 text-sm" placeholder="Water station, medis, dll">
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: SYARAT & KETENTUAN -->
+        <div id="tab-terms" class="tab-content hidden">
+            <div class="bg-white border border-indigo-500 rounded-xl shadow-sm overflow-hidden">
+                <div class="bg-indigo-600 px-6 py-4 flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <h2 class="text-white font-bold tracking-wide">Syarat & Ketentuan</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Isi Syarat & Ketentuan</label>
+                            <textarea name="terms_conditions" rows="15" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500 bg-gray-50 text-sm leading-relaxed" placeholder="Masukkan teks Syarat & Ketentuan di sini...">{{ $settings->terms_conditions }}</textarea>
+                            <p class="text-xs text-gray-400 mt-2">Gunakan tombol Enter untuk membuat paragraf atau baris baru. Teks ini akan ditampilkan di halaman depan website.</p>
                         </div>
                     </div>
                 </div>

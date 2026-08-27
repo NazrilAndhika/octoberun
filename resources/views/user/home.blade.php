@@ -21,7 +21,7 @@
              style="background-image: url('{{ !empty($settings->hero_image) ? asset('storage/' . $settings->hero_image) : asset('img/hero-bg.jpg') }}'); background-size: cover; background-position: 75% center;">
         
         <!-- MOBILE OVERLAY (Gradient dari transparan ke putih agar pelari & tugu di atas terlihat jelas, teks di bawah tetap terbaca) -->
-        <div class="block md:hidden absolute inset-0 bg-gradient-to-b from-white/0 via-white/60 to-white/95 z-0"></div>
+        <!-- <div class="block md:hidden absolute inset-0 bg-gradient-to-b from-white/0 via-white/60 to-white/95 z-0"></div> -->
         
         <!-- DESKTOP GRADIENT OVERLAY (Transisi putih dari kiri ke kanan) -->
         <div class="hidden md:block absolute inset-0 z-0 bg-gradient-to-r from-white via-white/90 to-transparent sm:via-white/70"></div> 
@@ -53,7 +53,7 @@
                 @if(!empty($settings->registration_deadline))
                 <div data-aos="zoom-in" data-aos-delay="400" class="mb-4 md:mb-8 w-full flex flex-col items-start" id="countdown-container">
                     @if(isset($settings) && !$settings->is_registration_open)
-                        <p class="text-red-500 font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN TELAH DITUTUP</p>
+                        <p class="text-red-500 font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN BELUM DIBUKA</p>
                     @else
                         <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
                     @endif
@@ -562,6 +562,56 @@
                         <h4 class="font-black font-sporty text-[#0b4d75] text-lg mb-2 uppercase italic">PENGALAMAN BERKESAN</h4>
                         <p class="text-sm text-gray-500 leading-relaxed">Menghadirkan rute dan festival lari yang menyenangkan serta tak terlupakan bagi semua kalangan.</p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SECTION SYARAT & KETENTUAN                 -->
+    <!-- ========================================== -->
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f8fafc; 
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #06b6d4; 
+        }
+    </style>
+    <section id="syarat-ketentuan" class="bg-slate-50 relative overflow-hidden py-16 md:py-24 border-b-2 border-dashed border-gray-300">
+        <!-- SVG Dekorasi Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-5">
+            <svg class="absolute h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="speed-lines" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                        <line x1="0" y1="0" x2="0" y2="40" stroke="#0b4d75" stroke-width="1.5" />
+                        <line x1="20" y1="0" x2="20" y2="40" stroke="#06b6d4" stroke-width="1" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#speed-lines)"></rect>
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <!-- Header Section -->
+            <div class="text-center mb-10" data-aos="fade-up">
+                <h2 class="font-sporty text-3xl md:text-5xl text-[#0b4d75] font-black italic uppercase tracking-tight">
+                    SYARAT & <span class="text-cyan-500">KETENTUAN</span>
+                </h2>
+            </div>
+
+            <!-- Box Konten -->
+            <div class="relative z-10 bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-8 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                <div class="max-h-96 overflow-y-auto pr-4 text-gray-600 text-sm md:text-base leading-relaxed custom-scrollbar">
+                    {!! nl2br(e($settings->terms_conditions ?? 'Syarat dan ketentuan belum tersedia.')) !!}
                 </div>
             </div>
         </div>

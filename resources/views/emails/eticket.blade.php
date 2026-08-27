@@ -47,6 +47,13 @@
                     <img src="{{ $message->embedData($qrCodeData, 'qrcode.png', 'image/png') }}" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
                 </div>
                 @endif
+
+                @if(!empty($settings->wa_group_link))
+                <div style="margin-top: 25px; border-top: 1px dashed #22c55e; padding-top: 20px;">
+                    <p style="font-size: 13px; color: #166534; margin-bottom: 15px; font-weight: 600;">PENTING: Wajib bergabung ke dalam grup WhatsApp untuk mendapatkan informasi terbaru terkait pengambilan Race Pack dan jadwal acara.</p>
+                    <a href="{{ $settings->wa_group_link }}" target="_blank" style="display: inline-block; background-color: #25D366; color: white; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; font-size: 14px;">GABUNG GRUP WHATSAPP PESERTA</a>
+                </div>
+                @endif
             </div>
 
             <div class="participant-details">
