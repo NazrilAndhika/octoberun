@@ -61,8 +61,8 @@
     <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
         <div class="px-4 pt-2 pb-4 space-y-2">
             <a href="{{ url('/#beranda') }}" class="block px-3 py-2 text-[#0b4d75] font-bold border-l-4 border-[#0b4d75] bg-blue-50">BERANDA</a>
-            <a href="{{ url('/#tentang') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">TENTANG</a>
             <a href="{{ url('/#info') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">INFO</a>
+            <a href="{{ url('/#tentang') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">TENTANG</a>
             <a href="{{ route('cek-status') }}" class="block px-3 py-2 text-[#0b4d75] font-bold hover:bg-gray-50">CEK STATUS</a>
             
             @if($isClosed)

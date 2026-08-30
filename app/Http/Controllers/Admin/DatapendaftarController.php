@@ -140,6 +140,7 @@ class DatapendaftarController extends Controller
 
         $request->validate([
             'full_name'  => 'required|string|max:255',
+            'nik'        => 'required|numeric|digits:16',
             'email'      => 'required|email|max:255',
             'whatsapp'   => 'required|string|max:20',
             'gender'     => 'required|in:male,female',
@@ -150,6 +151,7 @@ class DatapendaftarController extends Controller
 
         $participant->update([
             'full_name'  => $request->full_name,
+            'id_number'  => $request->nik,
             'email'      => $request->email,
             'whatsapp'   => $request->whatsapp,
             'gender'     => $request->gender,

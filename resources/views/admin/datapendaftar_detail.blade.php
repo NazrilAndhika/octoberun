@@ -44,6 +44,7 @@
                     @php
                         $fields = [
                             ['label' => 'Nama Lengkap',    'value' => $participant->full_name],
+                            ['label' => 'NIK',             'value' => $participant->id_number],
                             ['label' => 'Jenis Kelamin',   'value' => $participant->gender === 'male' ? 'Laki-laki' : 'Perempuan'],
                             ['label' => 'Email',           'value' => $participant->email],
                             ['label' => 'No. WhatsApp',    'value' => $participant->whatsapp],
@@ -96,15 +97,22 @@
                 <div>
                     <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Status</p>
                     @php
-                        $statusConfig = [
-                            'paid'    => ['label' => 'Lunas',   'class' => 'bg-green-100 text-green-700 border border-green-200'],
-                            'pending' => ['label' => 'Pending', 'class' => 'bg-amber-100 text-amber-700 border border-amber-200'],
-                            'failed'  => ['label' => 'Gagal',   'class' => 'bg-red-100 text-red-700 border border-red-200'],
-                            'expired' => ['label' => 'Expired', 'class' => 'bg-gray-100 text-gray-600 border border-gray-200'],
-                        ];
-                        $cfg = $statusConfig[$participant->payment_status] ?? ['label' => ucfirst($participant->payment_status), 'class' => 'bg-gray-100 text-gray-600 border border-gray-200'];
+                    $statusConfig = [
+                        'paid'     => ['label' => 'Lunas',   'class' => 'bg-green-100 text-green-700 border-green-200'],
+                        'pending'  => ['label' => 'Pending', 'class' => 'bg-amber-100 text-amber-700 border-amber-200'],
+                        'rejected' => ['label' => 'Ditolak', 'class' => 'bg-red-100 text-red-700 border-red-200'],
+                        'failed'   => ['label' => 'Gagal',   'class' => 'bg-red-100 text-red-700 border-red-200'],
+                        'expired'  => ['label' => 'Expired', 'class' => 'bg-gray-100 text-gray-600 border-gray-200'],
+                    ];
+                    $cfg = $statusConfig[$participant->payment_status] ?? ['label' => ucfirst($participant->payment_status), 'class' => 'bg-gray-100 text-gray-600'];
                     @endphp
-                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold {{ $cfg['class'] }}">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border {{ $cfg['class'] }}">
+                        <span class="w-1.5 h-1.5 rounded-full 
+                            {{ $participant->payment_status === 'paid' ? 'bg-green-500' : '' }}
+                            {{ $participant->payment_status === 'pending' ? 'bg-amber-500' : '' }}
+                            {{ in_array($participant->payment_status, ['failed', 'rejected']) ? 'bg-red-500' : '' }}
+                            {{ $participant->payment_status === 'expired' ? 'bg-gray-400' : '' }}
+                        "></span>
                         {{ $cfg['label'] }}
                     </span>
                 </div>
@@ -115,26 +123,69 @@
             </div>
 
             {{-- Ubah Status --}}
+            @php
+                $settings = \App\Models\EventSetting::first();
+            @endphp
+            @if(($settings->payment_mode ?? 'otomatis') == 'otomatis')
             <div class="px-6 pb-6">
                 <div class="bg-blue-50 border border-blue-100 rounded-lg p-3 text-sm text-blue-700">
                     <p class="font-bold mb-1">Status Pembayaran Otomatis</p>
                     <p class="text-xs">Status dikelola secara otomatis oleh Midtrans. Anda tidak perlu mengubah status secara manual.</p>
                 </div>
             </div>
+            @endif
         </div>
 
-        {{-- Bukti Pembayaran (Legacy) --}}
+        {{-- Bukti Pembayaran --}}
         @if($participant->payment_proof)
-        <div class="bg-gray-50 rounded-xl border border-gray-200 shadow-sm overflow-hidden opacity-75">
+        <div class="bg-gray-50 rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="font-bold text-gray-600 text-sm flex items-center gap-2">
+                <h2 class="font-bold text-gray-800 text-sm flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
-                    Bukti Pembayaran (Lama)
+                    Bukti Pembayaran Manual
                 </h2>
-                <p class="text-xs text-gray-500 mt-1">Data lama dari sistem manual.</p>
+                <p class="text-xs text-gray-500 mt-1">Peserta mengunggah bukti transfer.</p>
             </div>
-            <div class="p-4">
-                <a href="{{ Storage::url($participant->payment_proof) }}" target="_blank" class="text-xs text-blue-600 hover:underline">Lihat Bukti Bayar Manual</a>
+            <div class="p-4" x-data="{ open: false }">
+                <button @click="open = true" type="button" class="text-xs text-blue-600 hover:underline font-semibold focus:outline-none">
+                    Lihat Bukti Bayar Manual
+                </button>
+                
+                <!-- Modal Pop-up -->
+                <div x-show="open" x-cloak class="fixed inset-0 z-[100] flex items-center justify-center bg-black bg-opacity-75 p-4"
+                     @keydown.escape.window="open = false" 
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0">
+                    
+                    <!-- Modal Content -->
+                    <div @click.away="open = false" class="relative bg-white rounded-xl shadow-2xl max-w-2xl w-full p-4 overflow-hidden"
+                         x-transition:enter="transition ease-out duration-300"
+                         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:leave="transition ease-in duration-200"
+                         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                        
+                        <!-- Header Modal -->
+                        <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
+                            <h3 class="font-bold text-gray-800 text-sm">Bukti Pembayaran: {{ $participant->full_name }}</h3>
+                            <button @click="open = false" class="text-gray-400 hover:text-gray-600 focus:outline-none transition">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Gambar Bukti -->
+                        <div class="flex justify-center bg-gray-50 rounded-lg overflow-hidden border border-gray-100 max-h-[70vh] overflow-y-auto p-2">
+                            <img src="{{ Storage::url($participant->payment_proof) }}" alt="Bukti Pembayaran" class="max-w-full h-auto object-contain">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         @endif

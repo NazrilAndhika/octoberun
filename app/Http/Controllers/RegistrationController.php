@@ -69,25 +69,21 @@ class RegistrationController extends Controller
 
         $request->validate([
             'full_name'  => 'required|string|max:255',
+            'nik'        => 'required|numeric|digits:16',
             'jersey_size'=> 'required|in:XS,S,M,L,XL,XXL',
-            'email'      => [
-                'required',
-                'email:rfc,dns',
-                'max:255',
-                Rule::unique('participants')->where(function ($query) use ($request) {
-                    return $query->where('full_name', $request->full_name);
-                })
-            ],
+            'email'      => 'required|email:rfc,dns|max:255',
             'whatsapp'   => 'required|string|max:20',
             'address'    => 'required|string',
             'gender'     => 'required|in:male,female',
             'city'       => 'required|string|max:100',
         ], [
             'full_name.required'   => 'Nama lengkap wajib diisi.',
+            'nik.required'         => 'NIK wajib diisi.',
+            'nik.numeric'          => 'NIK harus berupa angka.',
+            'nik.digits'           => 'NIK harus tepat 16 digit.',
             'jersey_size.required' => 'Pilih ukuran jersey.',
             'email.required'       => 'Email wajib diisi.',
             'email.email'          => 'Format email tidak valid.',
-            'email.unique'         => 'Email dan Nama ini sudah terdaftar. Silakan gunakan email/nama lain.',
             'whatsapp.required'    => 'Nomor WhatsApp wajib diisi.',
             'address.required'     => 'Alamat wajib diisi.',
             'gender.required'      => 'Jenis kelamin wajib dipilih.',
@@ -100,30 +96,50 @@ class RegistrationController extends Controller
         $settings = EventSetting::first() ?? new EventSetting();
         $ticketPrice = $settings->ticket_price ?? 150000;
         $adminFee = $settings->admin_fee ?? 5000;
-        $grossAmount = $ticketPrice + $adminFee;
+        
+        $kodeUnik = 0;
+        if (($settings->payment_mode ?? 'otomatis') === 'manual') {
+            do {
+                $kodeUnik = rand(100, 500);
+                // Cek apakah ada order dengan kode unik yang sama dan statusnya gantung (pending/verifying)
+                $exists = Participant::where('kode_unik', $kodeUnik)
+                                     ->whereIn('payment_status', ['pending', 'verifying'])
+                                     ->exists();
+            } while ($exists);
+        }
 
-        // Cek email manual
-        $existingParticipant = Participant::where('email', $request->email)
-                                          ->where('full_name', $request->full_name)
-                                          ->first();
+        $grossAmount = $ticketPrice + $adminFee + $kodeUnik;
+
+        // Cek NIK manual
+        $existingParticipant = Participant::where('id_number', $request->nik)->first();
                                           
         if ($existingParticipant) {
-            if (in_array($existingParticipant->payment_status, ['paid', 'pending'])) {
-                return back()->withInput()->withErrors(['email' => 'Email dan Nama ini sudah terdaftar. Silakan cek status pendaftaran Anda.']);
+            // Jika transaksi dengan NIK tersebut berstatus "Lunas", "Menunggu Pembayaran", atau "Menunggu Verifikasi"
+            if (in_array($existingParticipant->payment_status, ['paid', 'pending', 'verifying'])) {
+                return back()->withInput()->withErrors(['nik' => 'Maaf, NIK ini sudah terdaftar dan sedang dalam proses atau sudah lunas.']);
             }
             
-            // Jika expired/failed, update data lama
+            // Jika expired/failed/ditolak, update data lama
             $participant = $existingParticipant;
+            
+            // Hapus bukti bayar lama jika ada
+            if ($participant->payment_proof && Storage::disk('public')->exists($participant->payment_proof)) {
+                Storage::disk('public')->delete($participant->payment_proof);
+            }
+
             $participant->update([
                 'order_id'           => $orderId,
                 'kategori'           => '5K',
                 'gross_amount'       => $grossAmount,
+                'kode_unik'          => $kodeUnik,
                 'payment_status'     => 'pending',
                 'payment_method'     => null,
+                'payment_proof'      => null, // Reset payment proof
                 'bib_name'           => '-', // Generic/empty as requested
                 'full_name'          => $request->full_name,
-                'id_number'          => '-', // Default value since NIK is no longer used
+                'id_number'          => $request->nik,
                 'jersey_size'        => $request->jersey_size,
+                'email'              => $request->email,
                 'whatsapp'           => $request->whatsapp,
                 'address'            => $request->address,
                 'gender'             => $request->gender,
@@ -137,11 +153,12 @@ class RegistrationController extends Controller
                 'order_id'           => $orderId,
                 'kategori'           => '5K',
                 'gross_amount'       => $grossAmount,
+                'kode_unik'          => $kodeUnik,
                 'payment_status'     => 'pending',
                 'payment_method'     => null,
                 'bib_name'           => '-', // Generic/empty as requested
                 'full_name'          => $request->full_name,
-                'id_number'          => '-', // Default value since NIK is no longer used
+                'id_number'          => $request->nik,
                 'jersey_size'        => $request->jersey_size,
                 'email'              => $request->email,
                 'whatsapp'           => $request->whatsapp,
@@ -184,14 +201,46 @@ class RegistrationController extends Controller
                          ->with('registered', true);
     }
 
-    // -------------------------------------------------------
-    // GET /pembayaran/{order_id}  → tampilkan halaman bayar
-    // -------------------------------------------------------
     public function showPembayaran($order_id)
     {
         $participant = Participant::where('order_id', $order_id)->firstOrFail();
         $settings = EventSetting::first() ?? new EventSetting();
         return view('user.pembayaran', compact('participant', 'settings'));
+    }
+
+    // -------------------------------------------------------
+    // POST /pembayaran/manual/{order_id}
+    // -------------------------------------------------------
+    public function uploadBukti(Request $request, $order_id)
+    {
+        $request->validate([
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:3072',
+        ], [
+            'payment_proof.required' => 'Bukti pembayaran wajib diunggah.',
+            'payment_proof.image' => 'File harus berupa gambar.',
+            'payment_proof.mimes' => 'Format yang didukung hanya JPG, JPEG, PNG.',
+            'payment_proof.max' => 'Ukuran file maksimal 3MB.',
+        ]);
+
+        $participant = Participant::where('order_id', $order_id)->firstOrFail();
+
+        if ($request->hasFile('payment_proof')) {
+            $file = $request->file('payment_proof');
+            $path = $file->store('payment_proofs', 'public');
+            
+            // Hapus file lama jika ada
+            if ($participant->payment_proof && Storage::disk('public')->exists($participant->payment_proof)) {
+                Storage::disk('public')->delete($participant->payment_proof);
+            }
+
+            $participant->payment_proof = $path;
+            $participant->payment_status = 'verifying';
+            $participant->save();
+
+            return back()->with('success', 'Bukti pembayaran berhasil diunggah. Silakan tunggu verifikasi admin.');
+        }
+
+        return back()->with('error', 'Gagal mengunggah bukti pembayaran.');
     }
 
     // -------------------------------------------------------

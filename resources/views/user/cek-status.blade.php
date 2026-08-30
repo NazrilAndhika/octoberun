@@ -55,6 +55,21 @@
                                 LANJUTKAN PEMBAYARAN
                             </a>
                         </div>
+                    @elseif($participant->payment_status === 'verifying')
+                        <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center shadow-sm">
+                            <div class="w-16 h-16 bg-blue-100 text-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-blue-700 mb-2">Menunggu Verifikasi Admin</h2>
+                            <p class="text-blue-600 font-medium">Bukti pembayaran Anda telah kami terima dan sedang dalam proses pengecekan.</p>
+                            
+                            <div class="mt-6 pt-6 border-t border-blue-200 text-left">
+                                <p class="text-sm text-blue-700"><strong>Nomor Order:</strong> {{ $participant->order_id }}</p>
+                                <p class="text-sm text-blue-700"><strong>Nama:</strong> {{ $participant->full_name }}</p>
+                            </div>
+                        </div>
                     @elseif($participant->payment_status === 'paid')
                         <div class="bg-green-50 border border-green-200 rounded-2xl p-6 text-center shadow-sm">
                             <div class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -78,6 +93,20 @@
                                 📱 <strong>Screenshot halaman ini!</strong><br>
                                 Silakan tunjukkan QR Code di atas saat pengambilan Race Pack di area EVENT. 
                             </p>
+                        </div>
+                    @elseif($participant->payment_status === 'rejected')
+                        <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">
+                            <div class="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-xl font-bold text-red-700 mb-2">Pembayaran Ditolak</h2>
+                            <p class="text-red-600 font-medium">Bukti transfer yang Anda unggah tidak valid atau ditolak oleh Admin. Silakan unggah ulang bukti yang benar.</p>
+                            
+                            <a href="{{ route('pembayaran.show', $participant->order_id) }}" class="block w-full text-center bg-[#0b4d75] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-blue-800 transition duration-300">
+                                UPLOAD ULANG BUKTI
+                            </a>
                         </div>
                     @elseif(in_array($participant->payment_status, ['expired', 'cancel', 'deny', 'failed']))
                         <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">

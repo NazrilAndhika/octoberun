@@ -34,6 +34,7 @@ Route::get('/cek-status', [RegistrationController::class, 'cekStatus'])->name('c
 Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook'])->name('midtrans.callback');
 // Rute Pembayaran
 Route::get('/pembayaran/{order_id}', [RegistrationController::class, 'showPembayaran'])->name('pembayaran.show');
+Route::post('/pembayaran/manual/{order_id}', [RegistrationController::class, 'uploadBukti'])->name('pembayaran.manual.upload');
 Route::get('/pembayaran/sukses/{order_id}', [RegistrationController::class, 'sukses'])->name('pembayaran.sukses');
 
 // === Rute Halaman Statis Payment Gateway ===
@@ -75,6 +76,11 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     Route::put('/datapendaftar/{id}', [DatapendaftarController::class, 'update'])->name('admin.datapendaftar.update');
     Route::post('/datapendaftar/{id}/resend-email', [DatapendaftarController::class, 'resendEmail'])->name('admin.datapendaftar.resendEmail');
     Route::delete('/datapendaftar/{id}', [DatapendaftarController::class, 'destroy'])->name('admin.datapendaftar.destroy');
+
+    // === Rute Verifikasi Manual ===
+    Route::get('/verifikasi', [\App\Http\Controllers\Admin\VerificationController::class, 'index'])->name('admin.verifikasi');
+    Route::post('/verifikasi/{id}/terima', [\App\Http\Controllers\Admin\VerificationController::class, 'terima'])->name('admin.verifikasi.terima');
+    Route::post('/verifikasi/{id}/tolak', [\App\Http\Controllers\Admin\VerificationController::class, 'tolak'])->name('admin.verifikasi.tolak');
 
     // === Rute Distribusi Race Pack ===
     Route::get('/rpc', [RacePackController::class, 'index'])->name('admin.rpc');

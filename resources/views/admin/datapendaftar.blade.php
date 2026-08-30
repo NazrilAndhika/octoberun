@@ -39,6 +39,7 @@
                 <option value="all" {{ request('status', 'all') === 'all' ? 'selected' : '' }}>Semua Status</option>
                 <option value="paid"    {{ request('status') === 'paid'    ? 'selected' : '' }}>Lunas</option>
                 <option value="pending" {{ request('status') === 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="rejected" {{ request('status') === 'rejected' ? 'selected' : '' }}>Ditolak</option>
                 <option value="failed"  {{ request('status') === 'failed'  ? 'selected' : '' }}>Gagal</option>
                 <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
             </select>
@@ -142,10 +143,11 @@
                     <td class="px-5 py-4 whitespace-nowrap">
                         @php
                             $statusConfig = [
-                                'paid'    => ['label' => 'Lunas',   'class' => 'bg-green-100 text-green-700 border border-green-200'],
-                                'pending' => ['label' => 'Pending', 'class' => 'bg-amber-100 text-amber-700 border border-amber-200'],
-                                'failed'  => ['label' => 'Gagal',   'class' => 'bg-red-100 text-red-700 border border-red-200'],
-                                'expired' => ['label' => 'Expired', 'class' => 'bg-gray-100 text-gray-600 border border-gray-200'],
+                                'paid'     => ['label' => 'Lunas',   'class' => 'bg-green-100 text-green-700 border border-green-200'],
+                                'pending'  => ['label' => 'Pending', 'class' => 'bg-amber-100 text-amber-700 border border-amber-200'],
+                                'rejected' => ['label' => 'Ditolak', 'class' => 'bg-red-100 text-red-700 border border-red-200'],
+                                'failed'   => ['label' => 'Gagal',   'class' => 'bg-red-100 text-red-700 border border-red-200'],
+                                'expired'  => ['label' => 'Expired', 'class' => 'bg-gray-100 text-gray-600 border border-gray-200'],
                             ];
                             $cfg = $statusConfig[$participant->payment_status] ?? ['label' => ucfirst($participant->payment_status), 'class' => 'bg-gray-100 text-gray-600'];
                         @endphp
@@ -153,7 +155,7 @@
                             <span class="w-1.5 h-1.5 rounded-full 
                                 {{ $participant->payment_status === 'paid' ? 'bg-green-500' : '' }}
                                 {{ $participant->payment_status === 'pending' ? 'bg-amber-500' : '' }}
-                                {{ $participant->payment_status === 'failed' ? 'bg-red-500' : '' }}
+                                {{ in_array($participant->payment_status, ['failed', 'rejected']) ? 'bg-red-500' : '' }}
                                 {{ $participant->payment_status === 'expired' ? 'bg-gray-400' : '' }}
                             "></span>
                             {{ $cfg['label'] }}

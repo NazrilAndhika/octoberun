@@ -84,6 +84,11 @@
                             <input type="text" name="full_name" value="{{ old('full_name', $participant->full_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
                         </div>
                         
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">NIK</label>
+                            <input type="number" name="nik" value="{{ old('nik', $participant->id_number) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
+                        </div>
+                        
 
 
                         <div>

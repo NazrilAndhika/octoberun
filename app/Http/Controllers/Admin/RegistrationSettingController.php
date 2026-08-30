@@ -28,7 +28,11 @@ class RegistrationSettingController extends Controller
             'registration_deadline',
             'ticket_price',
             'admin_fee',
-            'is_registration_open'
+            'is_registration_open',
+            'payment_mode',
+            'manual_bank_name',
+            'manual_bank_account',
+            'manual_bank_owner'
         ]);
         
         // Checkbox dari form (toggle switch) jika tidak diceklis maka tidak akan terkirim

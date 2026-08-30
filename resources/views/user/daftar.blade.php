@@ -68,6 +68,21 @@
                                 required>
                         </div>
 
+                        {{-- NIK --}}
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                Nomor Induk Kependudukan (NIK) <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" name="nik" id="nik"
+                                value="{{ old('nik') }}"
+                                placeholder="Masukkan 16 digit NIK"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('nik') ? 'border-red-400' : '' }}"
+                                required>
+                            @error('nik')
+                                <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         {{-- Size Jersey --}}
                         <div>
                             <label class="block text-sm font-semibold text-gray-600 mb-1.5">
@@ -208,7 +223,7 @@
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-center border-t pt-4 mb-6">
+                    <div class="flex justify-between items-center border-t pt-4 mb-2">
                         <span class="font-black text-[#0b4d75] uppercase tracking-wide">TOTAL BAYAR</span>
                         @php
                             $ticket = $settings->ticket_price ?? 150000;
@@ -217,6 +232,13 @@
                         @endphp
                         <span class="font-black text-[#e85d04] text-xl">Rp {{ number_format($total, 0, ',', '.') }}</span>
                     </div>
+                    @if(($settings->payment_mode ?? 'otomatis') === 'manual')
+                        <p class="text-sm text-gray-500 italic mb-6">
+                            *Catatan: Khusus metode Transfer Manual, total tagihan akan ditambahkan 3 digit angka acak (maks. Rp 500) pada halaman selanjutnya untuk keperluan verifikasi otomatis.
+                        </p>
+                    @else
+                        <div class="mb-6"></div>
+                    @endif
 
                     {{-- Tombol submit form --}}
                     <button type="button"
