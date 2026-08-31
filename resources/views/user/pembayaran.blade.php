@@ -98,6 +98,13 @@
                                 Terima kasih, pembayaran Anda telah diverifikasi. E-Ticket telah dikirimkan ke email Anda (cek folder Inbox atau Spam).
                             </p>
                             
+                            <a href="{{ route('e-ticket.show', $participant->order_id) }}" target="_blank" class="block w-full max-w-sm mx-auto text-center bg-[#0b4d75] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 mb-4">
+                                Lihat / Download E-Ticket
+                            </a>
+                            <p class="text-sm text-gray-500 italic mb-6 max-w-md mx-auto">
+                                *E-Ticket juga telah dikirimkan ke email Anda. Jika email tidak masuk (pastikan cek folder Spam) atau penyimpanan penuh, Anda bisa mengunduhnya langsung melalui tombol di atas. Kendala lain? Hubungi WhatsApp Admin.
+                            </p>
+                            
                             @if($settings->wa_group_link)
                             <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 inline-block w-full max-w-sm">
                                 <h3 class="font-bold text-[#0b4d75] mb-2">Grup WhatsApp Peserta</h3>

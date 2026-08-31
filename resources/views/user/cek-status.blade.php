@@ -93,6 +93,13 @@
                                 📱 <strong>Screenshot halaman ini!</strong><br>
                                 Silakan tunjukkan QR Code di atas saat pengambilan Race Pack di area EVENT. 
                             </p>
+                            
+                            <a href="{{ route('e-ticket.show', $participant->order_id) }}" target="_blank" class="block w-full text-center bg-[#0b4d75] text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-blue-800 transition duration-300 mb-4">
+                                Lihat / Download E-Ticket
+                            </a>
+                            <p class="text-sm text-gray-500 italic mt-2">
+                                *E-Ticket juga telah dikirimkan ke email Anda. Jika email tidak masuk (pastikan cek folder Spam) atau penyimpanan penuh, Anda bisa mengunduhnya langsung melalui tombol di atas. Kendala lain? Hubungi WhatsApp Admin.
+                            </p>
                         </div>
                     @elseif($participant->payment_status === 'rejected')
                         <div class="bg-red-50 border border-red-200 rounded-2xl p-6 text-center shadow-sm">

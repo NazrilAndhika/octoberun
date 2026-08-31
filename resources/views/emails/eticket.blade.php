@@ -2,9 +2,10 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Ticket & Info Race Pack</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9fafb; color: #374151; line-height: 1.6; margin: 0; padding: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f9fafb; color: #374151; line-height: 1.6; margin: 0; padding: 20px 20px 100px 20px; }
         .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
         .header { background-color: #0b4d75; color: #ffffff; padding: 30px 20px; text-align: center; }
         .header h1 { margin: 0; font-size: 24px; font-weight: 800; }
@@ -23,6 +24,18 @@
         .rpc-box p { margin: 0 0 8px; font-size: 14px; }
         .rpc-box ul { margin: 0; padding-left: 20px; font-size: 14px; }
         .footer { background-color: #f3f4f6; text-align: center; padding: 20px; font-size: 12px; color: #6b7280; }
+        
+        /* === TAMBAHAN UNTUK CETAK PDF === */
+        .print-btn-wrapper { position: fixed; bottom: 0; left: 0; width: 100%; background-color: rgba(255,255,255,0.95); border-top: 1px solid #e5e7eb; padding: 15px; box-shadow: 0 -4px 6px -1px rgba(0,0,0,0.1); z-index: 50; text-align: center; box-sizing: border-box; }
+        .print-btn { background-color: #0b4d75; color: white; border: none; padding: 14px 28px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; display: block; width: 100%; max-width: 400px; margin: 0 auto; text-decoration: none; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .print-btn:hover { background-color: #083b5c; }
+        
+        @media print {
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .no-print { display: none !important; }
+            body { background-color: #ffffff; padding: 0; }
+            .container { box-shadow: none; max-width: 100%; width: 100%; border-radius: 0; }
+        }
     </style>
 </head>
 <body>
@@ -89,5 +102,22 @@
             Email ini dihasilkan secara otomatis, mohon tidak membalas email ini.
         </div>
     </div>
+
+    <div class="print-btn-wrapper no-print">
+        <button id="print-btn" class="print-btn">🖨️ Cetak atau Simpan sebagai PDF</button>
+    </div>
+
+    <!-- Script untuk Cetak Otomatis -->
+    <script>
+        // Saat tombol diklik, jalankan fungsi print
+        document.getElementById('print-btn').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // Opsional: Jalankan print otomatis setelah 1 detik halaman dimuat
+        setTimeout(function() {
+            window.print();
+        }, 1000);
+    </script>
 </body>
 </html>

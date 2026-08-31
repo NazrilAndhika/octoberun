@@ -354,6 +354,21 @@ class RegistrationController extends Controller
         return view('user.cek-status', compact('participants', 'settings'));
     }
 
+    // -------------------------------------------------------
+    // GET /e-ticket/{order_id}
+    // -------------------------------------------------------
+    public function showTicket($order_id)
+    {
+        $participant = Participant::where('order_id', $order_id)->firstOrFail();
+        
+        if ($participant->payment_status !== 'paid') {
+            return redirect('/cek-status')->with('error', 'E-Ticket belum tersedia. Selesaikan pembayaran terlebih dahulu.');
+        }
+
+        $settings = EventSetting::first() ?? new EventSetting();
+        return new \App\Mail\ETicketMail($participant, $settings);
+    }
+
     // Legacy method (kept for compatibility)
     public function payment()
     {

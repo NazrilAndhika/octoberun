@@ -29,6 +29,7 @@ Route::post('/daftar', [RegistrationController::class, 'store'])->name('daftar.s
 
 // Rute Cek Status
 Route::get('/cek-status', [RegistrationController::class, 'cekStatus'])->name('cek-status');
+Route::get('/e-ticket/{order_id}', [RegistrationController::class, 'showTicket'])->name('e-ticket.show');
 
 // Webhook Midtrans
 Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook'])->name('midtrans.callback');
