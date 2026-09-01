@@ -88,13 +88,13 @@
 
             <div class="rpc-box">
                 <h4>📌 Informasi Pengambilan Race Pack (RPC)</h4>
-                <p>Harap perhatikan jadwal dan lokasi pengambilan Race Pack berikut:</p>
+                <p>Detail mengenai jadwal resmi, lokasi, serta dokumen persyaratan pengambilan Race Pack (RPC) sedang dalam tahap penyusunan oleh panitia.</p>
+                <p>Informasi lengkap (termasuk panduan pengambilan yang diwakilkan) akan diumumkan lebih lanjut mendekati hari pelaksanaan event melalui:</p>
                 <ul>
-                    <li><strong>Hari/Tanggal:</strong> H-2 sebelum acara ({{ $settings->event_date ?? '18 Oktober 2026' }})</li>
-                    <li><strong>Waktu:</strong> 10:00 - 17:00 WIB</li>
-                    <li><strong>Lokasi:</strong> Area Utama Event {{ $settings->event_name ?? 'OCTOBERUN 2026' }}</li>
-                    <li><strong>Syarat:</strong> Membawa KTP Asli dan menunjukkan E-Ticket ini.</li>
+                    <li>Grup WhatsApp Resmi Peserta</li>
+                    <li>Instagram Resmi @eventoctoberun</li>
                 </ul>
+                <p style="margin-top: 10px;">Pastikan Anda segera bergabung ke dalam Grup WhatsApp melalui tombol hijau di atas agar tidak tertinggal informasi penting terkait Race Pack.</p>
             </div>
 
             <p>Sampai jumpa di garis start! Terus berlatih dan persiapkan diri Anda.</p>

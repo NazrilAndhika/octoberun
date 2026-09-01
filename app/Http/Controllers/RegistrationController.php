@@ -214,11 +214,12 @@ class RegistrationController extends Controller
     public function uploadBukti(Request $request, $order_id)
     {
         $request->validate([
-            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:3072',
+            'payment_proof' => 'required|image|mimes:jpeg,png,jpg|min:10|max:3048',
         ], [
             'payment_proof.required' => 'Bukti pembayaran wajib diunggah.',
             'payment_proof.image' => 'File harus berupa gambar.',
             'payment_proof.mimes' => 'Format yang didukung hanya JPG, JPEG, PNG.',
+            'payment_proof.min' => 'File gambar terlalu kecil atau korup. Silakan unggah ulang foto yang valid.',
             'payment_proof.max' => 'Ukuran file maksimal 3MB.',
         ]);
 
