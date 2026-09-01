@@ -53,6 +53,7 @@ class ETicketMail extends Mailable
     {
         return new Content(
             view: 'emails.eticket',
+            with: ['is_email' => true],
         );
     }
 

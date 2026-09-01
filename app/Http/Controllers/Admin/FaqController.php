@@ -49,7 +49,7 @@ class FaqController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.faq')->with('success', 'FAQ berhasil ditambahkan!');
+        return redirect()->route('admin.settings', ['tab' => 'faq'])->with('success', 'FAQ berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -75,13 +75,13 @@ class FaqController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->route('admin.faq')->with('success', 'FAQ berhasil diperbarui!');
+        return redirect()->route('admin.settings', ['tab' => 'faq'])->with('success', 'FAQ berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         Faq::findOrFail($id)->delete();
-        return redirect()->route('admin.faq')->with('success', 'FAQ berhasil dihapus!');
+        return redirect()->route('admin.settings', ['tab' => 'faq'])->with('success', 'FAQ berhasil dihapus!');
     }
 
     public function toggleStatus($id)

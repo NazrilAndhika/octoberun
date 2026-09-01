@@ -32,7 +32,8 @@ class RegistrationSettingController extends Controller
             'payment_mode',
             'manual_bank_name',
             'manual_bank_account',
-            'manual_bank_owner'
+            'manual_bank_owner',
+            'wa_group_link'
         ]);
         
         // Checkbox dari form (toggle switch) jika tidak diceklis maka tidak akan terkirim

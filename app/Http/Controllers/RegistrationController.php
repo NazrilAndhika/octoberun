@@ -366,7 +366,19 @@ class RegistrationController extends Controller
         }
 
         $settings = EventSetting::first() ?? new EventSetting();
-        return new \App\Mail\ETicketMail($participant, $settings);
+        
+        try {
+            $qrCodeData = file_get_contents('https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=2&data=' . urlencode($participant->order_id));
+        } catch (\Exception $e) {
+            $qrCodeData = null;
+        }
+
+        return view('emails.eticket', [
+            'participant' => $participant,
+            'settings' => $settings,
+            'qrCodeData' => $qrCodeData,
+            'is_email' => false
+        ]);
     }
 
     // Legacy method (kept for compatibility)

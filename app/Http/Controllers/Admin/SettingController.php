@@ -9,10 +9,24 @@ use Illuminate\Support\Facades\Storage; // Wajib ditambahkan untuk fitur hapus f
 
 class SettingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $settings = EventSetting::first() ?? new EventSetting();
-        return view('admin.settings', compact('settings'));
+
+        $query = \App\Models\Faq::query();
+
+        if ($request->filled('search')) {
+            $query->where('question', 'like', '%' . $request->search . '%')
+                  ->orWhere('answer', 'like', '%' . $request->search . '%');
+        }
+
+        if ($request->filled('status') && $request->status !== 'all') {
+            $query->where('is_active', $request->status === 'active' ? true : false);
+        }
+
+        $faqs = $query->orderBy('order')->paginate(10)->appends($request->query());
+
+        return view('admin.settings', compact('settings', 'faqs'));
     }
 
     public function update(Request $request)

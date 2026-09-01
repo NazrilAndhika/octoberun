@@ -84,6 +84,13 @@
                             <input type="datetime-local" name="registration_deadline" value="{{ $settings->registration_deadline }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm">
                             <p class="text-xs text-gray-500 mt-1">Sistem otomatis ditutup melewati tanggal dan jam ini.</p>
                         </div>
+                        
+                        <!-- Link Grup WhatsApp -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Link Grup WhatsApp Peserta (Opsional)</label>
+                            <input type="url" name="wa_group_link" value="{{ $settings->wa_group_link ?? '' }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm" placeholder="Contoh: https://chat.whatsapp.com/...">
+                            <p class="text-xs text-gray-500 mt-1">Akan muncul di halaman sukses pembayaran & E-Ticket (jika sudah LUNAS).</p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -2,8 +2,18 @@
 @extends('layouts.user')
 
 @section('content')
-<div class="bg-gray-50 min-h-screen pt-28 pb-20 font-sans">
+<div class="bg-gray-50 min-h-screen pt-8 pb-20 font-sans">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {{-- Tombol Kembali --}}
+        <div class="mb-4">
+            <a href="{{ url('/') }}" class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-[#0b4d75] transition-colors bg-white px-4 py-2 rounded-lg shadow-sm border border-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Kembali
+            </a>
+        </div>
 
         {{-- ===== STEP INDICATOR ===== --}}
         <div class="flex items-center justify-center gap-0 mb-10">
@@ -40,7 +50,7 @@
         <div class="text-center mb-8">
             @if($participant->payment_status === 'paid')
                 <p class="text-xs font-bold text-green-600 bg-green-50 border border-green-200 inline-block px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
-                    🎉 Pembayaran Selesai!
+                    Pembayaran Selesai!
                 </p>
             @else
                 <p class="text-xs font-bold text-amber-600 bg-amber-50 border border-amber-200 inline-block px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
@@ -121,7 +131,7 @@
                             <div class="bg-gradient-to-r from-[#e85d04] to-[#c74c03] px-5 py-4">
                                 <h2 class="text-white font-bold text-base flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" /></svg>
-                                    Informasi Transfer Bank
+                                    Informasi Pembayaran
                                 </h2>
                             </div>
                             <div class="p-6">
@@ -138,21 +148,40 @@
                                     </div>
                                 @endif
     
-                                <div class="bg-orange-50 border border-orange-100 rounded-xl p-5 mb-6">
-                                    <p class="text-sm text-gray-700 mb-4">Silakan transfer tepat sejumlah <strong>Rp {{ number_format($participant->gross_amount, 0, ',', '.') }}</strong> ke rekening di bawah ini:</p>
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div>
-                                            <p class="text-xs text-gray-500 font-semibold mb-1">Bank Tujuan</p>
-                                            <p class="font-black text-gray-800 text-lg">{{ $settings->manual_bank_name }}</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-xs text-gray-500 font-semibold mb-1">Atas Nama</p>
-                                            <p class="font-black text-gray-800 text-lg">{{ $settings->manual_bank_owner }}</p>
-                                        </div>
-                                        <div class="md:col-span-2">
-                                            <p class="text-xs text-gray-500 font-semibold mb-1">Nomor Rekening</p>
-                                            <div class="flex items-center gap-3">
-                                                <p class="font-black text-[#e85d04] text-2xl tracking-widest">{{ $settings->manual_bank_account }}</p>
+                                <div class="mb-6 pb-6 border-b border-gray-200 text-center">
+                                    <h3 class="font-semibold text-gray-800 mb-4">QRIS</h3>
+                                    <img src="{{ asset('img/qris-gsc.jpg') }}" alt="QRIS GSC" class="mx-auto rounded-lg shadow-md border border-gray-200 max-w-xs w-full mb-3">
+                                    <div class="text-center font-bold text-gray-800 mt-3">QRIS &middot; GERAK SEDEKAH CILACAP</div>
+                                    <p class="text-xs text-gray-500">Gunakan aplikasi m-Banking atau e-Wallet apa saja untuk scan QR Code di atas.</p>
+                                </div>
+
+                                <div class="mb-6">
+                                    <h3 class="font-semibold text-gray-800 mb-4 text-center">Transfer Bank</h3>
+                                    <div class="bg-orange-50 border border-orange-100 rounded-xl p-5">
+                                        <p class="text-sm text-gray-700 mb-4 text-center">Silakan transfer <strong>TEPAT</strong> sejumlah <strong>Rp {{ number_format($participant->gross_amount, 0, ',', '.') }}</strong> (hingga 3 digit terakhir) ke rekening di bawah ini:</p>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                                            <div>
+                                                <p class="text-xs text-gray-500 font-semibold mb-1">Bank Tujuan</p>
+                                                <p class="font-black text-gray-800 text-lg">{{ $settings->manual_bank_name }}</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-xs text-gray-500 font-semibold mb-1">Atas Nama</p>
+                                                <p class="font-black text-gray-800 text-lg">{{ $settings->manual_bank_owner }}</p>
+                                            </div>
+                                            <div class="md:col-span-2">
+                                                <p class="text-xs text-gray-500 font-semibold mb-1">Nomor Rekening</p>
+                                                <div class="flex flex-col gap-3">
+                                                    <p id="nomor-rekening" class="font-black text-[#e85d04] text-2xl tracking-widest">{{ $settings->manual_bank_account }}</p>
+                                                    <div>
+                                                        <button type="button" onclick="copyRekening()" class="border-2 border-[#e85d04] text-[#e85d04] hover:bg-[#e85d04] hover:text-white font-bold py-2 px-4 rounded-lg transition text-xs uppercase tracking-wider w-full md:w-auto inline-flex items-center justify-center gap-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                                            </svg>
+                                                            Salin Nomor Rekening
+                                                        </button>
+                                                        <p id="copy-notif" class="text-green-600 font-semibold text-xs mt-2 hidden transition-opacity duration-300 md:text-left text-center">Nomor rekening berhasil disalin!</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -316,5 +345,18 @@
         }
       });
     };
+
+    function copyRekening() {
+        var copyText = document.getElementById("nomor-rekening").innerText;
+        // Hapus spasi jika ada
+        copyText = copyText.replace(/\s+/g, '');
+        navigator.clipboard.writeText(copyText).then(function() {
+            var notif = document.getElementById("copy-notif");
+            notif.classList.remove("hidden");
+            setTimeout(function() {
+                notif.classList.add("hidden");
+            }, 3000);
+        });
+    }
 </script>
 @endsection

@@ -11,7 +11,7 @@
             <h1 class="text-2xl font-black text-gray-900 tracking-tight">Edit FAQ</h1>
 
         </div>
-        <a href="{{ route('admin.faq') }}"
+        <a href="{{ route('admin.settings', ['tab' => 'faq']) }}"
             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:text-[#0b4d75] hover:border-[#0b4d75] transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
             Kembali
@@ -87,7 +87,7 @@
                     class="flex-1 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 rounded-xl transition text-sm">
                     Perbarui FAQ
                 </button>
-                <a href="{{ route('admin.faq') }}"
+                <a href="{{ route('admin.settings', ['tab' => 'faq']) }}"
                     class="flex-1 text-center border border-gray-300 text-gray-600 font-semibold py-3 rounded-xl hover:bg-gray-50 transition text-sm">
                     Batal
                 </a>

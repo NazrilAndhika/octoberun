@@ -407,7 +407,7 @@
                             <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl p-6 lg:p-8 border-l-4 border-[#e85d04] hover:-translate-y-1 transition-transform duration-300 relative overflow-hidden">
                                 <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 leading-none pointer-events-none">2</div>
                                 <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 text-left">SELESAIKAN PEMBAYARAN</h3>
-                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Pilih metode pembayaran yang Anda inginkan seperti BCA, Mandiri, QRIS, atau e-Wallet. Sistem memverifikasi otomatis.</p>
+                                <p class="text-gray-600 text-sm lg:text-base relative z-10 text-left">Lakukan transfer bank tepat sesuai nominal total tagihan ke rekening panitia, lalu unggah bukti transfer. Admin akan memverifikasi pembayaran Anda.</p>
                             </div>
                         </div>
                     </div>

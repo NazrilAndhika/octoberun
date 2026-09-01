@@ -41,7 +41,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Selamat! Pembayaran Lunas 🎉</h1>
+            <h1>Selamat, Pembayaran Lunas!</h1>
             <p>Terima kasih telah mendaftar di {{ $settings->event_name ?? 'OCTOBERUN 2026' }}</p>
         </div>
         
@@ -57,7 +57,11 @@
                 
                 @if($qrCodeData)
                 <div style="margin-top: 20px;">
-                    <img src="{{ $message->embedData($qrCodeData, 'qrcode.png', 'image/png') }}" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    @if(isset($message))
+                        <img src="{{ $message->embedData($qrCodeData, 'qrcode.png', 'image/png') }}" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    @else
+                        <img src="data:image/png;base64,{{ base64_encode($qrCodeData) }}" alt="QR Code" style="width: 150px; height: 150px; border-radius: 8px; border: 4px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                    @endif
                 </div>
                 @endif
 
@@ -104,20 +108,21 @@
     </div>
 
     <div class="print-btn-wrapper no-print">
-        <button id="print-btn" class="print-btn">🖨️ Cetak atau Simpan sebagai PDF</button>
+        @if(isset($is_email) && $is_email)
+            <a href="{{ route('e-ticket.show', $participant->order_id) }}" class="print-btn" style="text-align: center; display: block; box-sizing: border-box;">🌐 Buka di Browser untuk Cetak PDF</a>
+        @else
+            <button id="print-btn" class="print-btn" onclick="window.print()">Cetak atau Simpan sebagai PDF</button>
+        @endif
     </div>
 
+    @if(!isset($is_email) || !$is_email)
     <!-- Script untuk Cetak Otomatis -->
     <script>
-        // Saat tombol diklik, jalankan fungsi print
-        document.getElementById('print-btn').addEventListener('click', function() {
-            window.print();
-        });
-        
         // Opsional: Jalankan print otomatis setelah 1 detik halaman dimuat
         setTimeout(function() {
             window.print();
         }, 1000);
     </script>
+    @endif
 </body>
 </html>
