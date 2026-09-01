@@ -713,44 +713,49 @@
                         
                         <div class="bg-cyan-50 border border-cyan-100 p-4 rounded-lg mt-6 overflow-x-auto">
                             <p class="font-bold text-[#0b4d75] mb-3 text-xs tracking-wider uppercase">Panduan Ukuran (Toleransi 1-2 cm)</p>
-                            <table class="w-full text-left border-collapse text-sm text-gray-700">
+                            <table class="w-full text-center border-collapse text-sm text-gray-700">
                                 <thead>
                                     <tr class="border-b-2 border-cyan-200 text-[#0b4d75]">
-                                        <th class="py-2 px-4 font-bold uppercase">SIZE</th>
-                                        <th class="py-2 px-4 font-bold uppercase">WIDTH</th>
-                                        <th class="py-2 px-4 font-bold uppercase">LENGTH</th>
+                                        <th class="py-2 px-4 font-bold uppercase text-center">UKURAN</th>
+                                        <th class="py-2 px-4 font-bold uppercase text-center">LEBAR BADAN<br><span class="text-[10px] text-gray-500">(CM)</span></th>
+                                        <th class="py-2 px-4 font-bold uppercase text-center">PANJANG BADAN<br><span class="text-[10px] text-gray-500">(CM)</span></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
-                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">XS</td>
-                                        <td class="py-2 px-4">16"</td>
-                                        <td class="py-2 px-4">27"</td>
-                                    </tr>
-                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
                                         <td class="py-2 px-4 font-semibold text-[#0b4d75]">S</td>
-                                        <td class="py-2 px-4">18"</td>
-                                        <td class="py-2 px-4">28"</td>
+                                        <td class="py-2 px-4">48</td>
+                                        <td class="py-2 px-4">68</td>
                                     </tr>
                                     <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
                                         <td class="py-2 px-4 font-semibold text-[#0b4d75]">M</td>
-                                        <td class="py-2 px-4">20"</td>
-                                        <td class="py-2 px-4">29"</td>
+                                        <td class="py-2 px-4">50</td>
+                                        <td class="py-2 px-4">72</td>
                                     </tr>
                                     <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
                                         <td class="py-2 px-4 font-semibold text-[#0b4d75]">L</td>
-                                        <td class="py-2 px-4">22"</td>
-                                        <td class="py-2 px-4">30"</td>
+                                        <td class="py-2 px-4">52</td>
+                                        <td class="py-2 px-4">74</td>
                                     </tr>
                                     <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
                                         <td class="py-2 px-4 font-semibold text-[#0b4d75]">XL</td>
-                                        <td class="py-2 px-4">24"</td>
-                                        <td class="py-2 px-4">31"</td>
+                                        <td class="py-2 px-4">55</td>
+                                        <td class="py-2 px-4">77</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">XXL</td>
+                                        <td class="py-2 px-4">57</td>
+                                        <td class="py-2 px-4">80</td>
+                                    </tr>
+                                    <tr class="border-b border-cyan-100 hover:bg-cyan-100/50 transition">
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">3XL</td>
+                                        <td class="py-2 px-4">60</td>
+                                        <td class="py-2 px-4">82</td>
                                     </tr>
                                     <tr class="hover:bg-cyan-100/50 transition">
-                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">2XL</td>
-                                        <td class="py-2 px-4">26"</td>
-                                        <td class="py-2 px-4">32"</td>
+                                        <td class="py-2 px-4 font-semibold text-[#0b4d75]">4XL</td>
+                                        <td class="py-2 px-4">63</td>
+                                        <td class="py-2 px-4">85</td>
                                     </tr>
                                 </tbody>
                             </table>

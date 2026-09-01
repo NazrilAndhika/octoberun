@@ -90,7 +90,7 @@
                 <h4>📌 Informasi Pengambilan Race Pack (RPC)</h4>
                 <p>Harap perhatikan jadwal dan lokasi pengambilan Race Pack berikut:</p>
                 <ul>
-                    <li><strong>Hari/Tanggal:</strong> H-3 dan H-2 sebelum acara ({{ $settings->event_date ?? '18 Oktober 2026' }})</li>
+                    <li><strong>Hari/Tanggal:</strong> H-2 sebelum acara ({{ $settings->event_date ?? '18 Oktober 2026' }})</li>
                     <li><strong>Waktu:</strong> 10:00 - 17:00 WIB</li>
                     <li><strong>Lokasi:</strong> Area Utama Event {{ $settings->event_name ?? 'OCTOBERUN 2026' }}</li>
                     <li><strong>Syarat:</strong> Membawa KTP Asli dan menunjukkan E-Ticket ini.</li>
