@@ -109,7 +109,7 @@
 
     <div class="print-btn-wrapper no-print">
         @if(isset($is_email) && $is_email)
-            <a href="{{ route('e-ticket.show', $participant->order_id) }}" class="print-btn" style="text-align: center; display: block; box-sizing: border-box;">🌐 Buka di Browser untuk Cetak PDF</a>
+            <a href="{{ route('e-ticket.show', $participant->order_id) }}" class="print-btn" style="text-align: center; display: block; box-sizing: border-box; color: #ffffff !important; text-decoration: none;">🌐 Buka di Browser untuk Cetak PDF</a>
         @else
             <button id="print-btn" class="print-btn" onclick="window.print()">Cetak atau Simpan sebagai PDF</button>
         @endif

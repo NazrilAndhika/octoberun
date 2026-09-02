@@ -648,7 +648,7 @@
                     </button>
                     <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
                         <div class="px-5 pb-5 text-gray-600 text-sm border-t border-gray-100 pt-3">
-                            {{ $faq->answer }}
+                            {!! nl2br(e($faq->answer)) !!}
                         </div>
                     </div>
                 </div>
