@@ -47,7 +47,7 @@
             {{-- Jersey Size Filter --}}
             <select name="jersey_size" id="jersey-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
                 <option value="all" {{ request('jersey_size', 'all') === 'all' ? 'selected' : '' }}>Semua Ukuran Jersey</option>
-                @foreach(['XS','S','M','L','XL','XXL'] as $size)
+                @foreach(['S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $size)
                     <option value="{{ $size }}" {{ request('jersey_size') === $size ? 'selected' : '' }}>{{ $size }}</option>
                 @endforeach
             </select>
@@ -131,7 +131,7 @@
                     </td>
                     <td class="px-5 py-4 whitespace-nowrap">
                         <span class="inline-block bg-gray-100 text-gray-700 text-xs font-bold px-3 py-1 rounded-full">
-                            {{ $participant->jersey_size }}
+                            {{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}
                         </span>
                     </td>
                     <td class="px-5 py-4 whitespace-nowrap text-gray-600 font-medium">

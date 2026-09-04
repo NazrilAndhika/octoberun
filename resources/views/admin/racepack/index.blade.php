@@ -70,7 +70,7 @@
                 <div class="p-8 text-center">
                     <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">Ukuran Jersey</p>
                     <div class="inline-block bg-[#0b4d75] text-white text-6xl font-black rounded-3xl px-10 py-6 mb-8 shadow-inner">
-                        {{ $participant->jersey_size }}
+                        {{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}
                     </div>
 
                     @if ($participant->is_racepack_taken)

@@ -82,7 +82,7 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Ukuran Jersey:</span>
-                    <span>{{ $participant->jersey_size }}</span>
+                    <span>{{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}</span>
                 </div>
             </div>
 

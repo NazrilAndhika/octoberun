@@ -50,7 +50,7 @@ class PendaftarExport implements FromQuery, WithHeadings, WithMapping, ShouldAut
             $p->full_name,
             $p->bib_name,
             $p->id_number,
-            $p->jersey_size,
+            $p->jersey_size === 'Custom Size' ? $p->jersey_size . ' (' . $p->custom_size_note . ')' : $p->jersey_size,
             $p->email,
             $p->whatsapp,
             $p->gender === 'male' ? 'Laki-laki' : 'Perempuan',

@@ -49,7 +49,7 @@
                             ['label' => 'Email',           'value' => $participant->email],
                             ['label' => 'No. WhatsApp',    'value' => $participant->whatsapp],
                             ['label' => 'Kota',            'value' => $participant->city],
-                            ['label' => 'Ukuran Jersey',   'value' => $participant->jersey_size],
+                            ['label' => 'Ukuran Jersey',   'value' => $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size],
                         ];
                     @endphp
 

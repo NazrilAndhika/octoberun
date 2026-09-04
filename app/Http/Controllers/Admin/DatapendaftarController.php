@@ -146,8 +146,15 @@ class DatapendaftarController extends Controller
             'gender'     => 'required|in:male,female',
             'city'       => 'required|string|max:255',
             'address'    => 'required|string',
-            'jersey_size'=> 'required|in:XXS,XS,S,M,L,XL,XXL',
+            'jersey_size'=> 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
+            'custom_lebar'   => 'required_if:jersey_size,Custom Size|nullable|numeric',
+            'custom_panjang' => 'required_if:jersey_size,Custom Size|nullable|numeric',
         ]);
+
+        $customNote = $participant->custom_size_note;
+        if ($request->filled('custom_lebar') && $request->filled('custom_panjang')) {
+            $customNote = 'lebar ' . $request->custom_lebar . ' x panjang ' . $request->custom_panjang;
+        }
 
         $participant->update([
             'full_name'  => $request->full_name,
@@ -158,6 +165,7 @@ class DatapendaftarController extends Controller
             'city'       => $request->city,
             'address'    => $request->address,
             'jersey_size'=> $request->jersey_size,
+            'custom_size_note' => $customNote,
         ]);
 
         return redirect()->route('admin.datapendaftar.show', $participant->id)->with('success', 'Data berhasil diperbarui');

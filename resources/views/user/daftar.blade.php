@@ -100,13 +100,70 @@
                             </label>
                             <select name="jersey_size" id="jersey_size"
                                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
-                                required>
+                                required onchange="toggleCustomSize()">
                                 <option value="" disabled {{ old('jersey_size') ? '' : 'selected' }}>Pilih Ukuran</option>
-                                @foreach(['XS','S','M','L','XL','XXL'] as $s)
+                                @foreach(['S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $s)
                                     <option value="{{ $s }}" {{ old('jersey_size') === $s ? 'selected' : '' }}>{{ $s }}</option>
                                 @endforeach
                             </select>
+                            @error('jersey_size')
+                                <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                            @enderror
                         </div>
+
+                        {{-- Custom Size Note (Hidden by default) --}}
+                        <div id="custom_size_container" class="{{ old('jersey_size') === 'Custom Size' ? '' : 'hidden' }} mt-4">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                Detail Ukuran Custom <span class="text-red-500">*</span>
+                                <span class="text-gray-400 font-normal block text-xs mt-0.5">(Harap sesuaikan dengan toleransi jahit 1-2 cm)</span>
+                            </label>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-xs text-gray-500 mb-1">Lebar (cm)</label>
+                                    <input type="number" name="custom_lebar" id="custom_lebar"
+                                        value="{{ old('custom_lebar') }}"
+                                        placeholder="Misal: 63"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('custom_lebar') ? 'border-red-400' : '' }}">
+                                    @error('custom_lebar')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-xs text-gray-500 mb-1">Panjang (cm)</label>
+                                    <input type="number" name="custom_panjang" id="custom_panjang"
+                                        value="{{ old('custom_panjang') }}"
+                                        placeholder="Misal: 75"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('custom_panjang') ? 'border-red-400' : '' }}">
+                                    @error('custom_panjang')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function toggleCustomSize() {
+                                const select = document.getElementById('jersey_size');
+                                const container = document.getElementById('custom_size_container');
+                                const inputLebar = document.getElementById('custom_lebar');
+                                const inputPanjang = document.getElementById('custom_panjang');
+                                
+                                if (select.value === 'Custom Size') {
+                                    container.classList.remove('hidden');
+                                    inputLebar.required = true;
+                                    inputPanjang.required = true;
+                                } else {
+                                    container.classList.add('hidden');
+                                    inputLebar.required = false;
+                                    inputPanjang.required = false;
+                                }
+                            }
+                            
+                            // Initialize on load just in case old value is Custom Size
+                            document.addEventListener('DOMContentLoaded', function() {
+                                toggleCustomSize();
+                            });
+                        </script>
 
                         {{-- Email & WhatsApp --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -111,12 +111,64 @@
 
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Ukuran Jersey</label>
-                            <select name="jersey_size" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
-                                @foreach(['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL'] as $size)
+                            <select name="jersey_size" id="jersey_size" onchange="toggleCustomSize()" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
+                                @foreach(['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', 'Custom Size'] as $size)
                                     <option value="{{ $size }}" {{ old('jersey_size', $participant->jersey_size) === $size ? 'selected' : '' }}>{{ $size }}</option>
                                 @endforeach
                             </select>
                         </div>
+
+                        @php
+                            $lebar = '';
+                            $panjang = '';
+                            if ($participant->custom_size_note && preg_match('/lebar (\d+)\s*x\s*panjang (\d+)/i', $participant->custom_size_note, $matches)) {
+                                $lebar = $matches[1];
+                                $panjang = $matches[2];
+                            }
+                        @endphp
+                        <div id="custom_size_container" class="{{ old('jersey_size', $participant->jersey_size) === 'Custom Size' ? '' : 'hidden' }}">
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Detail Ukuran Custom</label>
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="block text-xs text-gray-500 mb-1">Lebar (cm)</label>
+                                    <input type="number" name="custom_lebar" id="custom_lebar" value="{{ old('custom_lebar', $lebar) }}" placeholder="Misal: 63" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm {{ $errors->has('custom_lebar') ? 'border-red-400' : '' }}">
+                                    @error('custom_lebar')
+                                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                <div class="flex-1">
+                                    <label class="block text-xs text-gray-500 mb-1">Panjang (cm)</label>
+                                    <input type="number" name="custom_panjang" id="custom_panjang" value="{{ old('custom_panjang', $panjang) }}" placeholder="Misal: 75" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm {{ $errors->has('custom_panjang') ? 'border-red-400' : '' }}">
+                                    @error('custom_panjang')
+                                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                            function toggleCustomSize() {
+                                const select = document.getElementById('jersey_size');
+                                const container = document.getElementById('custom_size_container');
+                                const inputLebar = document.getElementById('custom_lebar');
+                                const inputPanjang = document.getElementById('custom_panjang');
+                                
+                                if (select.value === 'Custom Size') {
+                                    container.classList.remove('hidden');
+                                    inputLebar.required = true;
+                                    inputPanjang.required = true;
+                                } else {
+                                    container.classList.add('hidden');
+                                    inputLebar.required = false;
+                                    inputPanjang.required = false;
+                                }
+                            }
+                            
+                            // Initialize on load
+                            document.addEventListener('DOMContentLoaded', function() {
+                                toggleCustomSize();
+                            });
+                        </script>
                         
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Kota</label>
