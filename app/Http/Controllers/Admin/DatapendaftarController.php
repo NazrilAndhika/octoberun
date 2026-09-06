@@ -49,11 +49,35 @@ class DatapendaftarController extends Controller
         }
 
         // --- Filter: Tanggal ---
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
+        if ($request->filled('date_filter') && $request->date_filter !== 'all') {
+            $filter = $request->date_filter;
+            if ($filter === 'today') {
+                $query->whereDate('created_at', now()->toDateString());
+            } elseif ($filter === 'this_week') {
+                $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+            } elseif ($filter === 'this_month') {
+                $query->whereMonth('created_at', now()->month)
+                      ->whereYear('created_at', now()->year);
+            } elseif ($filter === 'custom') {
+                if ($request->filled('date_from') && $request->filled('date_to')) {
+                    $query->whereDate('created_at', '>=', $request->date_from)
+                          ->whereDate('created_at', '<=', $request->date_to);
+                } elseif ($request->filled('date_from')) {
+                    $query->whereDate('created_at', $request->date_from);
+                } elseif ($request->filled('date_to')) {
+                    $query->whereDate('created_at', '<=', $request->date_to);
+                }
+            }
+        } else {
+            // Fallback backward compatibility
+            if ($request->filled('date_from') && $request->filled('date_to')) {
+                $query->whereDate('created_at', '>=', $request->date_from)
+                      ->whereDate('created_at', '<=', $request->date_to);
+            } elseif ($request->filled('date_from')) {
+                $query->whereDate('created_at', $request->date_from);
+            } elseif ($request->filled('date_to')) {
+                $query->whereDate('created_at', '<=', $request->date_to);
+            }
         }
 
         // --- Paginate ---
@@ -115,11 +139,35 @@ class DatapendaftarController extends Controller
                 $query->where('is_racepack_taken', false);
             }
         }
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
+        if ($request->filled('date_filter') && $request->date_filter !== 'all') {
+            $filter = $request->date_filter;
+            if ($filter === 'today') {
+                $query->whereDate('created_at', now()->toDateString());
+            } elseif ($filter === 'this_week') {
+                $query->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]);
+            } elseif ($filter === 'this_month') {
+                $query->whereMonth('created_at', now()->month)
+                      ->whereYear('created_at', now()->year);
+            } elseif ($filter === 'custom') {
+                if ($request->filled('date_from') && $request->filled('date_to')) {
+                    $query->whereDate('created_at', '>=', $request->date_from)
+                          ->whereDate('created_at', '<=', $request->date_to);
+                } elseif ($request->filled('date_from')) {
+                    $query->whereDate('created_at', $request->date_from);
+                } elseif ($request->filled('date_to')) {
+                    $query->whereDate('created_at', '<=', $request->date_to);
+                }
+            }
+        } else {
+            // Fallback backward compatibility
+            if ($request->filled('date_from') && $request->filled('date_to')) {
+                $query->whereDate('created_at', '>=', $request->date_from)
+                      ->whereDate('created_at', '<=', $request->date_to);
+            } elseif ($request->filled('date_from')) {
+                $query->whereDate('created_at', $request->date_from);
+            } elseif ($request->filled('date_to')) {
+                $query->whereDate('created_at', '<=', $request->date_to);
+            }
         }
 
         return \Maatwebsite\Excel\Facades\Excel::download(

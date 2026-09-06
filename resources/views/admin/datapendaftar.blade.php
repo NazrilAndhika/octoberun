@@ -59,10 +59,25 @@
                 <option value="not_taken" {{ request('racepack_status') === 'not_taken' ? 'selected' : '' }}>Belum Diambil</option>
             </select>
 
-            {{-- Date From --}}
-            <input type="date" name="date_from" id="date-from" value="{{ request('date_from') }}"
-                class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50"
-                placeholder="Dari Tanggal">
+            {{-- Date Filter --}}
+            <select name="date_filter" id="date-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer" onchange="toggleCustomDate()">
+                <option value="all" {{ request('date_filter', 'all') === 'all' ? 'selected' : '' }}>Semua Waktu</option>
+                <option value="today" {{ request('date_filter') === 'today' ? 'selected' : '' }}>Hari Ini</option>
+                <option value="this_week" {{ request('date_filter') === 'this_week' ? 'selected' : '' }}>Minggu Ini</option>
+                <option value="this_month" {{ request('date_filter') === 'this_month' ? 'selected' : '' }}>Bulan Ini</option>
+                <option value="custom" {{ request('date_filter') === 'custom' ? 'selected' : '' }}>Pilih Tanggal</option>
+            </select>
+
+            {{-- Custom Date Range --}}
+            <div id="custom-date-container" class="items-center gap-2 {{ request('date_filter') === 'custom' ? 'flex' : 'hidden' }}">
+                <input type="date" name="date_from" id="date-from" value="{{ request('date_from') }}" title="Mulai Tanggal"
+                    class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50"
+                    placeholder="Dari Tanggal">
+                <span class="text-gray-500 font-bold">-</span>
+                <input type="date" name="date_to" id="date-to" value="{{ request('date_to') }}" title="Sampai Tanggal"
+                    class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50"
+                    placeholder="Sampai Tanggal">
+            </div>
 
             {{-- Submit & Reset --}}
             <button type="submit" id="btn-filter"
@@ -235,11 +250,11 @@
     </div>
 
     {{-- Pagination Footer --}}
-    <div class="flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-t border-gray-100 gap-3">
-        <p class="text-sm text-gray-500">
+    <div class="flex flex-col xl:flex-row items-center justify-between px-4 md:px-6 py-4 border-t border-gray-100 gap-4">
+        <p class="text-sm text-gray-500 text-center xl:text-left w-full xl:w-auto">
             Menampilkan {{ $participants->firstItem() ?? 0 }} - {{ $participants->lastItem() ?? 0 }} dari {{ number_format($participants->total(), 0, ',', '.') }} data
         </p>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 w-full xl:w-auto">
             {{-- Per page selector --}}
             <form method="GET" action="{{ route('admin.datapendaftar') }}" id="per-page-form">
                 @foreach(request()->except(['page', 'per_page']) as $key => $val)
@@ -254,7 +269,7 @@
             </form>
 
             {{-- Pagination Links --}}
-            <div class="flex items-center gap-1">
+            <div class="flex flex-wrap items-center justify-center gap-1">
                 {{-- Prev --}}
                 @if($participants->onFirstPage())
                     <span class="w-8 h-8 flex items-center justify-center rounded-lg bg-gray-100 text-gray-300 cursor-not-allowed">
@@ -321,8 +336,27 @@
 @push('scripts')
 <script>
     // Auto-submit filter on select change
-    document.querySelectorAll('#status-filter, #jersey-filter, #racepack-filter').forEach(el => {
-        el.addEventListener('change', () => document.getElementById('filter-form').submit());
+    document.querySelectorAll('#status-filter, #jersey-filter, #racepack-filter, #date-filter').forEach(el => {
+        el.addEventListener('change', function() {
+            if (this.id === 'date-filter' && this.value === 'custom') {
+                return; // Jangan auto-submit jika milih 'custom' karena user harus isi tanggal dulu
+            }
+            document.getElementById('filter-form').submit();
+        });
     });
+
+    function toggleCustomDate() {
+        const filter = document.getElementById('date-filter').value;
+        const container = document.getElementById('custom-date-container');
+        if (filter === 'custom') {
+            container.classList.remove('hidden');
+            container.classList.add('flex');
+        } else {
+            container.classList.add('hidden');
+            container.classList.remove('flex');
+            document.getElementById('date-from').value = '';
+            document.getElementById('date-to').value = '';
+        }
+    }
 </script>
 @endpush

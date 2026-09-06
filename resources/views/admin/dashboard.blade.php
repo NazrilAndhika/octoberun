@@ -5,10 +5,10 @@
     <h1 class="text-2xl font-black text-gray-900 tracking-tight mb-8">Dashboard Utama</h1>
 
     <!-- Kotak-kotak Statistik -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
         <!-- Total Pendaftar -->
         <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 shadow-sm flex flex-col justify-center transition hover:-translate-y-1">
-            <span class="text-sm font-bold text-blue-600 mb-1 uppercase tracking-wider">Total Pendaftar</span>
+            <span class="text-sm font-bold text-blue-600 mb-1 uppercase tracking-wider">Total Pendaftar (Aktif)</span>
             <span class="text-4xl font-black text-[#0b4d75]">{{ $totalPendaftar }}</span>
         </div>
         
@@ -24,6 +24,12 @@
             <span class="text-4xl font-black text-orange-700">{{ $pending }}</span>
         </div>
         
+        <!-- Kadaluarsa -->
+        <div class="bg-red-50 border border-red-100 rounded-xl p-6 shadow-sm flex flex-col justify-center transition hover:-translate-y-1">
+            <span class="text-sm font-bold text-red-600 mb-1 uppercase tracking-wider">Kadaluarsa (Auto)</span>
+            <span class="text-4xl font-black text-red-700">{{ $expired ?? 0 }}</span>
+        </div>
+
         <!-- Sisa Kuota -->
         <div class="bg-purple-50 border border-purple-100 rounded-xl p-6 shadow-sm flex flex-col justify-center transition hover:-translate-y-1">
             <span class="text-sm font-bold text-purple-600 mb-1 uppercase tracking-wider">Sisa Kuota</span>

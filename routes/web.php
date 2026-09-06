@@ -13,11 +13,17 @@ use App\Http\Controllers\Admin\RegistrationSettingController;
 use App\Http\Controllers\Admin\RacePackController;
 
 Route::get('/', function () {
+    // Auto-Expire Logic (Real-time trigger saat user buka homepage)
+    \App\Models\Participant::where('payment_status', 'pending')
+        ->where('created_at', '<=', now()->subHours(24))
+        ->update(['payment_status' => 'expired']);
+
     $settings = EventSetting::first();
     $faqs = Faq::active()->get();
     
     $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
-    $jumlahPendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+    // Hanya hitung status aktif agar kuota bisa balik saat expired
+    $jumlahPendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending', 'verifying'])->count();
     $sisaKuota = $kapasitasMaksimal - $jumlahPendaftar;
 
     return view('user.home', compact('settings', 'faqs', 'sisaKuota'));

@@ -151,7 +151,7 @@
                                 <div class="mb-6 pb-6 border-b border-gray-200 text-center">
                                     <h3 class="font-semibold text-gray-800 mb-4">QRIS</h3>
                                     <img src="{{ asset('img/qris-gsc.jpg') }}" alt="QRIS GSC" class="mx-auto rounded-lg shadow-md border border-gray-200 max-w-xs w-full mb-3">
-                                    <div class="text-center font-bold text-gray-800 mt-3">QRIS &middot; GERAK SEDEKAH CILACAP</div>
+                                    <div class="text-center font-bold text-gray-800 mt-3">QRIS &middot; YAY GERAK SEDEKAH CILACAP</div>
                                     <p class="text-xs text-gray-500">Gunakan aplikasi m-Banking atau e-Wallet apa saja untuk scan QR Code di atas.</p>
                                 </div>
 

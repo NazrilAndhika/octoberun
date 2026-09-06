@@ -29,16 +29,23 @@ class DashboardController extends Controller
             rsort($availableYears);
         }
 
-        // 1. Ambil target kuota dari pengaturan website
+        // 1. Auto-Expire Logic (Real-time trigger)
+        Participant::where('payment_status', 'pending')
+            ->where('created_at', '<=', now()->subHours(24))
+            ->update(['payment_status' => 'expired']);
+
+        // 2. Ambil target kuota dari pengaturan website
         $settings = EventSetting::first();
         $kuotaTotal = $settings ? (int) $settings->target_runners : 0;
 
-        // 2. Hitung statistik dari tabel participants (Bisa difilter per tahun jika mau, tapi biasanya total pendaftar dihitung keseluruhan atau sesuai logika awal)
-        $totalPendaftar = Participant::count();
+        // 3. Hitung statistik dari tabel participants 
+        // Hanya hitung status aktif agar expired tidak memakan kuota
+        $totalPendaftar = Participant::whereIn('payment_status', ['paid', 'pending', 'verifying'])->count();
         $sisaKuota = $kuotaTotal - $totalPendaftar;
         
         $lunas = Participant::where('payment_status', 'paid')->count();
         $pending = Participant::where('payment_status', 'pending')->count();
+        $expired = Participant::where('payment_status', 'expired')->count();
 
         // 3. Hitung Total Pendapatan berdasarkan Tahun
         $totalPendapatan = Participant::where('payment_status', 'paid')
@@ -63,7 +70,7 @@ class DashboardController extends Controller
         $recentParticipants = Participant::orderBy('created_at', 'desc')->take(5)->get();
 
         return view('admin.dashboard', compact(
-            'kuotaTotal', 'totalPendaftar', 'sisaKuota', 'lunas', 'pending', 
+            'kuotaTotal', 'totalPendaftar', 'sisaKuota', 'lunas', 'pending', 'expired',
             'recentParticipants', 'totalPendapatan', 'monthlyIncomeData', 
             'selectedYear', 'availableYears'
         ));

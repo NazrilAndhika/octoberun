@@ -115,66 +115,35 @@ class RegistrationController extends Controller
 
         $grossAmount = $ticketPrice + $adminFee + $kodeUnik;
 
-        // Cek NIK manual
-        $existingParticipant = Participant::where('id_number', $request->nik)->first();
+        // Cek NIK manual: Tolak jika ada NIK yang statusnya sedang aktif
+        $activeParticipant = Participant::where('id_number', $request->nik)
+                                        ->whereIn('payment_status', ['paid', 'pending', 'verifying'])
+                                        ->first();
                                           
-        if ($existingParticipant) {
-            // Jika transaksi dengan NIK tersebut berstatus "Lunas", "Menunggu Pembayaran", atau "Menunggu Verifikasi"
-            if (in_array($existingParticipant->payment_status, ['paid', 'pending', 'verifying'])) {
-                return back()->withInput()->withErrors(['nik' => 'Maaf, NIK ini sudah terdaftar dan sedang dalam proses atau sudah lunas.']);
-            }
-            
-            // Jika expired/failed/ditolak, update data lama
-            $participant = $existingParticipant;
-            
-            // Hapus bukti bayar lama jika ada
-            if ($participant->payment_proof && Storage::disk('public')->exists($participant->payment_proof)) {
-                Storage::disk('public')->delete($participant->payment_proof);
-            }
-
-            $participant->update([
-                'order_id'           => $orderId,
-                'kategori'           => '5K',
-                'gross_amount'       => $grossAmount,
-                'kode_unik'          => $kodeUnik,
-                'payment_status'     => 'pending',
-                'payment_method'     => null,
-                'payment_proof'      => null, // Reset payment proof
-                'bib_name'           => '-', // Generic/empty as requested
-                'full_name'          => $request->full_name,
-                'id_number'          => $request->nik,
-                'jersey_size'        => $request->jersey_size,
-                'custom_size_note'   => $request->jersey_size === 'Custom Size' ? 'lebar ' . $request->custom_lebar . ' x panjang ' . $request->custom_panjang : null,
-                'email'              => $request->email,
-                'whatsapp'           => $request->whatsapp,
-                'address'            => $request->address,
-                'gender'             => $request->gender,
-                'city'               => $request->city,
-                'payment_expired_at' => now()->addHours(24),
-                'snap_token'         => null,
-            ]);
-        } else {
-            // Simpan ke database dengan status PENDING
-            $participant = Participant::create([
-                'order_id'           => $orderId,
-                'kategori'           => '5K',
-                'gross_amount'       => $grossAmount,
-                'kode_unik'          => $kodeUnik,
-                'payment_status'     => 'pending',
-                'payment_method'     => null,
-                'bib_name'           => '-', // Generic/empty as requested
-                'full_name'          => $request->full_name,
-                'id_number'          => $request->nik,
-                'jersey_size'        => $request->jersey_size,
-                'custom_size_note'   => $request->jersey_size === 'Custom Size' ? 'lebar ' . $request->custom_lebar . ' x panjang ' . $request->custom_panjang : null,
-                'email'              => $request->email,
-                'whatsapp'           => $request->whatsapp,
-                'address'            => $request->address,
-                'gender'             => $request->gender,
-                'city'               => $request->city,
-                'payment_expired_at' => now()->addHours(24),
-            ]);
+        if ($activeParticipant) {
+            return back()->withInput()->withErrors(['nik' => 'Maaf, NIK ini sudah terdaftar dan sedang dalam proses atau sudah lunas.']);
         }
+        
+        // Simpan ke database dengan status PENDING (Selalu buat data baru / INSERT)
+        $participant = Participant::create([
+            'order_id'           => $orderId,
+            'kategori'           => '5K',
+            'gross_amount'       => $grossAmount,
+            'kode_unik'          => $kodeUnik,
+            'payment_status'     => 'pending',
+            'payment_method'     => null,
+            'bib_name'           => '-', // Generic/empty as requested
+            'full_name'          => $request->full_name,
+            'id_number'          => $request->nik,
+            'jersey_size'        => $request->jersey_size,
+            'custom_size_note'   => $request->jersey_size === 'Custom Size' ? 'lebar ' . $request->custom_lebar . ' x panjang ' . $request->custom_panjang : null,
+            'email'              => $request->email,
+            'whatsapp'           => $request->whatsapp,
+            'address'            => $request->address,
+            'gender'             => $request->gender,
+            'city'               => $request->city,
+            'payment_expired_at' => now()->addHours(24),
+        ]);
 
         // Konfigurasi Midtrans
         Config::$serverKey = config('midtrans.server_key');
