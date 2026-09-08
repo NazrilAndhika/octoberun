@@ -424,6 +424,9 @@
                                 <div class="text-7xl font-black text-[#e85d04]/10 absolute top-2 right-4 lg:left-4 lg:right-auto leading-none pointer-events-none">3</div>
                                 <h3 class="font-sporty font-bold text-xl text-blue-900 mb-2 uppercase italic relative z-10 lg:text-right">CEK STATUS & E-TICKET</h3>
                                 <p class="text-gray-600 text-sm lg:text-base relative z-10 lg:text-right">Pantau status pesanan Anda. E-Ticket akan dikirimkan ke alamat email setelah pembayaran berhasil.</p>
+                                <div class="relative z-10 flex lg:justify-end">
+                                    <button onclick="openModal('modal-tutorial-bayar')" class="mt-3 text-xs md:text-sm font-bold text-[#e85d04] hover:text-orange-700 underline underline-offset-2 flex items-center gap-1 transition-colors">Lihat Panduan Melanjutkan Pembayaran</button>
+                                </div>
                             </div>
                         </div>
                         
@@ -677,17 +680,22 @@
         </div>
 
         <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
-            <h2 class="text-center font-sporty font-black text-2xl italic text-[#0b4d75] uppercase tracking-wider mb-2">SPONSORED BY</h2>
+            <h2 data-aos="fade-up" class="text-center font-sporty font-black text-2xl italic text-[#0b4d75] uppercase tracking-wider mb-2">SPONSORED BY</h2>
             
-            <div class="flex flex-row justify-center items-center gap-6 md:gap-16 w-full mt-6">
+            <div class="flex flex-row justify-center items-center gap-6 md:gap-16 w-full mt-6 flex-wrap">
                 <!-- Sponsor / Penyelenggara -->
-                <div class="flex flex-col items-center justify-center">
+                <div data-aos="fade-up" data-aos-delay="100" class="flex flex-col items-center justify-center">
                     <img src="{{ asset('img/logo_gsc.png') }}" alt="GSC" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                 </div>
 
                 <!-- Sponsor Utama -->
-                <div class="flex flex-col items-center justify-center">
+                <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col items-center justify-center">
                     <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-16 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                </div>
+
+                <!-- Sponsor Sari Roti -->
+                <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center justify-center">
+                    <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="h-16 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                 </div>
             </div>
         </div>
@@ -946,6 +954,28 @@
         </div>
     </div>
 
+    <!-- Modal Tutorial Pembayaran -->
+    <div id="modal-tutorial-bayar" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity opacity-0 p-4">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[95vh] relative border-[3px] border-[#e85d04] flex flex-col">
+            
+            <button onclick="closeModal('modal-tutorial-bayar')" class="absolute top-4 right-4 z-50 text-gray-900 hover:text-white hover:bg-red-500 bg-white shadow-md p-1.5 rounded-full transition border-2 border-gray-900">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <div class="pt-6 pb-4 px-6 border-b border-gray-100 bg-white z-40 text-center">
+                <h3 class="font-sporty text-xl md:text-2xl text-[#0b4d75] font-black italic uppercase leading-none">CARA MELANJUTKAN PEMBAYARAN</h3>
+            </div>
+
+            <div class="overflow-y-auto flex-grow bg-gray-50 p-4 flex justify-center items-start">
+                <img src="{{ asset('img/tutorial-pembayaran.jpeg') }}" class="w-full object-contain drop-shadow-md rounded-lg" alt="Tutorial Pembayaran">
+            </div>
+            
+            <div class="p-4 md:px-8 md:pb-6 bg-white shrink-0">
+                <button onclick="closeModal('modal-tutorial-bayar')" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-md uppercase tracking-wider text-sm">Kembali</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal Preview Gambar Fullscreen -->
     <div id="modal-image-preview" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/95 backdrop-blur-md transition-opacity opacity-0 p-4">
         <button onclick="closeImagePreview()" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-white transition focus:outline-none z-[210] bg-black/50 p-2 rounded-full">
@@ -1087,4 +1117,16 @@
         }, 1000);
         @endif
     </script>
+    <!-- Floating Reminder Notification -->
+    <div class="fixed z-40 bottom-6 left-0 right-0 flex justify-center pointer-events-none md:left-auto md:right-8 md:bottom-8">
+        <a href="{{ route('cek-status') }}" class="pointer-events-auto hover:scale-105 transition-all animate-bounce">
+            <div class="bg-gradient-to-r from-[#e85d04] to-orange-500 rounded-full shadow-2xl border-2 border-white px-4 py-2.5 flex items-center gap-3 cursor-pointer w-max max-w-[90vw]">
+                <!-- Bell Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <span class="text-white text-xs md:text-sm font-bold tracking-wide whitespace-nowrap">Belum Melanjutkan Pembayaran?</span>
+            </div>
+        </a>
+    </div>
 @endsection
