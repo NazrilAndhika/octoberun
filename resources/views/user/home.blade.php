@@ -694,9 +694,9 @@
                 </div>
 
                 <!-- Sponsor Sari Roti -->
-                <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center justify-center">
+                <!-- <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center justify-center">
                     <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="h-16 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
