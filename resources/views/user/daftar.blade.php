@@ -78,6 +78,52 @@
                                 required>
                         </div>
 
+                        {{-- Nama pada BIB --}}
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                Nama pada BIB <span class="text-red-500">*</span>
+                                <span class="text-gray-400 font-normal">(Maks. 10 Huruf)</span>
+                            </label>
+                            <input type="text" name="bib_name" id="bib_name"
+                                value="{{ old('bib_name') }}"
+                                placeholder="Masukkan nama untuk BIB"
+                                maxlength="10"
+                                class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('bib_name') ? 'border-red-400' : '' }}"
+                                required>
+                            @error('bib_name')
+                                <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Tempat, Tanggal Lahir --}}
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                    Tempat Lahir <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" name="birth_place" id="birth_place"
+                                    value="{{ old('birth_place') }}"
+                                    placeholder="Masukkan tempat lahir"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('birth_place') ? 'border-red-400' : '' }}"
+                                    required>
+                                @error('birth_place')
+                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                    Tanggal Lahir <span class="text-red-500">*</span>
+                                </label>
+                                <input type="date" name="birth_date" id="birth_date"
+                                    value="{{ old('birth_date') }}"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('birth_date') ? 'border-red-400' : '' }}"
+                                    required>
+                                @error('birth_date')
+                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
                         {{-- NIK --}}
                         <div>
                             <label class="block text-sm font-semibold text-gray-600 mb-1.5">
@@ -237,6 +283,95 @@
                                     placeholder="Masukkan asal kota"
                                     class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('city') ? 'border-red-400' : '' }}"
                                     required>
+                            </div>
+                            {{-- Golongan Darah --}}
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-600 mb-1.5">
+                                    Golongan Darah <span class="text-red-500">*</span>
+                                </label>
+                                <select name="blood_type" id="blood_type"
+                                    class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('blood_type') ? 'border-red-400' : '' }}"
+                                    required>
+                                    <option value="" disabled {{ old('blood_type') ? '' : 'selected' }}>Pilih Golongan Darah</option>
+                                    @foreach(['A','B','AB','O','Tidak Tahu'] as $goldar)
+                                        <option value="{{ $goldar }}" {{ old('blood_type') === $goldar ? 'selected' : '' }}>{{ $goldar }}</option>
+                                    @endforeach
+                                </select>
+                                @error('blood_type')
+                                    <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+
+                        {{-- EMERGENCY CONTACT & MEDIS --}}
+                        <div class="mt-8 border border-red-200 rounded-xl p-5 bg-red-50">
+                            <div class="flex items-center gap-2 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <h3 class="font-bold text-red-700 text-sm uppercase tracking-wider">EMERGENCY CONTACT & MEDIS</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {{-- Nama Kontak Darurat --}}
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                        Nama Kontak Darurat <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="emergency_contact_name" id="emergency_contact_name"
+                                        value="{{ old('emergency_contact_name') }}"
+                                        placeholder="Nama kontak darurat"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 py-2.5 px-3 text-sm {{ $errors->has('emergency_contact_name') ? 'border-red-400' : '' }}"
+                                        required>
+                                    @error('emergency_contact_name')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                {{-- No HP Darurat --}}
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                        No. HP Darurat <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="number" name="emergency_contact_phone" id="emergency_contact_phone"
+                                        value="{{ old('emergency_contact_phone') }}"
+                                        placeholder="08xxxxxxxxxx"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 py-2.5 px-3 text-sm {{ $errors->has('emergency_contact_phone') ? 'border-red-400' : '' }}"
+                                        required>
+                                    @error('emergency_contact_phone')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                {{-- Hubungan Kontak Darurat --}}
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                        Hubungan Kontak Darurat <span class="text-red-500">*</span>
+                                    </label>
+                                    <select name="emergency_contact_relation" id="emergency_contact_relation"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 py-2.5 px-3 text-sm {{ $errors->has('emergency_contact_relation') ? 'border-red-400' : '' }}"
+                                        required>
+                                        <option value="" disabled {{ old('emergency_contact_relation') ? '' : 'selected' }}>Pilih Hubungan</option>
+                                        @foreach(['Orang Tua', 'Suami/Istri', 'Saudara', 'Teman/Lainnya'] as $relasi)
+                                            <option value="{{ $relasi }}" {{ old('emergency_contact_relation') === $relasi ? 'selected' : '' }}>{{ $relasi }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('emergency_contact_relation')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                                {{-- Riwayat Penyakit --}}
+                                <div>
+                                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">
+                                        Riwayat Penyakit <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" name="medical_history" id="medical_history"
+                                        value="{{ old('medical_history') }}"
+                                        placeholder="Ketik 'Tidak Ada' jika sehat"
+                                        class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-red-500 focus:border-red-500 py-2.5 px-3 text-sm {{ $errors->has('medical_history') ? 'border-red-400' : '' }}"
+                                        required>
+                                    @error('medical_history')
+                                        <p class="text-red-500 text-xs font-semibold mt-1.5">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 

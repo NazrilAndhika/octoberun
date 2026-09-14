@@ -44,8 +44,13 @@
                     @php
                         $fields = [
                             ['label' => 'Nama Lengkap',    'value' => $participant->full_name],
+                            ['label' => 'Nama pada BIB',   'value' => $participant->bib_name],
+                            ['label' => 'Nomor BIB',       'value' => $participant->bib_number],
                             ['label' => 'NIK',             'value' => $participant->id_number],
                             ['label' => 'Jenis Kelamin',   'value' => $participant->gender === 'male' ? 'Laki-laki' : 'Perempuan'],
+                            ['label' => 'Tempat Lahir',    'value' => $participant->birth_place],
+                            ['label' => 'Tanggal Lahir',   'value' => $participant->birth_date],
+                            ['label' => 'Golongan Darah',  'value' => $participant->blood_type],
                             ['label' => 'Email',           'value' => $participant->email],
                             ['label' => 'No. WhatsApp',    'value' => $participant->whatsapp],
                             ['label' => 'Kota',            'value' => $participant->city],
@@ -64,6 +69,35 @@
                         <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Alamat Lengkap</p>
                         <p class="text-sm font-semibold text-gray-800">{{ $participant->address ?: '-' }}</p>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Card Emergency Contact & Medis --}}
+        <div class="bg-red-50 rounded-xl border border-red-100 shadow-sm overflow-hidden mt-6">
+            <div class="px-6 py-4 border-b border-red-100">
+                <h2 class="font-bold text-red-700 text-sm flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    Emergency Contact & Medis
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                    @php
+                        $emergencyFields = [
+                            ['label' => 'Nama Kontak Darurat', 'value' => $participant->emergency_contact_name],
+                            ['label' => 'No. HP Darurat',      'value' => $participant->emergency_contact_phone],
+                            ['label' => 'Hubungan',            'value' => $participant->emergency_contact_relation],
+                            ['label' => 'Riwayat Penyakit',    'value' => $participant->medical_history],
+                        ];
+                    @endphp
+
+                    @foreach($emergencyFields as $field)
+                    <div class="border-b border-red-100/50 pb-3">
+                        <p class="text-xs font-semibold text-red-400 uppercase tracking-wide mb-1">{{ $field['label'] }}</p>
+                        <p class="text-sm font-semibold text-gray-800">{{ $field['value'] ?: '-' }}</p>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

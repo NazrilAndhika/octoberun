@@ -83,6 +83,11 @@
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nama Lengkap</label>
                             <input type="text" name="full_name" value="{{ old('full_name', $participant->full_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
                         </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nama pada BIB</label>
+                            <input type="text" name="bib_name" value="{{ old('bib_name', $participant->bib_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm uppercase" maxlength="10">
+                        </div>
                         
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">NIK</label>
@@ -102,10 +107,31 @@
                         </div>
 
                         <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Tempat Lahir</label>
+                            <input type="text" name="birth_place" value="{{ old('birth_place', $participant->birth_place) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Tanggal Lahir</label>
+                            <input type="date" name="birth_date" value="{{ old('birth_date', $participant->birth_date) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                        </div>
+
+                        <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Jenis Kelamin</label>
                             <select name="gender" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
                                 <option value="male" {{ old('gender', $participant->gender) === 'male' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="female" {{ old('gender', $participant->gender) === 'female' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Golongan Darah</label>
+                            <select name="blood_type" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                                <option value="" {{ empty(old('blood_type', $participant->blood_type)) ? 'selected' : '' }}>Pilih...</option>
+                                <option value="-" {{ old('blood_type', $participant->blood_type) === '-' ? 'selected' : '' }}>-</option>
+                                @foreach(['A','B','AB','O','Tidak Tahu'] as $goldar)
+                                    <option value="{{ $goldar }}" {{ old('blood_type', $participant->blood_type) === $goldar ? 'selected' : '' }}>{{ $goldar }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -178,6 +204,37 @@
                         <div class="md:col-span-2">
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Alamat Lengkap</label>
                             <textarea name="address" rows="3" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>{{ old('address', $participant->address) }}</textarea>
+                        </div>
+
+                        <div class="md:col-span-2 mt-4 mb-2">
+                            <h3 class="font-bold text-red-700 text-sm uppercase tracking-wider flex items-center gap-2 border-b border-gray-200 pb-2">
+                                Emergency Contact & Medis
+                            </h3>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nama Kontak Darurat</label>
+                            <input type="text" name="emergency_contact_name" value="{{ old('emergency_contact_name', $participant->emergency_contact_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">No. HP Darurat</label>
+                            <input type="text" name="emergency_contact_phone" value="{{ old('emergency_contact_phone', $participant->emergency_contact_phone) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Hubungan</label>
+                            <select name="emergency_contact_relation" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
+                                <option value="" {{ empty(old('emergency_contact_relation', $participant->emergency_contact_relation)) ? 'selected' : '' }}>Pilih...</option>
+                                @foreach(['Orang Tua', 'Suami/Istri', 'Saudara', 'Teman/Lainnya'] as $relasi)
+                                    <option value="{{ $relasi }}" {{ old('emergency_contact_relation', $participant->emergency_contact_relation) === $relasi ? 'selected' : '' }}>{{ $relasi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Riwayat Penyakit</label>
+                            <input type="text" name="medical_history" value="{{ old('medical_history', $participant->medical_history) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm">
                         </div>
 
                     </div>

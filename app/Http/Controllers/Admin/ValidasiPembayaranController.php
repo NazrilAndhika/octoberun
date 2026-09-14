@@ -54,6 +54,7 @@ class ValidasiPembayaranController extends Controller
     {
         $participant = Participant::findOrFail($id);
         $participant->update(['payment_status' => 'paid']);
+        $participant->generateBibNumber();
         return back()->with('success', "Pembayaran {$participant->order_id} berhasil diverifikasi sebagai LUNAS ✅");
     }
 

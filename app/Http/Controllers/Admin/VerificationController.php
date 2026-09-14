@@ -26,6 +26,7 @@ class VerificationController extends Controller
 
         $participant->payment_status = 'paid';
         $participant->save();
+        $participant->generateBibNumber();
 
         // Kirim E-Ticket via Email
         try {

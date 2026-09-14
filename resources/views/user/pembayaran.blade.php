@@ -212,8 +212,14 @@
                                             @csrf
                                             <div>
                                                 <input type="file" name="payment_proof" accept="image/jpeg,image/png,image/jpg" required
-                                                    class="w-full border border-gray-300 rounded-lg focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-[#e85d04] hover:file:bg-orange-100 text-sm text-gray-500 bg-gray-50">
-                                                <p class="text-xs text-gray-400 mt-2">Format yang didukung: JPG, JPEG, PNG. Ukuran maksimal 3MB.</p>
+                                                    class="w-full border {{ $errors->has('payment_proof') ? 'border-red-500' : 'border-gray-300' }} rounded-lg focus:outline-none file:mr-4 file:py-2.5 file:px-4 file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-[#e85d04] hover:file:bg-orange-100 text-sm text-gray-500 bg-gray-50">
+                                                <p class="text-xs text-gray-400 mt-2 mb-1">Format yang didukung: JPG, JPEG, PNG. Ukuran maksimal 3MB.</p>
+                                                @error('payment_proof')
+                                                    <div class="text-red-600 text-sm font-bold bg-red-50 p-2.5 rounded-lg border border-red-200 mt-2 flex items-start gap-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                                        <span>{{ $message }}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <button type="submit" class="w-full bg-[#e85d04] hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl transition shadow-lg shadow-orange-900/20 uppercase tracking-widest text-sm">
                                                 Kirim Bukti Pembayaran

@@ -55,6 +55,13 @@
                 <div class="ticket-title">Nomor Order / E-Ticket</div>
                 <div class="ticket-number">{{ $participant->order_id }}</div>
                 
+                @if($participant->bib_number)
+                <div style="margin-top: 20px; padding-top: 15px; border-top: 1px dashed #22c55e;">
+                    <div class="ticket-title" style="color: #0b4d75;">NOMOR BIB</div>
+                    <div class="ticket-number" style="font-size: 40px; color: #e85d04;">{{ $participant->bib_number }}</div>
+                </div>
+                @endif
+                
                 @if($qrCodeData)
                 <div style="margin-top: 20px;">
                     @if(isset($message))

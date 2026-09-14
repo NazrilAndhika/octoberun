@@ -68,9 +68,20 @@
                 </div>
                 
                 <div class="p-8 text-center">
-                    <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">Ukuran Jersey</p>
-                    <div class="inline-block bg-[#0b4d75] text-white text-6xl font-black rounded-3xl px-10 py-6 mb-8 shadow-inner">
-                        {{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">Nomor & Nama BIB</p>
+                            <div class="bg-[#e85d04] text-white rounded-3xl px-6 py-5 shadow-inner h-full flex flex-col justify-center items-center">
+                                <div class="text-4xl md:text-5xl font-black mb-2">{{ $participant->bib_number ?? '-' }}</div>
+                                <div class="text-xl font-bold tracking-wider uppercase opacity-90">{{ $participant->bib_name }}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-gray-400 uppercase tracking-widest mb-2">Ukuran Jersey</p>
+                            <div class="bg-[#0b4d75] text-white text-5xl font-black rounded-3xl px-10 py-5 shadow-inner h-full flex items-center justify-center">
+                                {{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}
+                            </div>
+                        </div>
                     </div>
 
                     @if ($participant->is_racepack_taken)

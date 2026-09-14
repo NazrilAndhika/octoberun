@@ -197,6 +197,14 @@ class DatapendaftarController extends Controller
             'jersey_size'=> 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
             'custom_lebar'   => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'custom_panjang' => 'required_if:jersey_size,Custom Size|nullable|numeric',
+            'bib_name'   => 'nullable|string|max:10',
+            'birth_place' => 'nullable|string|max:100',
+            'birth_date'  => 'nullable|date',
+            'blood_type'  => 'nullable|in:A,B,AB,O,Tidak Tahu,-',
+            'emergency_contact_name' => 'nullable|string|max:255',
+            'emergency_contact_phone' => 'nullable|string|max:20',
+            'emergency_contact_relation' => 'nullable|in:Orang Tua,Suami/Istri,Saudara,Teman/Lainnya',
+            'medical_history' => 'nullable|string',
         ]);
 
         $customNote = $participant->custom_size_note;
@@ -214,6 +222,14 @@ class DatapendaftarController extends Controller
             'address'    => $request->address,
             'jersey_size'=> $request->jersey_size,
             'custom_size_note' => $customNote,
+            'bib_name'   => $request->bib_name,
+            'birth_place' => $request->birth_place,
+            'birth_date'  => $request->birth_date,
+            'blood_type'  => $request->blood_type,
+            'emergency_contact_name' => $request->emergency_contact_name,
+            'emergency_contact_phone' => $request->emergency_contact_phone,
+            'emergency_contact_relation' => $request->emergency_contact_relation,
+            'medical_history' => $request->medical_history,
         ]);
 
         return redirect()->route('admin.datapendaftar.show', $participant->id)->with('success', 'Data berhasil diperbarui');

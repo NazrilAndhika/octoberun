@@ -37,6 +37,10 @@ Route::post('/daftar', [RegistrationController::class, 'store'])->name('daftar.s
 Route::get('/cek-status', [RegistrationController::class, 'cekStatus'])->name('cek-status');
 Route::get('/e-ticket/{order_id}', [RegistrationController::class, 'showTicket'])->name('e-ticket.show');
 
+// Rute Lengkapi Data
+Route::get('/lengkapi-data', [RegistrationController::class, 'lengkapiData'])->name('lengkapi-data');
+Route::post('/lengkapi-data/{id}', [RegistrationController::class, 'lengkapiDataStore'])->name('lengkapi-data.store');
+
 // Webhook Midtrans
 Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook'])->name('midtrans.callback');
 // Rute Pembayaran

@@ -78,6 +78,14 @@ class RegistrationController extends Controller
             'address'    => 'required|string',
             'gender'     => 'required|in:male,female',
             'city'       => 'required|string|max:100',
+            'bib_name'   => 'required|string|max:10',
+            'birth_place' => 'required|string|max:100',
+            'birth_date'  => 'required|date',
+            'blood_type'  => 'required|in:A,B,AB,O,Tidak Tahu',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'emergency_contact_relation' => 'required|in:Orang Tua,Suami/Istri,Saudara,Teman/Lainnya',
+            'medical_history' => 'required|string',
         ], [
             'full_name.required'   => 'Nama lengkap wajib diisi.',
             'nik.required'         => 'NIK wajib diisi.',
@@ -93,6 +101,15 @@ class RegistrationController extends Controller
             'address.required'     => 'Alamat wajib diisi.',
             'gender.required'      => 'Jenis kelamin wajib dipilih.',
             'city.required'        => 'Kota wajib diisi.',
+            'bib_name.required'    => 'Nama pada BIB wajib diisi.',
+            'bib_name.max'         => 'Nama pada BIB maksimal 10 karakter.',
+            'birth_place.required' => 'Tempat lahir wajib diisi.',
+            'birth_date.required'  => 'Tanggal lahir wajib diisi.',
+            'blood_type.required'  => 'Golongan darah wajib dipilih.',
+            'emergency_contact_name.required' => 'Nama kontak darurat wajib diisi.',
+            'emergency_contact_phone.required' => 'Nomor HP darurat wajib diisi.',
+            'emergency_contact_relation.required' => 'Hubungan kontak darurat wajib dipilih.',
+            'medical_history.required' => 'Riwayat medis wajib diisi.',
         ]);
 
         // Generate Order ID unik
@@ -132,7 +149,6 @@ class RegistrationController extends Controller
             'kode_unik'          => $kodeUnik,
             'payment_status'     => 'pending',
             'payment_method'     => null,
-            'bib_name'           => '-', // Generic/empty as requested
             'full_name'          => $request->full_name,
             'id_number'          => $request->nik,
             'jersey_size'        => $request->jersey_size,
@@ -143,6 +159,14 @@ class RegistrationController extends Controller
             'gender'             => $request->gender,
             'city'               => $request->city,
             'payment_expired_at' => now()->addHours(24),
+            'bib_name'           => $request->bib_name,
+            'birth_place'        => $request->birth_place,
+            'birth_date'         => $request->birth_date,
+            'blood_type'         => $request->blood_type,
+            'emergency_contact_name' => $request->emergency_contact_name,
+            'emergency_contact_phone' => $request->emergency_contact_phone,
+            'emergency_contact_relation' => $request->emergency_contact_relation,
+            'medical_history'    => $request->medical_history,
         ]);
 
         // Konfigurasi Midtrans
@@ -290,8 +314,10 @@ class RegistrationController extends Controller
 
         $participant->save();
 
-        // 3. Jika lunas, kirim E-Ticket
+        // 3. Jika lunas, generate BIB dan kirim E-Ticket
         if ($participant->payment_status === 'paid') {
+            $participant->generateBibNumber();
+            
             try {
                 Mail::to($participant->email)->send(new ETicketMail($participant, $settings));
                 Log::info("Midtrans Webhook: E-Ticket sent to {$participant->email} for Order ID: $order_id");
@@ -362,5 +388,66 @@ class RegistrationController extends Controller
     public function payment()
     {
         return redirect()->route('daftar');
+    }
+
+    // -------------------------------------------------------
+    // GET /lengkapi-data
+    // -------------------------------------------------------
+    public function lengkapiData(Request $request)
+    {
+        $participants = collect();
+        $settings = EventSetting::first();
+        
+        if ($request->filled('search')) {
+            $query = strtolower(trim($request->search));
+            $participants = Participant::whereRaw('LOWER(email) = ?', [$query])
+                                      ->orWhere('id_number', $query)
+                                      ->latest()
+                                      ->get();
+        }
+
+        return view('user.lengkapi-data', compact('participants', 'settings'));
+    }
+
+    // -------------------------------------------------------
+    // POST /lengkapi-data/{id}
+    // -------------------------------------------------------
+    public function lengkapiDataStore(Request $request, $id)
+    {
+        $participant = Participant::findOrFail($id);
+
+        $request->validate([
+            'bib_name'   => 'required|string|max:10',
+            'birth_place' => 'required|string|max:100',
+            'birth_date'  => 'required|date',
+            'emergency_contact_name' => 'required|string|max:255',
+            'emergency_contact_phone' => 'required|string|max:20',
+            'emergency_contact_relation' => 'required|in:Orang Tua,Suami/Istri,Saudara,Teman/Lainnya',
+            'blood_type'  => 'required|in:A,B,AB,O,Tidak Tahu',
+            'medical_history' => 'required|string',
+        ], [
+            'bib_name.required'    => 'Nama pada BIB wajib diisi.',
+            'bib_name.max'         => 'Nama pada BIB maksimal 10 karakter.',
+            'birth_place.required' => 'Tempat lahir wajib diisi.',
+            'birth_date.required'  => 'Tanggal lahir wajib diisi.',
+            'blood_type.required'  => 'Golongan darah wajib dipilih.',
+            'emergency_contact_name.required' => 'Nama kontak darurat wajib diisi.',
+            'emergency_contact_phone.required' => 'Nomor HP darurat wajib diisi.',
+            'emergency_contact_relation.required' => 'Hubungan kontak darurat wajib dipilih.',
+            'medical_history.required' => 'Riwayat medis wajib diisi.',
+        ]);
+
+        $participant->update([
+            'bib_name'   => $request->bib_name,
+            'birth_place' => $request->birth_place,
+            'birth_date'  => $request->birth_date,
+            'blood_type'  => $request->blood_type,
+            'emergency_contact_name' => $request->emergency_contact_name,
+            'emergency_contact_phone' => $request->emergency_contact_phone,
+            'emergency_contact_relation' => $request->emergency_contact_relation,
+            'medical_history' => $request->medical_history,
+        ]);
+
+        return back()->with('success', 'Data berhasil dilengkapi!');
     }
 }
