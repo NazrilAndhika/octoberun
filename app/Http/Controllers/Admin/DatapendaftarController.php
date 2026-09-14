@@ -170,9 +170,19 @@ class DatapendaftarController extends Controller
             }
         }
 
+        if ($request->export_page == 'true') {
+            $perPage = $request->input('per_page', 10);
+            $page = $request->input('page', 1);
+            $data = $query->latest()->paginate($perPage, ['*'], 'page', $page)->getCollection();
+            $filename = 'Data_Pendaftar_OCTOBERUN_Page_' . $page . '.xlsx';
+        } else {
+            $data = $query;
+            $filename = 'Data_Pendaftar_OCTOBERUN_All.xlsx';
+        }
+
         return \Maatwebsite\Excel\Facades\Excel::download(
-            new \App\Exports\PendaftarExport($query), 
-            'Data_Pendaftar_OCTOBERUN.xlsx'
+            new \App\Exports\PendaftarExport($data), 
+            $filename
         );
     }
 

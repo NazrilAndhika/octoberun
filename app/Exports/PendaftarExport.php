@@ -2,24 +2,29 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
-class PendaftarExport implements FromQuery, WithHeadings, WithMapping, ShouldAutoSize
+class PendaftarExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
 {
-    protected $query;
+    protected $data;
 
-    public function __construct(Builder $query)
+    public function __construct($data)
     {
-        $this->query = $query;
+        $this->data = $data;
     }
 
-    public function query()
+    public function collection()
     {
-        return $this->query->latest();
+        if ($this->data instanceof Builder) {
+            return $this->data->latest()->get();
+        }
+        
+        return $this->data;
     }
 
     public function headings(): array

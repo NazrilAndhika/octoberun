@@ -400,10 +400,17 @@ class RegistrationController extends Controller
         
         if ($request->filled('search')) {
             $query = strtolower(trim($request->search));
-            $participants = Participant::whereRaw('LOWER(email) = ?', [$query])
+            $foundParticipant = Participant::whereRaw('LOWER(email) = ?', [$query])
                                       ->orWhere('id_number', $query)
                                       ->latest()
-                                      ->get();
+                                      ->first();
+
+            if ($foundParticipant) {
+                if (in_array($foundParticipant->payment_status, ['expired', 'failed', 'rejected'])) {
+                    return back()->with('error', "<strong>Pendaftaran Kadaluarsa!</strong><br>Maaf, data pendaftaran Anda telah hangus karena melewati batas waktu pembayaran. Silakan melakukan pendaftaran ulang pada slot yang tersedia.");
+                }
+                $participants = collect([$foundParticipant]);
+            }
         }
 
         return view('user.lengkapi-data', compact('participants', 'settings'));
