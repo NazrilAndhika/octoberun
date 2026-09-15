@@ -44,6 +44,13 @@
                 <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
             </select>
 
+            {{-- Gender Filter --}}
+            <select name="gender" id="gender-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
+                <option value="all" {{ request('gender', 'all') === 'all' ? 'selected' : '' }}>Semua Gender</option>
+                <option value="male" {{ request('gender') === 'male' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="female" {{ request('gender') === 'female' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+
             {{-- Jersey Size Filter --}}
             <select name="jersey_size" id="jersey-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
                 <option value="all" {{ request('jersey_size', 'all') === 'all' ? 'selected' : '' }}>Semua Ukuran Jersey</option>
@@ -57,6 +64,13 @@
                 <option value="all" {{ request('racepack_status', 'all') === 'all' ? 'selected' : '' }}>Status Race Pack</option>
                 <option value="taken" {{ request('racepack_status') === 'taken' ? 'selected' : '' }}>Sudah Diambil</option>
                 <option value="not_taken" {{ request('racepack_status') === 'not_taken' ? 'selected' : '' }}>Belum Diambil</option>
+            </select>
+
+            {{-- BIB Status Filter --}}
+            <select name="bib_status" id="bib-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
+                <option value="all" {{ request('bib_status', 'all') === 'all' ? 'selected' : '' }}>Status BIB</option>
+                <option value="has_bib" {{ request('bib_status') === 'has_bib' ? 'selected' : '' }}>Sudah Ada BIB</option>
+                <option value="no_bib" {{ request('bib_status') === 'no_bib' ? 'selected' : '' }}>Belum Ada BIB</option>
             </select>
 
             {{-- Date Filter --}}
@@ -146,7 +160,7 @@
                     <td class="px-5 py-4 whitespace-nowrap">
                         <div>
                             <p class="font-semibold text-gray-800">{{ $participant->full_name }}</p>
-                            <p class="text-xs text-gray-400">BIB: {{ $participant->bib_name }}</p>
+                            <p class="text-xs text-gray-400">No. BIB: {{ $participant->bib_number ?? '-' }} | Nama BIB: {{ $participant->bib_name }}</p>
                         </div>
                     </td>
                     <td class="px-5 py-4 whitespace-nowrap">
@@ -341,7 +355,7 @@
 @push('scripts')
 <script>
     // Auto-submit filter on select change
-    document.querySelectorAll('#status-filter, #jersey-filter, #racepack-filter, #date-filter').forEach(el => {
+    document.querySelectorAll('#status-filter, #gender-filter, #jersey-filter, #racepack-filter, #bib-filter, #date-filter').forEach(el => {
         el.addEventListener('change', function() {
             if (this.id === 'date-filter' && this.value === 'custom') {
                 return; // Jangan auto-submit jika milih 'custom' karena user harus isi tanggal dulu

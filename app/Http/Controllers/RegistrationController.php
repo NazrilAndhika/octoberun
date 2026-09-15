@@ -397,23 +397,38 @@ class RegistrationController extends Controller
     {
         $participants = collect();
         $settings = EventSetting::first();
+        $showListOnly = false;
         
         if ($request->filled('search')) {
             $query = strtolower(trim($request->search));
-            $foundParticipant = Participant::whereRaw('LOWER(email) = ?', [$query])
+            $foundParticipants = Participant::whereRaw('LOWER(email) = ?', [$query])
                                       ->orWhere('id_number', $query)
                                       ->latest()
-                                      ->first();
+                                      ->get();
 
-            if ($foundParticipant) {
-                if (in_array($foundParticipant->payment_status, ['expired', 'failed', 'rejected'])) {
-                    return back()->with('error', "<strong>Pendaftaran Kadaluarsa!</strong><br>Maaf, data pendaftaran Anda telah hangus karena melewati batas waktu pembayaran. Silakan melakukan pendaftaran ulang pada slot yang tersedia.");
+            if ($foundParticipants->isNotEmpty()) {
+                if ($foundParticipants->count() > 1 && !$request->filled('participant_id')) {
+                    $participants = $foundParticipants;
+                    $showListOnly = true;
+                } else {
+                    if ($request->filled('participant_id')) {
+                        $foundParticipant = $foundParticipants->firstWhere('id', $request->participant_id);
+                        if (!$foundParticipant) {
+                            $foundParticipant = $foundParticipants->first();
+                        }
+                    } else {
+                        $foundParticipant = $foundParticipants->first();
+                    }
+
+                    if (in_array($foundParticipant->payment_status, ['expired', 'failed', 'rejected'])) {
+                        return back()->with('error', "<strong>Pendaftaran Kadaluarsa!</strong><br>Maaf, data pendaftaran Anda telah hangus karena melewati batas waktu pembayaran. Silakan melakukan pendaftaran ulang pada slot yang tersedia.");
+                    }
+                    $participants = collect([$foundParticipant]);
                 }
-                $participants = collect([$foundParticipant]);
             }
         }
 
-        return view('user.lengkapi-data', compact('participants', 'settings'));
+        return view('user.lengkapi-data', compact('participants', 'settings', 'showListOnly'));
     }
 
     // -------------------------------------------------------

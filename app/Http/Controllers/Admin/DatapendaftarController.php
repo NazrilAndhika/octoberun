@@ -34,6 +34,11 @@ class DatapendaftarController extends Controller
             $query->where('payment_status', $request->status);
         }
 
+        // --- Filter: Gender ---
+        if ($request->filled('gender') && $request->gender !== 'all') {
+            $query->where('gender', $request->gender);
+        }
+
         // --- Filter: Ukuran Jersey ---
         if ($request->filled('jersey_size') && $request->jersey_size !== 'all') {
             $query->where('jersey_size', $request->jersey_size);
@@ -45,6 +50,21 @@ class DatapendaftarController extends Controller
                 $query->where('is_racepack_taken', true);
             } else if ($request->racepack_status === 'not_taken') {
                 $query->where('is_racepack_taken', false);
+            }
+        }
+
+        // --- Filter: Status BIB ---
+        if ($request->filled('bib_status') && $request->bib_status !== 'all') {
+            if ($request->bib_status === 'has_bib') {
+                $query->whereNotNull('bib_number')->where('bib_number', '!=', '')
+                      ->whereNotNull('bib_name')->where('bib_name', '!=', '');
+            } else if ($request->bib_status === 'no_bib') {
+                $query->where(function ($q) {
+                    $q->whereNull('bib_number')
+                      ->orWhere('bib_number', '')
+                      ->orWhereNull('bib_name')
+                      ->orWhere('bib_name', '');
+                });
             }
         }
 
@@ -129,6 +149,9 @@ class DatapendaftarController extends Controller
         if ($request->filled('status') && $request->status !== 'all') {
             $query->where('payment_status', $request->status);
         }
+        if ($request->filled('gender') && $request->gender !== 'all') {
+            $query->where('gender', $request->gender);
+        }
         if ($request->filled('jersey_size') && $request->jersey_size !== 'all') {
             $query->where('jersey_size', $request->jersey_size);
         }
@@ -137,6 +160,19 @@ class DatapendaftarController extends Controller
                 $query->where('is_racepack_taken', true);
             } else if ($request->racepack_status === 'not_taken') {
                 $query->where('is_racepack_taken', false);
+            }
+        }
+        if ($request->filled('bib_status') && $request->bib_status !== 'all') {
+            if ($request->bib_status === 'has_bib') {
+                $query->whereNotNull('bib_number')->where('bib_number', '!=', '')
+                      ->whereNotNull('bib_name')->where('bib_name', '!=', '');
+            } else if ($request->bib_status === 'no_bib') {
+                $query->where(function ($q) {
+                    $q->whereNull('bib_number')
+                      ->orWhere('bib_number', '')
+                      ->orWhereNull('bib_name')
+                      ->orWhere('bib_name', '');
+                });
             }
         }
         if ($request->filled('date_filter') && $request->date_filter !== 'all') {
@@ -208,6 +244,7 @@ class DatapendaftarController extends Controller
             'custom_lebar'   => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'custom_panjang' => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'bib_name'   => 'nullable|string|max:10',
+            'bib_number' => 'nullable|string|max:20',
             'birth_place' => 'nullable|string|max:100',
             'birth_date'  => 'nullable|date',
             'blood_type'  => 'nullable|in:A,B,AB,O,Tidak Tahu,-',
@@ -233,6 +270,7 @@ class DatapendaftarController extends Controller
             'jersey_size'=> $request->jersey_size,
             'custom_size_note' => $customNote,
             'bib_name'   => $request->bib_name,
+            'bib_number' => $request->bib_number,
             'birth_place' => $request->birth_place,
             'birth_date'  => $request->birth_date,
             'blood_type'  => $request->blood_type,

@@ -88,6 +88,11 @@
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nama pada BIB</label>
                             <input type="text" name="bib_name" value="{{ old('bib_name', $participant->bib_name) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm uppercase" maxlength="10">
                         </div>
+
+                        <div>
+                            <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Nomor BIB</label>
+                            <input type="text" name="bib_number" value="{{ old('bib_number', $participant->bib_number) }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm uppercase" placeholder="Kosongkan jika belum ada">
+                        </div>
                         
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">NIK</label>

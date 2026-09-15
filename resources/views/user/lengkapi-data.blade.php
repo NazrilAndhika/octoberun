@@ -55,9 +55,51 @@
 
         {{-- Hasil Pencarian --}}
         @if(request()->filled('search') && !session('success'))
-            @if($participants->isNotEmpty())
+            @if(isset($showListOnly) && $showListOnly)
+                {{-- Tampilkan List Peserta --}}
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-6">
+                    <h2 class="text-lg font-bold text-[#0b4d75] mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Pilih Data Peserta
+                    </h2>
+                    <p class="text-gray-500 text-sm mb-5">Ditemukan beberapa data peserta dengan email yang sama. Silakan pilih peserta yang ingin dilengkapi datanya:</p>
+                    <div class="space-y-3">
+                        @foreach($participants as $p)
+                            <a href="{{ route('lengkapi-data', ['search' => request('search'), 'participant_id' => $p->id]) }}" class="block p-4 bg-gray-50 border border-gray-200 rounded-xl hover:bg-[#0b4d75] hover:text-white hover:border-[#0b4d75] transition group cursor-pointer shadow-sm">
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <h3 class="font-bold text-gray-900 group-hover:text-white text-lg">{{ $p->full_name }}</h3>
+                                        <p class="text-xs text-gray-500 group-hover:text-gray-200 mt-1">
+                                            <span class="font-semibold">Kategori:</span> {{ $p->category->name ?? 'N/A' }} <span class="mx-1">|</span>
+                                            <span class="font-semibold">NIK:</span> {{ $p->id_number }}
+                                        </p>
+                                    </div>
+                                    <div class="bg-white group-hover:bg-blue-800 p-2 rounded-full shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#0b4d75] group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @elseif($participants->isNotEmpty())
                 <div class="space-y-6">
                 @foreach($participants as $participant)
+                    @if(request()->filled('participant_id'))
+                        <div class="mb-2">
+                            <a href="{{ route('lengkapi-data', ['search' => request('search')]) }}" class="inline-flex items-center text-sm font-bold text-gray-500 hover:text-[#0b4d75] transition bg-white py-2 px-4 rounded-lg border border-gray-200 shadow-sm">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Kembali ke Daftar Peserta
+                            </a>
+                        </div>
+                    @endif
+
                     @php
                         $isBibEmpty = is_null($participant->bib_name) || trim($participant->bib_name) === '-' || trim($participant->bib_name) === '';
                         $isBirthPlaceEmpty = is_null($participant->birth_place) || trim($participant->birth_place) === '-' || trim($participant->birth_place) === '';
