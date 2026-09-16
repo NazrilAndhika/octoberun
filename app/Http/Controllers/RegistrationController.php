@@ -132,13 +132,19 @@ class RegistrationController extends Controller
 
         $grossAmount = $ticketPrice + $adminFee + $kodeUnik;
 
-        // Cek NIK manual: Tolak jika ada NIK yang statusnya sedang aktif
-        $activeParticipant = Participant::where('id_number', $request->nik)
-                                        ->whereIn('payment_status', ['paid', 'pending', 'verifying'])
+        // Cek NIK manual: Cek status pendaftaran sebelumnya
+        $existingParticipant = Participant::where('id_number', $request->nik)
+                                        ->orderBy('created_at', 'desc')
                                         ->first();
                                           
-        if ($activeParticipant) {
-            return back()->withInput()->withErrors(['nik' => 'Maaf, NIK ini sudah terdaftar dan sedang dalam proses atau sudah lunas.']);
+        if ($existingParticipant) {
+            if (in_array($existingParticipant->payment_status, ['pending', 'verifying'])) {
+                return redirect()->route('pembayaran.show', $existingParticipant->order_id)
+                                 ->with('error', 'Anda memiliki pendaftaran yang belum diselesaikan. Silakan lanjutkan pembayaran.');
+            } elseif ($existingParticipant->payment_status === 'paid') {
+                return back()->withInput()->withErrors(['nik' => 'NIK ini sudah terdaftar dan lunas.']);
+            }
+            // Jika expired, biarkan lanjut (membuat row baru)
         }
         
         // Simpan ke database dengan status PENDING (Selalu buat data baru / INSERT)
