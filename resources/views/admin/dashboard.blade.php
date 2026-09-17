@@ -4,6 +4,50 @@
 @section('content')
     <h1 class="text-2xl font-black text-gray-900 tracking-tight mb-8">Dashboard Utama</h1>
 
+    <!-- Global Filter Form -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-5 mb-8" x-data="{ filterWaktu: '{{ $filterWaktu }}' }">
+        <form method="GET" action="{{ route('admin.dashboard') }}" class="flex flex-col md:flex-row gap-4 items-end">
+            <div class="w-full md:w-1/4">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Paket Tiket</label>
+                <select name="paket_id" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] text-sm font-semibold text-gray-700 px-3 py-2.5">
+                    <option value="semua" {{ $filterPaket == 'semua' ? 'selected' : '' }}>Semua Paket</option>
+                    @foreach($ticketPackages as $pkg)
+                        <option value="{{ $pkg->id }}" {{ $filterPaket == $pkg->id ? 'selected' : '' }}>{{ $pkg->nama_paket }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="w-full md:w-1/4">
+                <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Waktu Pendaftaran</label>
+                <select name="waktu" x-model="filterWaktu" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] text-sm font-semibold text-gray-700 px-3 py-2.5">
+                    <option value="hari_ini" {{ $filterWaktu == 'hari_ini' ? 'selected' : '' }}>Hari Ini</option>
+                    <option value="bulan_ini" {{ $filterWaktu == 'bulan_ini' ? 'selected' : '' }}>Bulan Ini</option>
+                    <option value="tahun_ini" {{ $filterWaktu == 'tahun_ini' ? 'selected' : '' }}>Tahun Ini</option>
+                    <option value="custom" {{ $filterWaktu == 'custom' ? 'selected' : '' }}>Tanggal Custom</option>
+                </select>
+            </div>
+
+            <!-- Custom Date Inputs -->
+            <div class="w-full md:w-1/3 flex gap-2" x-show="filterWaktu === 'custom'" x-transition style="display: {{ $filterWaktu == 'custom' ? 'flex' : 'none' }};">
+                <div class="w-1/2">
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Dari</label>
+                    <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] text-sm px-3 py-2.5">
+                </div>
+                <div class="w-1/2">
+                    <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Sampai</label>
+                    <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] text-sm px-3 py-2.5">
+                </div>
+            </div>
+
+            <div class="w-full md:w-auto">
+                <button type="submit" class="w-full bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition">
+                    Terapkan
+                </button>
+            </div>
+        </form>
+    </div>
+
+
     <!-- Kotak-kotak Statistik -->
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
         <!-- Total Pendaftar -->
@@ -46,18 +90,51 @@
         </div>
     </div>
 
+    
+    <!-- Breakdown Penjualan Paket -->
+    <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mb-8">
+        <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider mb-6">Breakdown Penjualan per Paket Tiket</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            @forelse($breakdownData as $index => $bd)
+                @php
+                    $colors = [
+                        ['bg' => 'bg-cyan-50', 'border' => 'border-cyan-100', 'text' => 'text-cyan-700', 'bar' => 'bg-cyan-500'],
+                        ['bg' => 'bg-blue-50', 'border' => 'border-blue-100', 'text' => 'text-blue-700', 'bar' => 'bg-blue-600'],
+                        ['bg' => 'bg-orange-50', 'border' => 'border-orange-100', 'text' => 'text-orange-700', 'bar' => 'bg-orange-500'],
+                        ['bg' => 'bg-gray-50', 'border' => 'border-gray-100', 'text' => 'text-gray-700', 'bar' => 'bg-gray-500'],
+                    ];
+                    if (strtoupper($bd['nama']) === 'EARLY BIRD') {
+                        $c = ['bg' => 'bg-purple-50', 'border' => 'border-purple-100', 'text' => 'text-purple-700', 'bar' => 'bg-purple-500'];
+                    } else {
+                        $c = $colors[$index % count($colors)];
+                    }
+                @endphp
+                <div class="{{ $c['bg'] }} border {{ $c['border'] }} rounded-xl p-5 shadow-sm">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold {{ $c['text'] }} uppercase tracking-wider text-sm">{{ $bd['nama'] }}</h3>
+                        <span class="text-xs font-bold bg-white px-2 py-1 rounded shadow-sm {{ $c['text'] }}">{{ $bd['orang'] }} Orang</span>
+                    </div>
+                    <div class="text-2xl font-black text-gray-800 mb-3">Rp {{ number_format($bd['uang'], 0, ',', '.') }}</div>
+                    
+                    <!-- Progress Bar (Persentase dari total) -->
+                    <div class="w-full bg-white rounded-full h-2.5 mb-1 overflow-hidden border border-gray-200">
+                        <div class="{{ $c['bar'] }} h-2.5 rounded-full" style="width: {{ $bd['persentase'] }}%"></div>
+                    </div>
+                    <div class="text-right text-[10px] font-bold text-gray-500">{{ $bd['persentase'] }}% dari Total Pendapatan</div>
+                </div>
+            @empty
+                <div class="col-span-3 text-center py-6 text-gray-400 font-semibold">
+                    Belum ada data penjualan yang lunas.
+                </div>
+            @endforelse
+        </div>
+    </div>
+
     <!-- Area Grafik Analitik -->
     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8 p-6">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Grafik Pendapatan Bulanan ({{ $selectedYear }})</h2>
-            <form method="GET" action="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
-                <label for="year" class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filter Tahun:</label>
-                <select name="year" id="year" onchange="this.form.submit()" class="border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-1.5 px-3 text-sm text-gray-700 font-bold">
-                    @foreach($availableYears as $year)
-                        <option value="{{ $year }}" {{ $selectedYear == $year ? 'selected' : '' }}>{{ $year }}</option>
-                    @endforeach
-                </select>
-            </form>
+            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Grafik Pendapatan Bulanan (Tahun {{ $chartYear }})</h2>
+            
         </div>
         <div class="relative h-[300px] w-full">
             <canvas id="incomeChart"></canvas>

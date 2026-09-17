@@ -26,7 +26,6 @@ class RegistrationSettingController extends Controller
             'event_location', 
             'target_runners', 
             'registration_deadline',
-            'ticket_price',
             'admin_fee',
             'is_registration_open',
             'payment_mode',

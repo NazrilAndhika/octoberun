@@ -247,7 +247,7 @@
                             @php
                             $rows = [
                                 ['label' => 'Nama Peserta', 'value' => $participant->full_name],
-                                ['label' => 'Kategori',     'value' => $participant->kategori . ' Run'],
+                                ['label' => 'Kategori',     'value' => $participant->kategori . ' Run - ' . ($participant->ticketPackage->nama_paket ?? '')],
                                 ['label' => 'Jersey',       'value' => $participant->jersey_size],
                                 ['label' => 'Email',        'value' => $participant->email],
                             ];
@@ -264,7 +264,7 @@
                         <div class="border-t border-gray-100 pt-4 space-y-2">
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-500">Subtotal Tiket</span>
-                                <span class="font-semibold text-gray-700">Rp {{ number_format($settings->ticket_price ?? 150000, 0, ',', '.') }}</span>
+                                <span class="font-semibold text-gray-700">Rp {{ number_format($participant->ticketPackage->harga ?? 0, 0, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-500">Biaya Admin</span>

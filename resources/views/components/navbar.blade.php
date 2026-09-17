@@ -48,7 +48,7 @@
                         PENDAFTARAN DITUTUP
                     </button>
                 @else
-                    <a href="{{ route('daftar') }}" class="btn-daftar-global bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
+                    <a href="{{ url('/#paket-tiket') }}" class="btn-daftar-global bg-[#0b4d75] hover:bg-blue-800 text-white text-sm font-bold py-2.5 px-6 rounded flex items-center gap-2 transition duration-300">
                         DAFTAR SEKARANG
                     </a>
                 @endif
@@ -70,7 +70,7 @@
                     PENDAFTARAN DITUTUP
                 </button>
             @else
-                <a href="{{ route('daftar') }}" class="btn-daftar-global block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
+                <a href="{{ url('/#paket-tiket') }}" class="btn-daftar-global block mt-4 w-full text-center bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 rounded transition">
                     DAFTAR SEKARANG
                 </a>
             @endif

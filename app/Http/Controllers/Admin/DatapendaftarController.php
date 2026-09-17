@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Participant;
 use App\Models\EventSetting;
+use App\Models\TicketPackage;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Mail;
@@ -37,6 +38,15 @@ class DatapendaftarController extends Controller
         // --- Filter: Gender ---
         if ($request->filled('gender') && $request->gender !== 'all') {
             $query->where('gender', $request->gender);
+        }
+
+        // --- Filter: Paket Tiket ---
+        if ($request->filled('paket_id') && $request->paket_id !== 'all') {
+            if ($request->paket_id === 'early_bird') {
+                $query->whereNull('ticket_package_id');
+            } else {
+                $query->where('ticket_package_id', $request->paket_id);
+            }
         }
 
         // --- Filter: Ukuran Jersey ---
@@ -104,9 +114,12 @@ class DatapendaftarController extends Controller
         $perPage = $request->input('per_page', 10);
         $participants = $query->latest()->paginate($perPage)->appends($request->query());
 
+        $ticketPackages = TicketPackage::all();
+
         return view('admin.datapendaftar', compact(
             'participants',
-            'perPage'
+            'perPage',
+            'ticketPackages'
         ));
     }
 
@@ -151,6 +164,13 @@ class DatapendaftarController extends Controller
         }
         if ($request->filled('gender') && $request->gender !== 'all') {
             $query->where('gender', $request->gender);
+        }
+        if ($request->filled('paket_id') && $request->paket_id !== 'all') {
+            if ($request->paket_id === 'early_bird') {
+                $query->whereNull('ticket_package_id');
+            } else {
+                $query->where('ticket_package_id', $request->paket_id);
+            }
         }
         if ($request->filled('jersey_size') && $request->jersey_size !== 'all') {
             $query->where('jersey_size', $request->jersey_size);

@@ -73,6 +73,17 @@
                 <option value="no_bib" {{ request('bib_status') === 'no_bib' ? 'selected' : '' }}>Belum Ada BIB</option>
             </select>
 
+            {{-- Paket Tiket Filter --}}
+            <select name="paket_id" id="paket-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
+                <option value="all" {{ request('paket_id', 'all') === 'all' ? 'selected' : '' }}>Semua Paket</option>
+                <option value="early_bird" {{ request('paket_id') === 'early_bird' ? 'selected' : '' }}>Early Bird</option>
+                @if(isset($ticketPackages))
+                    @foreach($ticketPackages as $pkg)
+                        <option value="{{ $pkg->id }}" {{ request('paket_id') == $pkg->id ? 'selected' : '' }}>{{ $pkg->nama_paket }}</option>
+                    @endforeach
+                @endif
+            </select>
+
             {{-- Date Filter --}}
             <select name="date_filter" id="date-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer" onchange="toggleCustomDate()">
                 <option value="all" {{ request('date_filter', 'all') === 'all' ? 'selected' : '' }}>Semua Waktu</option>
@@ -161,6 +172,7 @@
                         <div>
                             <p class="font-semibold text-gray-800">{{ $participant->full_name }}</p>
                             <p class="text-xs text-gray-400">No. BIB: {{ $participant->bib_number ?? '-' }} | Nama BIB: {{ $participant->bib_name }}</p>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase mt-0.5">Paket: <span class="text-indigo-600">{{ $participant->ticketPackage->nama_paket ?? 'EARLY BIRD' }}</span></p>
                         </div>
                     </td>
                     <td class="px-5 py-4 whitespace-nowrap">
@@ -355,7 +367,7 @@
 @push('scripts')
 <script>
     // Auto-submit filter on select change
-    document.querySelectorAll('#status-filter, #gender-filter, #jersey-filter, #racepack-filter, #bib-filter, #date-filter').forEach(el => {
+    document.querySelectorAll('#status-filter, #gender-filter, #jersey-filter, #racepack-filter, #bib-filter, #paket-filter, #date-filter').forEach(el => {
         el.addEventListener('change', function() {
             if (this.id === 'date-filter' && this.value === 'custom') {
                 return; // Jangan auto-submit jika milih 'custom' karena user harus isi tanggal dulu

@@ -51,4 +51,12 @@ class Participant extends Model
 
         return $this->bib_number;
     }
+
+    /**
+     * Relasi ke TicketPackage
+     */
+    public function ticketPackage()
+    {
+        return $this->belongsTo(TicketPackage::class, 'ticket_package_id');
+    }
 }

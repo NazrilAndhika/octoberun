@@ -5,7 +5,7 @@
     <div class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-2xl font-black text-gray-900 tracking-tight">Pengaturan Pendaftaran</h1>
-            <p class="text-sm text-gray-500 mt-1">Atur jadwal, harga tiket, dan metode pembayaran event.</p>
+            <p class="text-sm text-gray-500 mt-1">Atur jadwal, biaya admin, dan metode pembayaran event.</p>
         </div>
         <button form="reg-setting-form" type="submit" class="bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-2.5 px-6 rounded-lg shadow-sm transition">
             Simpan Pengaturan
@@ -25,7 +25,7 @@
             Jadwal & Kuota Event
         </button>
         <button type="button" onclick="switchTabReg('tab-harga')" id="btn-harga" class="tab-btn-reg px-4 py-3 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition">
-            Harga Tiket & Biaya Admin
+            Biaya Admin
         </button>
         <button type="button" onclick="switchTabReg('tab-pembayaran')" id="btn-pembayaran" class="tab-btn-reg px-4 py-3 font-bold text-sm border-b-2 border-transparent text-gray-500 hover:text-gray-700 transition">
             Mode Pembayaran
@@ -101,18 +101,10 @@
             <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
                 <div class="bg-[#0b4d75] px-6 py-4 flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    <h2 class="text-white font-bold tracking-wide">Harga Tiket & Biaya Admin</h2>
+                    <h2 class="text-white font-bold tracking-wide">Biaya Admin</h2>
                 </div>
                 <div class="p-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Harga Tiket -->
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Harga Tiket (Rp)</label>
-                            <input type="number" name="ticket_price" value="{{ $settings->ticket_price }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm">
-                            <p class="text-xs text-gray-500 mt-1">Harga dasar tiket pendaftaran (tanpa titik/koma, contoh: 150000).</p>
-                        </div>
-                        
-                        <!-- Biaya Admin -->
+                    <div class="grid grid-cols-1 gap-6">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">Biaya Admin (Rp)</label>
                             <input type="number" name="admin_fee" value="{{ $settings->admin_fee }}" class="w-full border-gray-300 rounded-lg px-4 py-2.5 focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 text-sm">

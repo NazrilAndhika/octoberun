@@ -25,8 +25,10 @@ Route::get('/', function () {
     // Hanya hitung status aktif agar kuota bisa balik saat expired
     $jumlahPendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending', 'verifying'])->count();
     $sisaKuota = $kapasitasMaksimal - $jumlahPendaftar;
+    
+    $ticketPackages = \App\Models\TicketPackage::where('is_active', true)->orderBy('harga', 'asc')->get();
 
-    return view('user.home', compact('settings', 'faqs', 'sisaKuota'));
+    return view('user.home', compact('settings', 'faqs', 'sisaKuota', 'ticketPackages'));
 });
 
 // Rute Halaman Pendaftaran
@@ -109,6 +111,17 @@ Route::prefix('admin-gsc')->middleware('auth')->group(function () {
     // Rute Pengaturan Pendaftaran
     Route::get('/pengaturan-pendaftaran', [RegistrationSettingController::class, 'index'])->name('admin.registration.settings');
     Route::post('/pengaturan-pendaftaran', [RegistrationSettingController::class, 'update'])->name('admin.registration.update');
+
+    // === Rute Ticket Packages ===
+    Route::resource('/ticket-packages', \App\Http\Controllers\Admin\TicketPackageController::class)->names([
+        'index' => 'admin.ticket_packages.index',
+        'create' => 'admin.ticket_packages.create',
+        'store' => 'admin.ticket_packages.store',
+        'edit' => 'admin.ticket_packages.edit',
+        'update' => 'admin.ticket_packages.update',
+        'destroy' => 'admin.ticket_packages.destroy',
+    ]);
+    Route::patch('/ticket-packages/{id}/toggle', [\App\Http\Controllers\Admin\TicketPackageController::class, 'toggleStatus'])->name('admin.ticket_packages.toggle');
 
 });
 

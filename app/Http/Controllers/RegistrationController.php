@@ -24,7 +24,7 @@ class RegistrationController extends Controller
     // -------------------------------------------------------
     // GET /daftar  → tampilkan form
     // -------------------------------------------------------
-    public function index()
+    public function index(Request $request)
     {
         $settings = EventSetting::first();
         
@@ -34,6 +34,13 @@ class RegistrationController extends Controller
         }
         // --------------------------------------------
 
+        $paketId = $request->query('paket_id');
+        $selectedPackage = \App\Models\TicketPackage::where('id', $paketId)->where('is_active', true)->first();
+        
+        if (!$selectedPackage) {
+            return redirect('/#paket-tiket')->with('error', 'Silakan pilih paket tiket terlebih dahulu.');
+        }
+
         $kapasitasMaksimal = (int) ($settings->target_runners ?? 0);
         $jumlahPendaftar = Participant::whereIn('payment_status', ['paid', 'pending'])->count();
         
@@ -41,7 +48,7 @@ class RegistrationController extends Controller
             return redirect('/')->with('error', 'Maaf, kuota pendaftaran sudah penuh!');
         }
 
-        return view('user.daftar', compact('settings'));
+        return view('user.daftar', compact('settings', 'selectedPackage'));
     }
 
     // -------------------------------------------------------
@@ -68,6 +75,7 @@ class RegistrationController extends Controller
         // ... (Kodingan validasi dan simpan ke bawahnya tetap sama, biarkan saja) ...
 
         $request->validate([
+            'paket_id'   => 'required|exists:ticket_packages,id',
             'full_name'  => 'required|string|max:255',
             'nik'        => 'required|numeric|digits:16',
             'jersey_size'=> 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
@@ -115,8 +123,10 @@ class RegistrationController extends Controller
         // Generate Order ID unik
         $orderId = 'ORD-' . now()->format('Ymd') . '-' . strtoupper(Str::random(6));
 
+        $selectedPackage = \App\Models\TicketPackage::where('id', $request->paket_id)->where('is_active', true)->firstOrFail();
+
         $settings = EventSetting::first() ?? new EventSetting();
-        $ticketPrice = $settings->ticket_price ?? 150000;
+        $ticketPrice = $selectedPackage->harga;
         $adminFee = $settings->admin_fee ?? 5000;
         
         $kodeUnik = 0;
@@ -150,6 +160,7 @@ class RegistrationController extends Controller
         // Simpan ke database dengan status PENDING (Selalu buat data baru / INSERT)
         $participant = Participant::create([
             'order_id'           => $orderId,
+            'ticket_package_id'  => $selectedPackage->id,
             'kategori'           => '5K',
             'gross_amount'       => $grossAmount,
             'kode_unik'          => $kodeUnik,
@@ -281,14 +292,9 @@ class RegistrationController extends Controller
         // 2. Validasi Gross Amount (Hapus desimal .00)
         $requestAmount = (int) floor($gross_amount);
 
-        // Ambil dari database, TANPA HARDCODE
-        $settings = EventSetting::first() ?? new EventSetting();
-        $ticketPrice = $settings->ticket_price ?? 150000;
-        $adminFee = $settings->admin_fee ?? 5000;
-        $expectedAmount = $ticketPrice + $adminFee;
-
-        if ($requestAmount !== (int)$expectedAmount && $requestAmount !== (int)$participant->gross_amount) {
-             Log::error("Midtrans Webhook: Invalid Gross Amount for Order ID: $order_id. Expected: $expectedAmount, Got: $requestAmount");
+        // Cukup bandingkan dengan $participant->gross_amount karena sudah mencakup harga paket tiket
+        if ($requestAmount !== (int)$participant->gross_amount) {
+             Log::error("Midtrans Webhook: Invalid Gross Amount for Order ID: $order_id. Expected: {$participant->gross_amount}, Got: $requestAmount");
              return response()->json(['message' => 'Invalid Amount'], 400);
         }
 

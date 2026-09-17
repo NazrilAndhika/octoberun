@@ -60,6 +60,7 @@
 
                     <form action="{{ route('daftar.store') }}" method="POST" class="space-y-6">
                         @csrf
+                        <input type="hidden" name="paket_id" value="{{ $selectedPackage->id }}">
 
                         {{-- RACE DATA --}}
                         <h3 class="font-bold text-[#0b4d75] text-sm uppercase tracking-wider mb-4">RACE DATA</h3>
@@ -406,7 +407,7 @@
                     <div class="space-y-3 text-sm text-gray-600 mb-6">
                         <div class="flex justify-between">
                             <span>Kategori</span>
-                            <span class="font-bold text-gray-900">5K RUN</span>
+                            <span class="font-bold text-gray-900">5K Run - {{ $selectedPackage->nama_paket }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span>Total Peserta</span>
@@ -417,7 +418,7 @@
                     <div class="space-y-3 text-sm text-gray-600 border-t pt-4 mb-6">
                         <div class="flex justify-between">
                             <span>Subtotal Tiket</span>
-                            <span class="font-bold text-gray-900">Rp {{ number_format($settings->ticket_price ?? 150000, 0, ',', '.') }}</span>
+                            <span class="font-bold text-gray-900">Rp {{ number_format($selectedPackage->harga, 0, ',', '.') }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span>Biaya Admin</span>
@@ -428,7 +429,7 @@
                     <div class="flex justify-between items-center border-t pt-4 mb-2">
                         <span class="font-black text-[#0b4d75] uppercase tracking-wide">TOTAL BAYAR</span>
                         @php
-                            $ticket = $settings->ticket_price ?? 150000;
+                            $ticket = $selectedPackage->harga;
                             $admin = $settings->admin_fee ?? 5000;
                             $total = $ticket + $admin;
                         @endphp

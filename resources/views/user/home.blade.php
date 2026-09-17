@@ -6,7 +6,7 @@
     <style> html { scroll-behavior: smooth; } </style>
 
     @if(session('error'))
-        <div class="bg-red-500 text-white text-center py-3 px-4 font-bold z-50 relative flex justify-center items-center gap-2">
+        <div class="bg-red-500 text-white text-center py-3 px-4 font-bold z-40 sticky top-20 w-full flex justify-center items-center gap-2 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
             </svg>
@@ -88,7 +88,7 @@
                             KUOTA PENUH / DITUTUP
                         </button>
                     @else
-                        <a href="{{ route('daftar') }}" id="btn-daftar" class="btn-daftar-global w-auto inline-flex justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
+                        <a href="#paket-tiket" id="btn-daftar" class="btn-daftar-global w-auto inline-flex justify-center bg-[#0b4d75] hover:bg-blue-800 text-white text-[10px] md:text-sm font-bold py-2 md:py-3.5 px-5 md:px-8 rounded-lg md:rounded-xl items-center gap-1.5 md:gap-2 transition duration-300 shadow-xl transform hover:-translate-y-1 uppercase tracking-wider">
                             DAFTAR SEKARANG
                         </a>
                     @endif
@@ -277,9 +277,7 @@
             </div>
             
         </div>
-    </section>
-
-    <!-- ========================================== -->
+    </section><!-- ========================================== -->
     <!-- BAGIAN 3: KARTU LAYANAN (ID: info)         -->
     <!-- ========================================== -->
     <section id="info" class="scroll-mt-28 relative z-20 py-12 lg:py-16 overflow-hidden bg-slate-50 border-b-2 border-dashed border-gray-300">
@@ -621,6 +619,109 @@
     </section>
 
     <!-- ========================================== -->
+    <!-- BAGIAN PAKET TIKET (3 TIER)                -->
+    <!-- ========================================== -->
+    <section id="paket-tiket" class="scroll-mt-20 py-16 md:py-24 bg-gradient-to-b from-white via-slate-50 to-white relative overflow-hidden border-b-2 border-dashed border-gray-300">
+        <!-- SVG Pattern Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none opacity-5">
+            <svg class="absolute h-full w-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="dot-pattern" width="24" height="24" patternUnits="userSpaceOnUse">
+                        <circle cx="2" cy="2" r="2" fill="#0b4d75" />
+                        <circle cx="14" cy="14" r="1.5" fill="#e85d04" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#dot-pattern)"></rect>
+            </svg>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-sporty font-black text-3xl md:text-4xl italic text-[#0b4d75] uppercase tracking-wide">
+                    PILIH PAKET TIKET
+                </h2>
+                <p class="mt-3 text-gray-500 text-sm md:text-base max-w-2xl mx-auto relative z-20">Pilih paket tiket yang paling sesuai dengan kebutuhanmu. Dapatkan benefit menarik di setiap tier!</p>
+            </div>
+
+            <!-- Glow Effect di belakang kotak tengah -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-400/20 blur-3xl rounded-full z-0 pointer-events-none hidden md:block"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative z-10">
+                @php
+                    $isClosedHome = false;
+                    if (!$settings || !$settings->is_registration_open || (!empty($settings->registration_deadline) && now()->greaterThan($settings->registration_deadline))) {
+                        $isClosedHome = true;
+                    } else {
+                        $kapasitas = (int) ($settings->target_runners ?? 0);
+                        $pendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending'])->count();
+                        if ($kapasitas - $pendaftar <= 0) {
+                            $isClosedHome = true;
+                        }
+                    }
+                @endphp
+                @if(isset($ticketPackages) && $ticketPackages->count() > 0)
+                    @foreach($ticketPackages as $index => $package)
+                        @php
+                            $headerBg = 'bg-cyan-500'; // Default Reguler
+                            if ($index == 1) $headerBg = 'bg-[#0b4d75]'; // Premium (Navy)
+                            if ($index == 2) $headerBg = 'bg-[#e85d04]'; // Eksekutif (Orange/Gold)
+                        @endphp
+                        <!-- Pricing Card -->
+                        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-full hover:-translate-y-3 hover:shadow-2xl transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $index * 150 }}">
+                            <div class="p-8 text-center {{ $headerBg }} text-white relative">
+                                <h3 class="text-2xl font-black font-sporty italic uppercase tracking-wide mb-2 drop-shadow-sm">{{ $package->nama_paket }}</h3>
+                                <div class="text-white/90 text-sm mb-6 min-h-[40px] leading-relaxed">{{ $package->deskripsi }}</div>
+                                <div class="flex items-start justify-center gap-1">
+                                    <span class="text-xl font-bold mt-1">Rp</span>
+                                    <span class="text-4xl font-black tracking-tight drop-shadow-sm">{{ number_format($package->harga, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="p-8 flex-grow flex flex-col bg-white">
+                                @if($package->gambar_benefit)
+                                    <div class="mb-6 rounded-xl overflow-hidden shadow-sm border border-gray-100 relative group">
+                                        <img src="{{ asset('storage/' . $package->gambar_benefit) }}" alt="Benefit {{ $package->nama_paket }}" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500">
+                                    </div>
+                                @endif
+                                
+                                @if(!empty($package->benefits))
+                                <ul class="space-y-5 mb-8 flex-grow text-sm text-gray-700 font-medium">
+                                    @foreach($package->benefits as $benefit)
+                                    <li class="flex items-start gap-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500 shrink-0 drop-shadow-sm" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        <span class="pt-0.5">{{ $benefit }}</span>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @endif
+                                
+                                <div class="mt-auto pt-4">
+                                    @if($isClosedHome)
+                                        <button disabled class="w-full block text-center bg-gray-400 text-white font-bold py-3.5 rounded-xl cursor-not-allowed uppercase tracking-widest shadow-md border-2 border-transparent">
+                                            PENDAFTARAN DITUTUP
+                                        </button>
+                                    @else
+                                        <a href="{{ route('daftar', ['paket_id' => $package->id]) }}" class="btn-pilih-paket w-full block text-center border-2 border-[#0b4d75] bg-[#0b4d75] hover:bg-transparent hover:text-[#0b4d75] text-white font-bold py-3.5 rounded-xl transition-colors duration-300 uppercase tracking-widest shadow-md hover:shadow-none">
+                                            PILIH PAKET
+                                        </a>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <div class="col-span-3 text-center py-12 text-gray-500">
+                        Belum ada paket tiket yang tersedia.
+                    </div>
+                @endif
+            </div>
+        </div>
+    </section>
+
+    
+        <!-- ========================================== -->
     <!-- BAGIAN 5: FREQUENTLY ASKED QUESTIONS       -->
     <!-- ========================================== -->
     <section class="relative overflow-hidden bg-gradient-to-b from-slate-50 to-white pt-12 pb-20 lg:pt-16 lg:pb-24">
@@ -661,12 +762,10 @@
 
             </div>
         </div>
-    </section>
-
+    </section>    <!-- ========================================== -->
+    <!-- BAGIAN 6: ORGANIZED, SPONSORED, MEDIA PARTNERS -->
     <!-- ========================================== -->
-    <!-- BAGIAN 6: SPONSORED BY                     -->
-    <!-- ========================================== -->
-    <section class="bg-slate-100 py-12 md:py-16 relative overflow-hidden border-t-2 border-dashed border-gray-300">
+    <section class="bg-slate-100 py-16 md:py-24 relative overflow-hidden border-t-2 border-dashed border-gray-300">
         <!-- SVG Dekorasi Background -->
         <div class="absolute inset-0 z-0 opacity-20 pointer-events-none text-gray-400">
             <svg class="absolute h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -679,25 +778,37 @@
             </svg>
         </div>
 
-        <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
-            <h2 data-aos="fade-up" class="text-center font-sporty font-black text-2xl italic text-[#0b4d75] uppercase tracking-wider mb-2">SPONSORED BY</h2>
+        <div class="relative z-10 max-w-5xl mx-auto px-4 flex flex-col items-center">
             
-            <div class="flex flex-row justify-center items-center gap-6 md:gap-16 w-full mt-6 flex-wrap">
-                <!-- Sponsor / Penyelenggara -->
-                <div data-aos="fade-up" data-aos-delay="100" class="flex flex-col items-center justify-center">
-                    <img src="{{ asset('img/logo_gsc.png') }}" alt="GSC" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+            <!-- 1. ORGANIZED BY -->
+            <div class="w-full mb-16">
+                <h2 data-aos="fade-up" class="text-center font-bold text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-6">ORGANIZED BY</h2>
+                <div data-aos="fade-up" data-aos-delay="100" class="flex justify-center">
+                    <img src="{{ asset('img/logo_gsc.png') }}" alt="GSC" class="h-20 md:h-28 w-auto object-contain drop-shadow-md hover:scale-105 transition-transform duration-300">
                 </div>
-
-                <!-- Sponsor Utama -->
-                <div data-aos="fade-up" data-aos-delay="200" class="flex flex-col items-center justify-center">
-                    <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-16 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                </div>
-
-                <!-- Sponsor Sari Roti -->
-                <!-- <div data-aos="fade-up" data-aos-delay="300" class="flex flex-col items-center justify-center">
-                    <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="h-16 md:h-24 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                </div> -->
             </div>
+
+            <!-- 2. SPONSORED BY -->
+            <div class="w-full mb-16">
+                <h2 data-aos="fade-up" class="text-center font-bold text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-8">SPONSORED BY</h2>
+                <div data-aos="fade-up" data-aos-delay="200" class="flex flex-row justify-center items-center gap-6 md:gap-12 flex-wrap">
+                    <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                </div>
+            </div>
+
+            <!-- 3. MEDIA PARTNERS -->
+            <div class="w-full">
+                <h2 data-aos="fade-up" class="text-center font-bold text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-8">MEDIA PARTNERS</h2>
+                <div data-aos="fade-up" data-aos-delay="300" class="flex flex-row justify-center items-center gap-8 md:gap-12 flex-wrap max-w-4xl mx-auto">
+                    <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -1090,6 +1201,7 @@
         @if(!empty($settings->registration_deadline) && $settings->is_registration_open)
         const deadline = new Date("{{ $settings->registration_deadline }}").getTime();
         const btnsDaftar = document.querySelectorAll('.btn-daftar-global');
+        const btnsPilihPaket = document.querySelectorAll('.btn-pilih-paket');
         
         const countdownTimer = setInterval(function() {
             const now = new Date().getTime();
@@ -1105,6 +1217,12 @@
                 btnsDaftar.forEach(btn => {
                     btn.classList.add('bg-gray-400', 'cursor-not-allowed');
                     btn.classList.remove('bg-[#0b4d75]', 'hover:bg-blue-800', 'hover:-translate-y-1');
+                    btn.removeAttribute('href');
+                    btn.innerHTML = 'PENDAFTARAN DITUTUP';
+                });
+
+                btnsPilihPaket.forEach(btn => {
+                    btn.className = 'w-full block text-center bg-gray-400 text-white font-bold py-3.5 rounded-xl cursor-not-allowed uppercase tracking-widest shadow-md border-2 border-transparent';
                     btn.removeAttribute('href');
                     btn.innerHTML = 'PENDAFTARAN DITUTUP';
                 });
