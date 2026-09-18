@@ -49,6 +49,7 @@ Route::post('/api/midtrans-callback', [RegistrationController::class, 'webhook']
 Route::get('/pembayaran/{order_id}', [RegistrationController::class, 'showPembayaran'])->name('pembayaran.show');
 Route::post('/pembayaran/manual/{order_id}', [RegistrationController::class, 'uploadBukti'])->name('pembayaran.manual.upload');
 Route::get('/pembayaran/sukses/{order_id}', [RegistrationController::class, 'sukses'])->name('pembayaran.sukses');
+Route::post('/pembayaran/batal/{order_id}', [RegistrationController::class, 'batal'])->name('pembayaran.batal');
 
 // === Rute Halaman Statis Payment Gateway ===
 Route::get('/faq', function () { return view('pages.faq'); });

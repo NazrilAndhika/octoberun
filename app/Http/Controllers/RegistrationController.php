@@ -150,7 +150,7 @@ class RegistrationController extends Controller
         if ($existingParticipant) {
             if (in_array($existingParticipant->payment_status, ['pending', 'verifying'])) {
                 return redirect()->route('pembayaran.show', $existingParticipant->order_id)
-                                 ->with('error', 'Anda memiliki pendaftaran yang belum diselesaikan. Silakan lanjutkan pembayaran.');
+                                 ->with('error', 'NIK Anda mendeteksi pesanan yang belum dibayar. Silakan lanjutkan pembayaran di bawah ini, atau Batalkan Pesanan jika Anda ingin mengganti paket tiket.');
             } elseif ($existingParticipant->payment_status === 'paid') {
                 return back()->withInput()->withErrors(['nik' => 'NIK ini sudah terdaftar dan lunas.']);
             }
@@ -348,6 +348,21 @@ class RegistrationController extends Controller
     {
         $participant = Participant::where('order_id', $order_id)->firstOrFail();
         return view('user.sukses', compact('participant'));
+    }
+
+    // -------------------------------------------------------
+    // POST /pembayaran/batal/{order_id}
+    // -------------------------------------------------------
+    public function batal($order_id)
+    {
+        $participant = Participant::where('order_id', $order_id)->firstOrFail();
+        
+        if ($participant->payment_status === 'pending') {
+            $participant->delete();
+            return redirect('/#paket-tiket')->with('success', 'Pesanan dibatalkan. Silakan pilih paket baru Anda.');
+        }
+
+        return back()->with('error', 'Pesanan ini tidak dapat dibatalkan.');
     }
 
     // -------------------------------------------------------

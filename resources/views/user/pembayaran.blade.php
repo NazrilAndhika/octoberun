@@ -15,6 +15,22 @@
             </a>
         </div>
 
+        @if(session('success'))
+            <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl mb-6 font-bold flex items-center gap-2 text-sm shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
+                <span>{{ session('success') }}</span>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl mb-6 shadow-sm">
+                <div class="flex items-start gap-3 font-bold text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 flex-shrink-0 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span>{{ session('error') }}</span>
+                </div>
+            </div>
+        @endif
+
+
         {{-- ===== STEP INDICATOR ===== --}}
         <div class="flex items-center justify-center gap-0 mb-10">
             {{-- Step 1 --}}
@@ -94,6 +110,8 @@
                                 </svg>
                                 Bayar Sekarang
                             </button>
+                            
+
                         </div>
                     </div>
                 @else
@@ -135,18 +153,6 @@
                                 </h2>
                             </div>
                             <div class="p-6">
-                                @if(session('success'))
-                                    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 font-bold flex items-center gap-2 text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>
-                                        {{ session('success') }}
-                                    </div>
-                                @endif
-                                @if(session('error'))
-                                    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 font-bold flex items-center gap-2 text-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                        {{ session('error') }}
-                                    </div>
-                                @endif
     
                                 <div class="mb-6 pb-6 border-b border-gray-200 text-center">
                                     <h3 class="font-semibold text-gray-800 mb-4">QRIS</h3>
@@ -225,6 +231,8 @@
                                                 Kirim Bukti Pembayaran
                                             </button>
                                         </form>
+
+
                                     @endif
                                 </div>
                             </div>
@@ -304,6 +312,20 @@
                                     Menunggu Pembayaran
                                 </span>
                             </div>
+
+                            @if($participant->payment_status === 'pending')
+                            <div class="mt-4">
+                                <form action="{{ route('pembayaran.batal', $participant->order_id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini? NIK Anda akan di-reset agar bisa mendaftar ulang.');">
+                                    @csrf
+                                    <button type="submit" class="w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold py-2.5 rounded-lg transition shadow-sm text-sm flex items-center justify-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Batalkan Pesanan & Ganti Tiket
+                                    </button>
+                                </form>
+                            </div>
+                            @endif
 
                             {{-- Sudah punya bukti? --}}
                             @if($participant->payment_proof)

@@ -54,6 +54,18 @@
                             <a href="{{ route('pembayaran.show', $participant->order_id) }}" class="block w-full text-center bg-[#0b4d75] text-white font-bold py-4 px-6 rounded-lg shadow-md uppercase mt-6 hover:bg-blue-800 transition duration-300">
                                 LANJUTKAN PEMBAYARAN
                             </a>
+
+                            <div class="mt-4">
+                                <form action="{{ route('pembayaran.batal', $participant->order_id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini? NIK Anda akan di-reset agar bisa mendaftar ulang.');">
+                                    @csrf
+                                    <button type="submit" class="w-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 font-bold py-3 rounded-lg transition shadow-sm text-sm flex items-center justify-center gap-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                        Batalkan Pesanan & Ganti Tiket
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     @elseif($participant->payment_status === 'verifying')
                         <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-center shadow-sm">
