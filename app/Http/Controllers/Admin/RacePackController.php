@@ -24,7 +24,8 @@ class RacePackController extends Controller
         if (!empty($kode)) {
             $searchPerformed = true;
             // Cari data dengan akhir kode yang cocok, dan pastikan sudah lunas
-            $participant = Participant::where('order_id', 'LIKE', '%' . $kode)
+            $participant = Participant::with('ticketPackage')
+                                      ->where('order_id', 'LIKE', '%' . $kode)
                                       ->where('payment_status', 'paid')
                                       ->first();
         }

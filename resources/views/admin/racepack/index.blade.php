@@ -59,12 +59,37 @@
 @if ($searchPerformed)
     <div class="max-w-2xl mx-auto">
         @if ($participant)
+            @php
+                $paketName = 'Early Bird / Eksekutif';
+                $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+                $items = ['Jersey', 'Nomor BIB', 'Medali', 'Race Pack Lengkap'];
+                
+                if ($participant->ticket_package_id && $participant->ticketPackage) {
+                    $paketName = $participant->ticketPackage->nama_paket;
+                    if (stripos($paketName, 'Reguler') !== false) {
+                        $items = ['Jersey', 'Nomor BIB'];
+                        $paketBadgeColor = 'bg-blue-100 text-blue-800 border-blue-300';
+                    } elseif (stripos($paketName, 'Premium') !== false) {
+                        $items = ['Jersey', 'Nomor BIB', 'Medali'];
+                        $paketBadgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-300';
+                    } elseif (stripos($paketName, 'Eksekutif') !== false) {
+                        $items = ['Jersey', 'Nomor BIB', 'Medali', 'Race Pack Lengkap'];
+                        $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+                    } else {
+                        $items = ['Jersey', 'Nomor BIB'];
+                        $paketBadgeColor = 'bg-gray-100 text-gray-800 border-gray-300';
+                    }
+                }
+            @endphp
             
             <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
                 <div class="bg-blue-50 border-b border-blue-100 p-6 text-center">
                     <p class="text-xs font-bold text-[#0b4d75] tracking-widest uppercase mb-1">Tiket Ditemukan</p>
                     <h2 class="text-3xl font-black text-gray-900">{{ $participant->full_name }}</h2>
-                    <p class="text-gray-500 mt-1">No. Order: <span class="font-bold">{{ $participant->order_id }}</span></p>
+                    <p class="text-gray-500 mt-1 mb-3">No. Order: <span class="font-bold">{{ $participant->order_id }}</span></p>
+                    <div class="inline-block px-4 py-1.5 rounded-full text-sm font-bold border {{ $paketBadgeColor }} uppercase tracking-wide shadow-sm">
+                        {{ $paketName }}
+                    </div>
                 </div>
                 
                 <div class="p-8 text-center">
@@ -82,6 +107,23 @@
                                 {{ $participant->jersey_size === 'Custom Size' ? $participant->jersey_size . ' (' . $participant->custom_size_note . ')' : $participant->jersey_size }}
                             </div>
                         </div>
+                    </div>
+
+                    {{-- DYNAMIC CHECKLIST --}}
+                    <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 mb-8 text-left shadow-inner">
+                        <h3 class="text-lg font-black text-gray-800 mb-4 border-b border-gray-200 pb-2">Checklist Barang (Harap Pastikan!):</h3>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            @foreach($items as $item)
+                                <li class="flex items-center gap-3 bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center shadow-inner">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                    <span class="font-bold text-gray-700 text-lg">{{ $item }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
 
                     @if ($participant->is_racepack_taken)
