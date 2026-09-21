@@ -68,9 +68,11 @@
 
             {{-- BIB Status Filter --}}
             <select name="bib_status" id="bib-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
-                <option value="all" {{ request('bib_status', 'all') === 'all' ? 'selected' : '' }}>Status BIB</option>
-                <option value="has_bib" {{ request('bib_status') === 'has_bib' ? 'selected' : '' }}>Sudah Ada BIB</option>
-                <option value="no_bib" {{ request('bib_status') === 'no_bib' ? 'selected' : '' }}>Belum Ada BIB</option>
+                <option value="all" {{ request('bib_status', 'all') === 'all' ? 'selected' : '' }}>Semua Status BIB</option>
+                <option value="only_name" {{ request('bib_status') === 'only_name' ? 'selected' : '' }}>Hanya Ada Nama BIB</option>
+                <option value="only_number" {{ request('bib_status') === 'only_number' ? 'selected' : '' }}>Hanya Ada Nomor BIB</option>
+                <option value="complete" {{ request('bib_status') === 'complete' ? 'selected' : '' }}>Lengkap (Nama & Nomor BIB)</option>
+                <option value="none" {{ request('bib_status') === 'none' ? 'selected' : '' }}>Belum Ada Keduanya</option>
             </select>
 
             {{-- Paket Tiket Filter --}}

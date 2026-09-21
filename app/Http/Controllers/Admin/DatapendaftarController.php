@@ -65,16 +65,26 @@ class DatapendaftarController extends Controller
 
         // --- Filter: Status BIB ---
         if ($request->filled('bib_status') && $request->bib_status !== 'all') {
-            if ($request->bib_status === 'has_bib') {
-                $query->whereNotNull('bib_number')->where('bib_number', '!=', '')
-                      ->whereNotNull('bib_name')->where('bib_name', '!=', '');
-            } else if ($request->bib_status === 'no_bib') {
+            if ($request->bib_status === 'only_name') {
+                $query->whereNotNull('bib_name')->where('bib_name', '!=', '')
+                      ->where(function ($q) {
+                          $q->whereNull('bib_number')->orWhere('bib_number', '');
+                      });
+            } else if ($request->bib_status === 'only_number') {
                 $query->where(function ($q) {
-                    $q->whereNull('bib_number')
-                      ->orWhere('bib_number', '')
-                      ->orWhereNull('bib_name')
-                      ->orWhere('bib_name', '');
-                });
+                          $q->whereNull('bib_name')->orWhere('bib_name', '');
+                      })
+                      ->whereNotNull('bib_number')->where('bib_number', '!=', '');
+            } else if ($request->bib_status === 'complete') {
+                $query->whereNotNull('bib_name')->where('bib_name', '!=', '')
+                      ->whereNotNull('bib_number')->where('bib_number', '!=', '');
+            } else if ($request->bib_status === 'none') {
+                $query->where(function ($q) {
+                          $q->whereNull('bib_name')->orWhere('bib_name', '');
+                      })
+                      ->where(function ($q) {
+                          $q->whereNull('bib_number')->orWhere('bib_number', '');
+                      });
             }
         }
 
@@ -183,16 +193,26 @@ class DatapendaftarController extends Controller
             }
         }
         if ($request->filled('bib_status') && $request->bib_status !== 'all') {
-            if ($request->bib_status === 'has_bib') {
-                $query->whereNotNull('bib_number')->where('bib_number', '!=', '')
-                      ->whereNotNull('bib_name')->where('bib_name', '!=', '');
-            } else if ($request->bib_status === 'no_bib') {
+            if ($request->bib_status === 'only_name') {
+                $query->whereNotNull('bib_name')->where('bib_name', '!=', '')
+                      ->where(function ($q) {
+                          $q->whereNull('bib_number')->orWhere('bib_number', '');
+                      });
+            } else if ($request->bib_status === 'only_number') {
                 $query->where(function ($q) {
-                    $q->whereNull('bib_number')
-                      ->orWhere('bib_number', '')
-                      ->orWhereNull('bib_name')
-                      ->orWhere('bib_name', '');
-                });
+                          $q->whereNull('bib_name')->orWhere('bib_name', '');
+                      })
+                      ->whereNotNull('bib_number')->where('bib_number', '!=', '');
+            } else if ($request->bib_status === 'complete') {
+                $query->whereNotNull('bib_name')->where('bib_name', '!=', '')
+                      ->whereNotNull('bib_number')->where('bib_number', '!=', '');
+            } else if ($request->bib_status === 'none') {
+                $query->where(function ($q) {
+                          $q->whereNull('bib_name')->orWhere('bib_name', '');
+                      })
+                      ->where(function ($q) {
+                          $q->whereNull('bib_number')->orWhere('bib_number', '');
+                      });
             }
         }
         if ($request->filled('date_filter') && $request->date_filter !== 'all') {
