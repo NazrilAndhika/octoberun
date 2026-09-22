@@ -34,14 +34,14 @@
 {{-- AREA PENCARIAN --}}
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center max-w-2xl mx-auto mb-8">
     <form action="{{ route('admin.rpc') }}" method="GET">
-        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Masukkan Kode E-Ticket atau Scan QR Code</label>
+        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Scan QR Code atau Ketik Nama / NIK / Email / Order ID</label>
         
         <div id="reader" class="mx-auto mb-4 overflow-hidden rounded-xl hidden" style="width: 100%; max-width: 500px;"></div>
 
         <div class="flex flex-col sm:flex-row items-center gap-3">
             <input type="text" id="kode" name="kode" value="{{ request('kode') }}" 
                    class="w-full sm:flex-1 text-center text-3xl font-black tracking-widest uppercase rounded-xl border-2 border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] py-4"
-                   placeholder="KODE E-TICKET"
+                   placeholder="NAMA / NIK / EMAIL / ORDER ID"
                    required
                    autofocus>
             <button type="submit" id="btn-cari" class="w-full sm:w-auto bg-[#0b4d75] hover:bg-blue-800 text-white px-8 py-5 rounded-xl font-bold text-lg shadow-md transition">
@@ -58,7 +58,7 @@
 {{-- AREA HASIL --}}
 @if ($searchPerformed)
     <div class="max-w-2xl mx-auto">
-        @if ($participant)
+        @forelse ($participants as $participant)
             @php
                 $paketName = 'Early Bird / Eksekutif';
                 $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
@@ -82,7 +82,7 @@
                 }
             @endphp
             
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden mb-8">
                 <div class="bg-blue-50 border-b border-blue-100 p-6 text-center">
                     <p class="text-xs font-bold text-[#0b4d75] tracking-widest uppercase mb-1">Tiket Ditemukan</p>
                     <h2 class="text-3xl font-black text-gray-900">{{ $participant->full_name }}</h2>
@@ -149,15 +149,15 @@
                 </div>
             </div>
 
-        @else
+        @empty
             <div class="bg-red-50 border border-red-200 rounded-2xl p-8 text-center shadow-sm">
                 <div class="w-20 h-20 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                 </div>
                 <h2 class="text-2xl font-bold text-red-700 mb-2">Data Tidak Ditemukan</h2>
-                <p class="text-red-600 text-lg">Tiket dengan kode <strong>{{ strtoupper($kode) }}</strong> tidak ditemukan atau status pembayarannya belum LUNAS.</p>
+                <p class="text-red-600 text-lg">Data dengan pencarian <strong>{{ strtoupper($kode) }}</strong> tidak ditemukan atau status pembayarannya belum LUNAS.</p>
             </div>
-        @endif
+        @endforelse
     </div>
 @endif
 

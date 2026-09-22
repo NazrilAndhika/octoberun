@@ -121,6 +121,28 @@
                     <p class="text-sm font-bold text-[#0b4d75]">{{ $participant->order_id }}</p>
                 </div>
                 <div>
+                    <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Paket Tiket</p>
+                    @php
+                        $paketName = 'Early Bird / Eksekutif';
+                        $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-200';
+                        if ($participant->ticket_package_id && $participant->ticketPackage) {
+                            $paketName = $participant->ticketPackage->nama_paket;
+                            if (stripos($paketName, 'Reguler') !== false) {
+                                $paketBadgeColor = 'bg-blue-100 text-blue-800 border-blue-200';
+                            } elseif (stripos($paketName, 'Premium') !== false) {
+                                $paketBadgeColor = 'bg-yellow-100 text-yellow-800 border-yellow-200';
+                            } elseif (stripos($paketName, 'Eksekutif') !== false) {
+                                $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-200';
+                            } else {
+                                $paketBadgeColor = 'bg-gray-100 text-gray-800 border-gray-200';
+                            }
+                        }
+                    @endphp
+                    <span class="inline-flex items-center px-3 py-1.5 rounded-md text-xs font-black uppercase tracking-wider border {{ $paketBadgeColor }}">
+                        {{ $paketName }}
+                    </span>
+                </div>
+                <div>
                     <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Total Pembayaran</p>
                     <p class="text-xl font-black text-gray-900">Rp {{ number_format($participant->gross_amount, 0, ',', '.') }}</p>
                 </div>

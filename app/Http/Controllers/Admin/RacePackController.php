@@ -13,7 +13,7 @@ class RacePackController extends Controller
      */
     public function index(Request $request)
     {
-        $participant = null;
+        $participants = [];
         $searchPerformed = false;
         $kode = trim($request->query('kode'));
 
@@ -23,14 +23,19 @@ class RacePackController extends Controller
         // Lakukan pencarian jika panitia memasukkan kode
         if (!empty($kode)) {
             $searchPerformed = true;
-            // Cari data dengan akhir kode yang cocok, dan pastikan sudah lunas
-            $participant = Participant::with('ticketPackage')
-                                      ->where('order_id', 'LIKE', '%' . $kode)
+            // Cari data berdasarkan order_id, nama_lengkap, nik, atau email, dan pastikan sudah lunas
+            $participants = Participant::with('ticketPackage')
+                                      ->where(function ($query) use ($kode) {
+                                          $query->where('order_id', 'LIKE', '%' . $kode . '%')
+                                                ->orWhere('full_name', 'LIKE', '%' . $kode . '%')
+                                                ->orWhere('id_number', 'LIKE', '%' . $kode . '%')
+                                                ->orWhere('email', 'LIKE', '%' . $kode . '%');
+                                      })
                                       ->where('payment_status', 'paid')
-                                      ->first();
+                                      ->get();
         }
 
-        return view('admin.racepack.index', compact('participant', 'searchPerformed', 'kode', 'totalDistributed', 'totalPaid'));
+        return view('admin.racepack.index', compact('participants', 'searchPerformed', 'kode', 'totalDistributed', 'totalPaid'));
     }
 
     /**
