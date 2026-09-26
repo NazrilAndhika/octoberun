@@ -17,13 +17,13 @@
                 <label for="order_id" class="block text-sm font-bold text-gray-700 mb-2">
                     Masukkan Email atau nomor order Anda yang sudah terdaftar
                 </label>
-                <div class="flex gap-3">
+                <div class="flex flex-col sm:flex-row gap-3">
                     <input type="text" name="order_id" id="order_id" 
-                           class="flex-1 rounded-lg border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] shadow-sm px-4 py-3"
+                           class="flex-1 w-full rounded-lg border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] shadow-sm px-4 py-3"
                            placeholder="Contoh: email@gmail.com" 
                            value="{{ request('order_id') }}"
                            required>
-                    <button type="submit" class="bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
+                    <button type="submit" class="w-full sm:w-auto shrink-0 bg-[#0b4d75] hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-lg shadow-md transition duration-300">
                         Cari
                     </button>
                 </div>
