@@ -150,7 +150,7 @@
                                             Nama pada BIB <span class="text-red-500">*</span>
                                         </label>
                                         <p class="text-xs text-gray-400 mb-3">Maksimal 10 huruf. Akan dicetak pada nomor lari (BIB) Anda.</p>
-                                        <input type="text" name="bib_name" value="{{ old('bib_name') }}" maxlength="10" placeholder="Contoh: BUDI" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-4 py-2.5 text-sm uppercase" required>
+                                        <input type="text" name="bib_name" value="{{ old('bib_name') }}" maxlength="10" placeholder="Contoh: BUDI" pattern="[A-Za-z\s]+" title="Hanya boleh diisi dengan huruf (tanpa angka/simbol)" oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-4 py-2.5 text-sm uppercase" required>
                                     </div>
                                     @else
                                     <input type="hidden" name="bib_name" value="{{ $participant->bib_name }}">

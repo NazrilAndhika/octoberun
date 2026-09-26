@@ -89,6 +89,9 @@
                                 value="{{ old('bib_name') }}"
                                 placeholder="Masukkan nama untuk BIB"
                                 maxlength="10"
+                                pattern="[A-Za-z\s]+" 
+                                title="Hanya boleh diisi dengan huruf (tanpa angka/simbol)" 
+                                oninput="this.value = this.value.replace(/[^A-Za-z\s]/g, '')"
                                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('bib_name') ? 'border-red-400' : '' }}"
                                 required>
                             @error('bib_name')
