@@ -58,34 +58,60 @@
                     Bergabunglah dalam event lari terbesar di bulan Oktober. Rasakan pengalaman lari yang seru, menantang, dan penuh makna bersama ribuan pelari lainnya!
                 </p>
 
-                <!-- Countdown Timer -->
-                @if(!empty($settings->registration_deadline))
-                <div data-aos="zoom-in" data-aos-delay="400" class="mb-4 md:mb-8 w-full flex flex-col items-start" id="countdown-container">
-                    @if(isset($settings) && !$settings->is_registration_open)
-                        <p class="text-red-500 font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN BELUM DIBUKA</p>
-                    @else
-                        <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                <!-- Countdown Timer Wrapper -->
+                <div data-aos="zoom-in" data-aos-delay="400" class="mb-4 md:mb-8 w-full flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
+                    <!-- Countdown Pendaftaran -->
+                    @if(!empty($settings->registration_deadline))
+                    <div class="flex flex-col items-start" id="countdown-container">
+                        @if(isset($settings) && !$settings->is_registration_open)
+                            <p class="text-red-500 font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN BELUM DIBUKA</p>
+                        @else
+                            <p class="text-[#0b4d75] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">PENDAFTARAN DITUTUP DALAM:</p>
+                        @endif
+                        <div class="flex gap-1.5 md:gap-3 justify-start">
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-days">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-hours">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-minutes">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-seconds">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
+                            </div>
+                        </div>
+                    </div>
                     @endif
-                    <div class="flex gap-1.5 md:gap-3 justify-start">
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
-                            <div class="font-black text-lg md:text-3xl text-black" id="cd-days">00</div>
-                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Hari</div>
-                        </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
-                            <div class="font-black text-lg md:text-3xl text-black" id="cd-hours">00</div>
-                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Jam</div>
-                        </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
-                            <div class="font-black text-lg md:text-3xl text-black" id="cd-minutes">00</div>
-                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Menit</div>
-                        </div>
-                        <div class="bg-white/90 backdrop-blur border-2 border-[#0b4d75] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
-                            <div class="font-black text-lg md:text-3xl text-black" id="cd-seconds">00</div>
-                            <div class="text-[8px] md:text-[10px] font-bold text-[#0b4d75] uppercase">Detik</div>
+
+                    <!-- Countdown Race Day -->
+                    <div class="flex flex-col items-start" id="countdown-raceday-container">
+                        <p class="text-[#e85d04] font-bold text-[10px] md:text-sm mb-1.5 md:mb-2 tracking-wide drop-shadow-sm">MENUJU RACE DAY:</p>
+                        <div class="flex gap-1.5 md:gap-3 justify-start">
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#e85d04] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-race-days">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#e85d04] uppercase">Hari</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#e85d04] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-race-hours">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#e85d04] uppercase">Jam</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#e85d04] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-race-minutes">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#e85d04] uppercase">Menit</div>
+                            </div>
+                            <div class="bg-white/90 backdrop-blur border-2 border-[#e85d04] rounded-lg md:rounded-xl p-1 md:p-2 w-[45px] md:w-[80px] shadow-lg text-center">
+                                <div class="font-black text-lg md:text-3xl text-black" id="cd-race-seconds">00</div>
+                                <div class="text-[8px] md:text-[10px] font-bold text-[#e85d04] uppercase">Detik</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                @endif
 
                 <div data-aos="fade-up" data-aos-delay="500" class="flex flex-col sm:flex-row items-start justify-start gap-2 md:gap-4 w-full">
                     @if(isset($settings) && !$settings->is_registration_open)
@@ -787,7 +813,7 @@
             </svg>
         </div>
 
-        <div class="relative z-10 max-w-5xl mx-auto px-4 flex flex-col items-center">
+        <div class="relative z-10 w-full max-w-[100rem] mx-auto px-4 md:px-8 flex flex-col items-center">
             
             <!-- 1. ORGANIZED BY -->
             <div class="w-full mb-16">
@@ -797,24 +823,102 @@
                 </div>
             </div>
 
+    <style>
+        /* Custom Marquee for Mobile */
+        @media (max-width: 767px) {
+            .marquee-container {
+                display: flex;
+                overflow: hidden;
+                width: 100%;
+                position: relative;
+            }
+            .marquee-content {
+                display: flex;
+                min-width: max-content;
+                animation: marquee-left 25s linear infinite;
+            }
+            .marquee-content.reverse {
+                animation: marquee-right 25s linear infinite;
+            }
+            @keyframes marquee-left {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+            }
+            @keyframes marquee-right {
+                0% { transform: translateX(-50%); }
+                100% { transform: translateX(0); }
+            }
+        }
+        @media (min-width: 768px) {
+            .marquee-content {
+                animation: none !important;
+                transform: none !important;
+            }
+            .mobile-duplicate {
+                display: none !important;
+            }
+        }
+    </style>
+
             <!-- 2. SPONSORED BY -->
             <div class="w-full mb-16">
                 <h2 data-aos="fade-up" class="text-center font-bold text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-8">SPONSORED BY</h2>
-                <div data-aos="fade-up" data-aos-delay="200" class="flex flex-row justify-center items-center gap-6 md:gap-12 flex-wrap">
-                    <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                <div data-aos="fade-up" data-aos-delay="200" class="marquee-container">
+                    <div class="marquee-content flex flex-row items-center gap-6 pr-6 md:pr-0 md:gap-6 lg:gap-8 md:justify-center md:flex-wrap md:w-full">
+                        <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_mountoya.png') }}" alt="Mountoya" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cst.png') }}" alt="CST" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_amh.png') }}" alt="AMH" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_lpk_chikara.png') }}" alt="LPK Chikara" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_lpk_satomi.png') }}" alt="LPKS Satomi" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_krimiliky.jpeg') }}" alt="Krimiliky" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cuanqu.png') }}" alt="Cuanqu" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_merayu.png') }}" alt="Merayu" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        
+                        <!-- Duplicate for Mobile Marquee -->
+                        <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_mountoya.png') }}" alt="Mountoya" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cst.png') }}" alt="CST" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_amh.png') }}" alt="AMH" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_lpk_chikara.png') }}" alt="LPK Chikara" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_lpk_satomi.png') }}" alt="LPKS Satomi" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_krimiliky.jpeg') }}" alt="Krimiliky" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cuanqu.png') }}" alt="Cuanqu" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_merayu.png') }}" alt="Merayu" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    </div>
                 </div>
             </div>
 
             <!-- 3. MEDIA PARTNERS -->
             <div class="w-full">
                 <h2 data-aos="fade-up" class="text-center font-bold text-xs md:text-sm text-gray-500 uppercase tracking-widest mb-8">MEDIA PARTNERS</h2>
-                <div data-aos="fade-up" data-aos-delay="300" class="flex flex-row justify-center items-center gap-8 md:gap-12 flex-wrap max-w-4xl mx-auto">
-                    <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                    <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                <div data-aos="fade-up" data-aos-delay="300" class="marquee-container">
+                    <div class="marquee-content reverse flex flex-row items-center gap-8 pr-8 md:pr-0 md:gap-8 lg:gap-10 md:justify-center md:flex-wrap max-w-[100rem] mx-auto md:w-full">
+                        <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_bumingapak.jpeg') }}" alt="Bumi Ngapak" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacapzone.jpeg') }}" alt="Cilacap Zone" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_kebumenupdate.jpeg') }}" alt="Kebumen Update" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_dronecilacap.jpeg') }}" alt="Drone Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        
+                        <!-- Duplicate for Mobile Marquee -->
+                        <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_bumingapak.jpeg') }}" alt="Bumi Ngapak" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_cilacapzone.jpeg') }}" alt="Cilacap Zone" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_kebumenupdate.jpeg') }}" alt="Kebumen Update" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_dronecilacap.jpeg') }}" alt="Drone Cilacap" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                    </div>
                 </div>
             </div>
 
@@ -1243,6 +1347,27 @@
             }
         }, 1000);
         @endif
+
+        // Countdown Race Day Logic (Hardcoded: 11 Oktober 2026 05:30)
+        const raceDayDeadline = new Date("2026-10-11T05:30:00").getTime();
+        
+        const raceDayTimer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = raceDayDeadline - now;
+            
+            if (distance < 0) {
+                clearInterval(raceDayTimer);
+                document.getElementById('cd-race-days').innerText = "00";
+                document.getElementById('cd-race-hours').innerText = "00";
+                document.getElementById('cd-race-minutes').innerText = "00";
+                document.getElementById('cd-race-seconds').innerText = "00";
+            } else {
+                document.getElementById('cd-race-days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('cd-race-hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('cd-race-minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('cd-race-seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }
+        }, 1000);
     </script>
     <!-- Floating Reminder Notification -->
     <div class="fixed z-40 bottom-6 left-0 right-0 flex justify-center pointer-events-none md:left-auto md:right-8 md:bottom-8">
