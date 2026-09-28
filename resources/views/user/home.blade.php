@@ -899,7 +899,7 @@
                         <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_cilacap.PNG') }}" alt="Explore Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_bumingapak.jpeg') }}" alt="Bumi Ngapak" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
@@ -911,7 +911,7 @@
                         <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_insta_kroya.png') }}" alt="Insta Kroya" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_explore_kesugihan.png') }}" alt="Explore Kesugihan" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('img/logo_explore_cilacap.png') }}" alt="Explore Cilacap" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_explore_cilacap.PNG') }}" alt="Explore Cilacap" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_cilacap_kekinian.png') }}" alt="Cilacap Kekinian" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_cilacap_info.id.png') }}" alt="Cilacap Info" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_bumingapak.jpeg') }}" alt="Bumi Ngapak" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
