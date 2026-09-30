@@ -906,6 +906,8 @@
                         <img src="{{ asset('img/logo_cilacapzone.jpeg') }}" alt="Cilacap Zone" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_kebumenupdate.jpeg') }}" alt="Kebumen Update" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_dronecilacap.jpeg') }}" alt="Drone Cilacap" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_instamaos.png') }}" alt="Insta Maos" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_kroyaterkini.png') }}" alt="Kroya Terkini" class="h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         
                         <!-- Duplicate for Mobile Marquee -->
                         <img src="{{ asset('img/logo_love_purwokerto.png') }}" alt="Love Purwokerto" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
@@ -918,6 +920,8 @@
                         <img src="{{ asset('img/logo_cilacapzone.jpeg') }}" alt="Cilacap Zone" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_kebumenupdate.jpeg') }}" alt="Kebumen Update" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_dronecilacap.jpeg') }}" alt="Drone Cilacap" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_instamaos.png') }}" alt="Insta Maos" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
+                        <img src="{{ asset('img/logo_kroyaterkini.png') }}" alt="Kroya Terkini" class="mobile-duplicate h-10 md:h-12 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                     </div>
                 </div>
             </div>
