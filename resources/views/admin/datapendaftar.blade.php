@@ -29,7 +29,7 @@
                     id="search-input"
                     name="search"
                     value="{{ request('search') }}"
-                    placeholder="Cari nama, email, No. HP, atau order ID..."
+                    placeholder="Cari nama, email, No. HP, order ID, atau No. BIB..."
                     class="w-full pl-9 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50"
                 >
             </div>

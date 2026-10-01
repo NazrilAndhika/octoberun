@@ -26,7 +26,8 @@ class DatapendaftarController extends Controller
                 $q->where('full_name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('whatsapp', 'like', "%{$search}%")
-                  ->orWhere('order_id', 'like', "%{$search}%");
+                  ->orWhere('order_id', 'like', "%{$search}%")
+                  ->orWhere('bib_number', 'like', "%{$search}%");
             });
         }
 
@@ -166,7 +167,8 @@ class DatapendaftarController extends Controller
                 $q->where('full_name', 'like', "%{$search}%")
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('whatsapp', 'like', "%{$search}%")
-                  ->orWhere('order_id', 'like', "%{$search}%");
+                  ->orWhere('order_id', 'like', "%{$search}%")
+                  ->orWhere('bib_number', 'like', "%{$search}%");
             });
         }
         if ($request->filled('status') && $request->status !== 'all') {
