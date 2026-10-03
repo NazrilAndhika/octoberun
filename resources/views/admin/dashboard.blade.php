@@ -133,7 +133,7 @@
     <!-- Area Grafik Analitik -->
     <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden mb-8 p-6">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">Grafik Pendapatan Bulanan (Tahun {{ $chartYear }})</h2>
+            <h2 class="text-sm font-bold text-gray-700 uppercase tracking-wider">{{ $chartTitle }}</h2>
             
         </div>
         <div class="relative h-[300px] w-full">
@@ -211,12 +211,14 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var ctx = document.getElementById('incomeChart').getContext('2d');
-            var chartData = @json($monthlyIncomeData);
+            
+            var chartLabels = @json($chartLabels);
+            var chartData = @json($chartData);
             
             var incomeChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+                    labels: chartLabels,
                     datasets: [{
                         label: 'Total Pendapatan (Rp)',
                         data: chartData,

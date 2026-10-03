@@ -681,7 +681,7 @@
             <!-- Glow Effect di belakang kotak tengah -->
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-400/20 blur-3xl rounded-full z-0 pointer-events-none hidden md:block"></div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch relative z-10">
+            <div class="flex flex-row flex-wrap justify-center items-stretch gap-8 relative z-10">
                 @php
                     $isClosedHome = false;
                     if (!$settings || !$settings->is_registration_open || (!empty($settings->registration_deadline) && now()->greaterThan($settings->registration_deadline))) {
@@ -701,8 +701,8 @@
                             if ($index == 1) $headerBg = 'bg-[#0b4d75]'; // Premium (Navy)
                             if ($index == 2) $headerBg = 'bg-[#e85d04]'; // Eksekutif (Orange/Gold)
                         @endphp
-                        <!-- Pricing Card -->
-                        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-full hover:-translate-y-3 hover:shadow-2xl transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $index * 150 }}">
+                        <!-- Pricing Card dengan Max-Width -->
+                        <div class="w-full md:w-[320px] lg:w-[350px] max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-full hover:-translate-y-3 hover:shadow-2xl transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $index * 150 }}">
                             <div class="p-8 text-center {{ $headerBg }} text-white relative">
                                 <h3 class="text-2xl font-black font-sporty italic uppercase tracking-wide mb-2 drop-shadow-sm">{{ $package->nama_paket }}</h3>
                                 <div class="text-white/90 text-sm mb-6 min-h-[40px] leading-relaxed">{{ $package->deskripsi }}</div>

@@ -89,27 +89,76 @@ class DashboardController extends Controller
             ];
         }
 
-        // Grafik Pendapatan Bulanan (Filter waktu tidak mempengaruhi grafik ini, hanya filter Paket)
-        $chartYear = date('Y');
-        if ($filterWaktu === 'custom' && $startDate) {
-            $chartYear = $startDate->format('Y');
-        }
-
-        $monthlyQuery = Participant::where('payment_status', 'paid')
-                                 ->whereYear('created_at', $chartYear);
+        // -------------------------------------------------------------
+        // GRAFIK PENDAPATAN DINAMIS BERDASARKAN FILTER
+        // -------------------------------------------------------------
+        $chartLabels = [];
+        $chartData = [];
+        $chartTitle = '';
         
-        if ($filterPaket !== 'semua') {
-            $monthlyQuery->where('ticket_package_id', $filterPaket);
-        }
-
-        $monthlyIncomeRaw = $monthlyQuery->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(gross_amount) as total'))
-                                ->groupBy('month')
-                                ->pluck('total', 'month')
-                                ->toArray();
-
-        $monthlyIncomeData = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $monthlyIncomeData[] = $monthlyIncomeRaw[$i] ?? 0;
+        $chartQuery = (clone $query)->where('payment_status', 'paid');
+        
+        if ($filterWaktu === 'hari_ini') {
+            $chartTitle = 'GRAFIK PENDAPATAN (HARI INI)';
+            $results = (clone $chartQuery)
+                         ->select(DB::raw('HOUR(created_at) as hour'), DB::raw('SUM(gross_amount) as total'))
+                         ->groupBy('hour')
+                         ->pluck('total', 'hour')
+                         ->toArray();
+                         
+            // Sumbu X: 00:00 - 23:00
+            for ($i = 0; $i < 24; $i++) {
+                $chartLabels[] = str_pad($i, 2, '0', STR_PAD_LEFT) . ':00';
+                $chartData[] = $results[$i] ?? 0;
+            }
+            
+        } elseif ($filterWaktu === 'bulan_ini') {
+            $chartTitle = 'GRAFIK PENDAPATAN (BULAN INI)';
+            $results = (clone $chartQuery)
+                         ->select(DB::raw('DAY(created_at) as day'), DB::raw('SUM(gross_amount) as total'))
+                         ->groupBy('day')
+                         ->pluck('total', 'day')
+                         ->toArray();
+                         
+            // Sumbu X: 1 - 30/31
+            $daysInMonth = Carbon::now()->daysInMonth;
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                $chartLabels[] = $i;
+                $chartData[] = $results[$i] ?? 0;
+            }
+            
+        } elseif ($filterWaktu === 'tahun_ini') {
+            $chartTitle = 'GRAFIK PENDAPATAN (TAHUN INI)';
+            $results = (clone $chartQuery)
+                         ->select(DB::raw('MONTH(created_at) as month'), DB::raw('SUM(gross_amount) as total'))
+                         ->groupBy('month')
+                         ->pluck('total', 'month')
+                         ->toArray();
+                         
+            // Sumbu X: Jan - Des
+            $months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            foreach ($months as $index => $month) {
+                $chartLabels[] = $month;
+                $chartData[] = $results[$index + 1] ?? 0;
+            }
+            
+        } elseif ($filterWaktu === 'custom') {
+            $chartTitle = 'GRAFIK PENDAPATAN (TANGGAL CUSTOM)';
+            $results = (clone $chartQuery)
+                         ->select(DB::raw('DATE(created_at) as date'), DB::raw('SUM(gross_amount) as total'))
+                         ->groupBy('date')
+                         ->pluck('total', 'date')
+                         ->toArray();
+                         
+            $cStart = $startDate ?? Carbon::now()->startOfMonth();
+            $cEnd = $endDate ?? Carbon::now()->endOfMonth();
+            
+            $period = \Carbon\CarbonPeriod::create($cStart, $cEnd);
+            foreach ($period as $date) {
+                $dateString = $date->format('Y-m-d');
+                $chartLabels[] = $date->format('d M');
+                $chartData[] = $results[$dateString] ?? 0;
+            }
         }
 
         $recentParticipants = (clone $query)->orderBy('created_at', 'desc')->take(5)->get();
@@ -118,8 +167,8 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact(
             'kuotaTotal', 'totalPendaftar', 'sisaKuota', 'lunas', 'pending', 'expired',
-            'recentParticipants', 'totalPendapatan', 'monthlyIncomeData', 
-            'filterPaket', 'filterWaktu', 'ticketPackages', 'breakdownData', 'chartYear',
+            'recentParticipants', 'totalPendapatan', 'chartLabels', 'chartData', 'chartTitle', 
+            'filterPaket', 'filterWaktu', 'ticketPackages', 'breakdownData',
             'startDate', 'endDate'
         ));
     }
