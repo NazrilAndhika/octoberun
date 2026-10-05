@@ -26,7 +26,7 @@ Route::get('/', function () {
     $jumlahPendaftar = \App\Models\Participant::whereIn('payment_status', ['paid', 'pending', 'verifying'])->count();
     $sisaKuota = $kapasitasMaksimal - $jumlahPendaftar;
     
-    $ticketPackages = \App\Models\TicketPackage::where('is_active', true)->orderBy('harga', 'asc')->get();
+    $ticketPackages = \App\Models\TicketPackage::orderBy('harga', 'asc')->get();
 
     return view('user.home', compact('settings', 'faqs', 'sisaKuota', 'ticketPackages'));
 });

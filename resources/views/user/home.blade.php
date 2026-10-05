@@ -700,6 +700,7 @@
                             $headerBg = 'bg-cyan-500'; // Default Reguler
                             if ($index == 1) $headerBg = 'bg-[#0b4d75]'; // Premium (Navy)
                             if ($index == 2) $headerBg = 'bg-[#e85d04]'; // Eksekutif (Orange/Gold)
+                            if ($index == 3) $headerBg = 'bg-green-600'; // Basic (Green)
                         @endphp
                         <!-- Pricing Card dengan Max-Width -->
                         <div class="w-full md:w-[320px] lg:w-[350px] max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 flex flex-col h-full hover:-translate-y-3 hover:shadow-2xl transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ $index * 150 }}">
@@ -738,9 +739,15 @@
                                             PENDAFTARAN DITUTUP
                                         </button>
                                     @else
-                                        <a href="{{ route('daftar', ['paket_id' => $package->id]) }}" class="btn-pilih-paket w-full block text-center border-2 border-[#0b4d75] bg-[#0b4d75] hover:bg-transparent hover:text-[#0b4d75] text-white font-bold py-3.5 rounded-xl transition-colors duration-300 uppercase tracking-widest shadow-md hover:shadow-none">
-                                            PILIH PAKET
-                                        </a>
+                                        @if($package->is_active)
+                                            <a href="{{ route('daftar', ['paket_id' => $package->id]) }}" class="btn-pilih-paket w-full block text-center border-2 border-[#0b4d75] bg-[#0b4d75] hover:bg-transparent hover:text-[#0b4d75] text-white font-bold py-3.5 rounded-xl transition-colors duration-300 uppercase tracking-widest shadow-md hover:shadow-none">
+                                                PILIH PAKET
+                                            </a>
+                                        @else
+                                            <button disabled class="w-full block text-center bg-gray-400 text-white font-bold py-3.5 rounded-xl cursor-not-allowed opacity-50 uppercase tracking-widest shadow-md border-2 border-transparent">
+                                                SOLD OUT
+                                            </button>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
