@@ -27,7 +27,8 @@ class DatapendaftarController extends Controller
                   ->orWhere('email', 'like', "%{$search}%")
                   ->orWhere('whatsapp', 'like', "%{$search}%")
                   ->orWhere('order_id', 'like', "%{$search}%")
-                  ->orWhere('bib_number', 'like', "%{$search}%");
+                  ->orWhere('bib_number', 'like', "%{$search}%")
+                  ->orWhere('id_number', 'like', "%{$search}%");
             });
         }
 
