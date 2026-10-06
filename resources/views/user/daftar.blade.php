@@ -144,7 +144,7 @@
                         </div>
 
                         {{-- Size Jersey --}}
-                        @if($selectedPackage->id != 9)
+                        @if(!in_array($selectedPackage->id, [4, 9]))
                         <div>
                             <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                 Pilih Size Jersey <span class="text-red-500">*</span>
