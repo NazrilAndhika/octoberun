@@ -144,6 +144,7 @@
                         </div>
 
                         {{-- Size Jersey --}}
+                        @if($selectedPackage->id != 9)
                         <div>
                             <label class="block text-sm font-semibold text-gray-600 mb-1.5">
                                 Pilih Size Jersey <span class="text-red-500">*</span>
@@ -211,9 +212,10 @@
                             
                             // Initialize on load just in case old value is Custom Size
                             document.addEventListener('DOMContentLoaded', function() {
-                                toggleCustomSize();
+                                if (document.getElementById('jersey_size')) toggleCustomSize();
                             });
                         </script>
+                        @endif
 
                         {{-- Email & WhatsApp --}}
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

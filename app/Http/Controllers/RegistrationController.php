@@ -78,7 +78,7 @@ class RegistrationController extends Controller
             'paket_id'   => 'required|exists:ticket_packages,id',
             'full_name'  => 'required|string|max:255',
             'nik'        => 'required|numeric|digits:16',
-            'jersey_size'=> 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
+            'jersey_size'=> $request->paket_id == 9 ? 'nullable|in:S,M,L,XL,XXL,3XL,4XL,Custom Size' : 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
             'custom_lebar'   => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'custom_panjang' => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'email'      => 'required|email:rfc,dns|max:255',

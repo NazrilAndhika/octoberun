@@ -875,7 +875,6 @@
                         <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_mountoya.png') }}" alt="Mountoya" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('img/logo_cst.png') }}" alt="CST" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_amh.png') }}" alt="AMH" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_lpk_chikara.png') }}" alt="LPK Chikara" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_lpk_satomi.png') }}" alt="LPKS Satomi" class="h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
@@ -887,7 +886,6 @@
                         <img src="{{ asset('img/logo_amansa.png') }}" alt="Amansa" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo-sari-roti.png') }}" alt="Sari Roti" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_mountoya.png') }}" alt="Mountoya" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
-                        <img src="{{ asset('img/logo_cst.png') }}" alt="CST" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_amh.png') }}" alt="AMH" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_lpk_chikara.png') }}" alt="LPK Chikara" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
                         <img src="{{ asset('img/logo_lpk_satomi.png') }}" alt="LPKS Satomi" class="mobile-duplicate h-14 md:h-20 w-auto object-contain drop-shadow-sm hover:scale-105 transition-transform duration-300">
