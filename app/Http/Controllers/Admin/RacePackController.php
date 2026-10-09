@@ -29,7 +29,8 @@ class RacePackController extends Controller
                                           $query->where('order_id', 'LIKE', '%' . $kode . '%')
                                                 ->orWhere('full_name', 'LIKE', '%' . $kode . '%')
                                                 ->orWhere('id_number', 'LIKE', '%' . $kode . '%')
-                                                ->orWhere('email', 'LIKE', '%' . $kode . '%');
+                                                ->orWhere('email', 'LIKE', '%' . $kode . '%')
+                                                ->orWhere('bib_number', 'LIKE', '%' . $kode . '%');
                                       })
                                       ->where('payment_status', 'paid')
                                       ->get();

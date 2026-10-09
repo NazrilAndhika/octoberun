@@ -34,14 +34,14 @@
 {{-- AREA PENCARIAN --}}
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 text-center max-w-2xl mx-auto mb-8">
     <form action="{{ route('admin.rpc') }}" method="GET">
-        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Scan QR Code atau Ketik Nama / NIK / Email / Order ID</label>
+        <label for="kode" class="block text-lg font-bold text-gray-800 mb-4">Scan QR Code atau Ketik Nama / NIK / Email / Order ID / Nomor BIB</label>
         
         <div id="reader" class="mx-auto mb-4 overflow-hidden rounded-xl hidden" style="width: 100%; max-width: 500px;"></div>
 
         <div class="flex flex-col sm:flex-row items-center gap-3">
             <input type="text" id="kode" name="kode" value="{{ request('kode') }}" 
                    class="w-full sm:flex-1 text-center text-3xl font-black tracking-widest uppercase rounded-xl border-2 border-gray-300 focus:border-[#0b4d75] focus:ring-[#0b4d75] py-4"
-                   placeholder="NAMA / NIK / EMAIL / ORDER ID"
+                   placeholder="NAMA / NIK / EMAIL / ORDER ID / NOMOR BIB"
                    required
                    autofocus>
             <button type="submit" id="btn-cari" class="w-full sm:w-auto bg-[#0b4d75] hover:bg-blue-800 text-white px-8 py-5 rounded-xl font-bold text-lg shadow-md transition">
@@ -75,6 +75,9 @@
                     } elseif (stripos($paketName, 'Eksekutif') !== false) {
                         $items = ['Jersey', 'Nomor BIB', 'Medali', 'Race Pack Lengkap'];
                         $paketBadgeColor = 'bg-purple-100 text-purple-800 border-purple-300';
+                    } elseif (stripos($paketName, 'Basic') !== false || stripos($paketName, 'Run Only') !== false) {
+                        $items = ['Nomor BIB'];
+                        $paketBadgeColor = 'bg-gray-100 text-gray-800 border-gray-300';
                     } else {
                         $items = ['Jersey', 'Nomor BIB'];
                         $paketBadgeColor = 'bg-gray-100 text-gray-800 border-gray-300';

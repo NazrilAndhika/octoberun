@@ -283,7 +283,7 @@ class DatapendaftarController extends Controller
             'gender'     => 'required|in:male,female',
             'city'       => 'required|string|max:255',
             'address'    => 'required|string',
-            'jersey_size'=> 'required|in:S,M,L,XL,XXL,3XL,4XL,Custom Size',
+            'jersey_size'=> 'required|in:XS,S,M,L,XL,XXL,3XL,4XL,Custom Size',
             'custom_lebar'   => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'custom_panjang' => 'required_if:jersey_size,Custom Size|nullable|numeric',
             'bib_name'   => 'nullable|string|max:10',

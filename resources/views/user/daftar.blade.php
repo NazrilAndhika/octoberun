@@ -153,7 +153,7 @@
                                 class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-[#0b4d75] focus:border-[#0b4d75] py-2.5 px-3 text-sm {{ $errors->has('jersey_size') ? 'border-red-400' : '' }}"
                                 required onchange="toggleCustomSize()">
                                 <option value="" disabled {{ old('jersey_size') ? '' : 'selected' }}>Pilih Ukuran</option>
-                                @foreach(['S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $s)
+                                @foreach(['XS','S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $s)
                                     <option value="{{ $s }}" {{ old('jersey_size') === $s ? 'selected' : '' }}>{{ $s }}</option>
                                 @endforeach
                             </select>

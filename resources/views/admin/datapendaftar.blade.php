@@ -54,7 +54,7 @@
             {{-- Jersey Size Filter --}}
             <select name="jersey_size" id="jersey-filter" class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#0b4d75]/30 focus:border-[#0b4d75] bg-gray-50 cursor-pointer">
                 <option value="all" {{ request('jersey_size', 'all') === 'all' ? 'selected' : '' }}>Semua Ukuran Jersey</option>
-                @foreach(['S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $size)
+                @foreach(['XS','S','M','L','XL','XXL','3XL','4XL','Custom Size'] as $size)
                     <option value="{{ $size }}" {{ request('jersey_size') === $size ? 'selected' : '' }}>{{ $size }}</option>
                 @endforeach
             </select>

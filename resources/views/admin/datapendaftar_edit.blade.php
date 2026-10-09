@@ -143,7 +143,7 @@
                         <div>
                             <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1 block">Ukuran Jersey</label>
                             <select name="jersey_size" id="jersey_size" onchange="toggleCustomSize()" class="w-full border-gray-300 rounded-lg shadow-sm focus:border-[#0b4d75] focus:ring-[#0b4d75] px-3 py-2 text-sm" required>
-                                @foreach(['S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', 'Custom Size'] as $size)
+                                @foreach(['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '4XL', 'Custom Size'] as $size)
                                     <option value="{{ $size }}" {{ old('jersey_size', $participant->jersey_size) === $size ? 'selected' : '' }}>{{ $size }}</option>
                                 @endforeach
                             </select>
